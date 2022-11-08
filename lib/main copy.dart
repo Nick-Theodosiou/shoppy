@@ -114,14 +114,14 @@ showAlertDialog(BuildContext context) {
 
   // set up the button
   Widget okButton = TextButton(
-    child: const Text("OK"),
+    child: const Text("Yes daddy!"),
     onPressed: () => Navigator.pop(context, false),
   );
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: const Text("Question"),
-    content: const Text("Description"),
+    title: const Text("Ποιος βλάκας ξεχάνει τον κωδικό του;"),
+    content: const Text("Εσύ. Ναι εσύ."),
     actions: [
       okButton,
     ],
