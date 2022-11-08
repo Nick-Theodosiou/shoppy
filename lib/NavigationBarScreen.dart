@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'CategoriesScreen.dart';
-import 'FavoritesScreen.dart';
-import 'ListsScreen.dart';
+import 'screens/CategoriesScreen.dart';
+import 'screens/FavoritesScreen.dart';
+import 'screens/ListsScreen.dart';
 import 'StoresScreen.dart';
-import 'HomeScreen.dart';
+import 'screens/HomeScreen.dart';
 
 class NavigationBarScreen extends StatefulWidget {
+  const NavigationBarScreen({super.key});
+
   @override
   _NavigationBarScreenState createState() => _NavigationBarScreenState();
 }
@@ -23,29 +25,26 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
 
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: Image.asset('asset/images/logo.png'),
-        titleSpacing: 00.0,
-        centerTitle: true,
-        toolbarHeight: 60.2,
-        toolbarOpacity: 0.8,
-        elevation: 0.00,
-        backgroundColor: const Color.fromARGB(255, 6, 39, 97),
-        actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: 20.0),
-          child: GestureDetector(
-            onTap: () {},
-            child: const Icon(
-              Icons.account_circle_outlined,
-              size: 26.0,
-            ),
-          )
-        ),
-        ]
-      ),
+          flexibleSpace: Image.asset('asset/images/logo.png'),
+          titleSpacing: 00.0,
+          centerTitle: true,
+          toolbarHeight: 60.2,
+          toolbarOpacity: 0.8,
+          elevation: 0.00,
+          backgroundColor: const Color.fromARGB(255, 6, 39, 97),
+          actions: <Widget>[
+            Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.account_circle_outlined,
+                    size: 26.0,
+                  ),
+                )),
+          ]),
       body: Scaffold(
         backgroundColor: Colors.white,
         bottomNavigationBar: BottomNavigationBar(
@@ -64,7 +63,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                 color: Colors.grey[300],
                 size: 32,
               ),
-              label: 'HOME',              
+              label: 'HOME',
               activeIcon: const Icon(
                 Icons.home,
                 color: Color.fromARGB(255, 6, 39, 97),
@@ -124,7 +123,6 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
               ),
             ),
           ],
-          
           onTap: (index) {
             setState(() {
               _selectedIndex = index;
@@ -135,8 +133,4 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
       ),
     );
   }
-
 }
-
-
-
