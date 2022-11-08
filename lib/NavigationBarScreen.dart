@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/CategoriesScreen.dart';
 import 'screens/FavoritesScreen.dart';
 import 'screens/ListsScreen.dart';
-import 'StoresScreen.dart';
+import 'screens/StoresScreen.dart';
 import 'screens/HomeScreen.dart';
 
 class NavigationBarScreen extends StatefulWidget {
