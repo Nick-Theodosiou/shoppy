@@ -1,40 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:shoppy/screens/SignUpScreen.dart';
-import 'NavigationBarScreen.dart';
-import 'styles/colors.dart';
-import 'screens/ForgotPasswordScreen.dart';
+import '../NavigationBarScreen.dart';
+import '../styles/colors.dart';
+import 'ForgotPasswordScreen.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+// void main() {
+//   runApp(const SignUp());
+// }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class SignUp extends StatelessWidget {
+  const SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginDemo(),
+      home: SignUpDemo(),
     );
   }
 }
 
-class LoginDemo extends StatefulWidget {
-  const LoginDemo({super.key});
+class SignUpDemo extends StatefulWidget {
+  const SignUpDemo({super.key});
 
   @override
-  _LoginDemoState createState() => _LoginDemoState();
+  _SignUpDemoState createState() => _SignUpDemoState();
 }
 
-class _LoginDemoState extends State<LoginDemo> {
+class _SignUpDemoState extends State<SignUpDemo> {
   var username = "user";
   var password = "password";
-
-  @override
-  Widget build(BuildContext context) {
+Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage("asset/images/background_1.png"),
             fit: BoxFit.cover),
@@ -71,7 +68,7 @@ class _LoginDemoState extends State<LoginDemo> {
                       const Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Log In',
+                          'Sign Up',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 30,
@@ -81,31 +78,19 @@ class _LoginDemoState extends State<LoginDemo> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
+                      textFormField('Name'),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
+                      ),
                       textFormField('E-mail'),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
                       textFormField('Password'),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => ForgotPasswordScreen()));
-                          },
-                          child: const Text(
-                            'Forgot Password?',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.white,
-                              decorationThickness: 1.8,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
                       ),
+                      textFormField('Confirm Password'),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
@@ -125,7 +110,7 @@ class _LoginDemoState extends State<LoginDemo> {
                           ),
                         ),
                         child: const Text(
-                          'Log In',
+                          'Sign Up',
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -144,21 +129,7 @@ class _LoginDemoState extends State<LoginDemo> {
                               fontSize: 15,
                             ),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const SignUp()));
-                            },
-                            child: Text(
-                              'Sign Up',
-                              style: TextStyle(
-                                color: ShoppyColors.red,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
+                          
                         ],
                       )
                     ],
@@ -168,10 +139,15 @@ class _LoginDemoState extends State<LoginDemo> {
         ),
       ),
     );
-  }
+}
 
-  TextFormField textFormField(String textH) {
+TextFormField textFormField(String textH) {
+  bool hide = false;
+  if(textH=='Password'|| textH=='Confirm Password') {
+    hide = true;
+  }
     return TextFormField(
+        obscureText: hide,
       style: TextStyle(color: ShoppyColors.blue),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
