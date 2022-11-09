@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shoppy/DataController.dart';
 import 'package:shoppy/styles/colors.dart';
+import '../models/User.dart';
 import 'ForgotPasswordScreen.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -10,6 +12,11 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  static User user = localUser;
+  String email = user.email;
+  String name = user.name;
+  String surname = user.surname;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +53,21 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ),
             Column(
-              children: const [Text('miso tin simona')],
+              children: [
+                Text(email),
+                Text(name),
+                Text(surname),
+              ],
+            ),
+            TextButton(
+              child: Text("Refresh"),
+              onPressed: () {
+                setState(() {
+                  email = "Changed text. So refresh button works just fine.";
+                  name = "This works too.";
+                  surname = "Yeah OK we get it... It works";
+                });
+              },
             ),
           ],
         ),

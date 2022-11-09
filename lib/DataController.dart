@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 
+import 'models/User.dart';
+
+var localUser;
+
 var settings = ConnectionSettings(
     host: '45.84.205.255',
     port: 3306,
@@ -17,4 +21,17 @@ Future<bool> checkCredentials(String email, String password) async {
 
   if (results.first[0] == 0) return false;
   return true;
+}
+
+Future<User> getAccountDataDB(String email) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query(
+      'select S.UserID, S.Name, S.Surname, S.Email from systemUser as S where S.Email = ?',
+      [email]);
+
+  var user = User(
+      results.first[0], results.first[1], results.first[2], results.first[3]);
+  localUser = user;
+  return user;
 }
