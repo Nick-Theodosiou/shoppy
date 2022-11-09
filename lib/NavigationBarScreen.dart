@@ -27,8 +27,8 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          flexibleSpace: Image.asset('asset/images/logo.png'),
-          titleSpacing: 00.0,
+          title: Image.asset('asset/images/logo.png'),
+          titleSpacing: MediaQuery.of(context).size.width * 0.26,
           centerTitle: true,
           toolbarHeight: 60.2,
           toolbarOpacity: 0.8,
