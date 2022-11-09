@@ -12,7 +12,7 @@ class _ListScreenState extends State<ListScreen> {
       color: Colors.green,
       child: const Center(
         child: Text('Lists Page'),
-        ),
+      ),
     );
   }
 }
