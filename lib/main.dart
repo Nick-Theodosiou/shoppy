@@ -28,6 +28,27 @@ class LoginDemo extends StatefulWidget {
 }
 
 class _LoginDemoState extends State<LoginDemo> {
+  bool visibilityIncorrect = false;
+
+  void _changed(bool visibility, String field) {
+    setState(() {
+      if (field == "incorrect") {
+        visibilityIncorrect = visibility;
+      }
+    });
+  }
+
+  final userController = TextEditingController();
+  final passController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    userController.dispose();
+    passController.dispose();
+    super.dispose();
+  }
+
   var username = "user";
   var password = "password";
 
@@ -81,11 +102,11 @@ class _LoginDemoState extends State<LoginDemo> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
-                      textFormField('E-mail'),
+                      textFormField('E-mail', userController),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
-                      textFormField('Password'),
+                      textFormField('Password', passController),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: TextButton(
@@ -109,13 +130,21 @@ class _LoginDemoState extends State<LoginDemo> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
+                      visibilityIncorrect
+                          ? const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Incorrect Username and Password',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            )
+                          : Container(),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const NavigationBarScreen()),
-                          );
+                          login();
                         },
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size.fromHeight(47),
@@ -160,7 +189,7 @@ class _LoginDemoState extends State<LoginDemo> {
                             ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   )),
             ),
@@ -170,8 +199,14 @@ class _LoginDemoState extends State<LoginDemo> {
     );
   }
 
-  TextFormField textFormField(String textH) {
+  TextFormField textFormField(String textH, TextEditingController eController) {
+    bool hide = false;
+    if (textH == 'Password') {
+      hide = true;
+    }
     return TextFormField(
+      controller: eController,
+      obscureText: hide,
       style: TextStyle(color: ShoppyColors.blue),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
@@ -184,6 +219,21 @@ class _LoginDemoState extends State<LoginDemo> {
         hintText: textH,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
       ),
+    );
+  }
+
+  void login() {
+    // if (userController.text == username && passController.text == password) {
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
+    //   );
+    // } else {
+    //   _changed(true, "incorrect");
+    // }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
     );
   }
 }
