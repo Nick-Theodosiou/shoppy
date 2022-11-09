@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoppy/main.dart';
 import '../NavigationBarScreen.dart';
 import '../styles/colors.dart';
 import 'ForgotPasswordScreen.dart';
@@ -123,15 +124,29 @@ decoration: const BoxDecoration(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            "Don't have an account?",
+                            "Already have an account ?",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
                             ),
                           ),
-                          
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const LoginDemo()));
+                            },
+                            child: Text(
+                              'Log in',
+                              style: TextStyle(
+                                color: ShoppyColors.red,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   )),
             ),
@@ -153,11 +168,13 @@ TextFormField textFormField(String textH) {
         contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
         fillColor: const Color.fromARGB(240, 225, 225, 225),
         filled: true,
-        hintStyle: TextStyle(color: ShoppyColors.blue),
+         hintStyle: TextStyle(color: ShoppyColors.blue),
+     //  labelStyle: TextStyle(color:ShoppyColors.blue ),
+     // labelText: textH,
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(35),
             borderSide: BorderSide(color: ShoppyColors.red)),
-        hintText: textH,
+            hintText: textH,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
       ),
     );
