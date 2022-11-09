@@ -12,15 +12,9 @@ Future<bool> checkCredentials(String email, String password) async {
   var conn = await MySqlConnection.connect(settings);
 
   var results = await conn.query(
-      'select S.Email, L.Password from systemUser as S join LoginDetails as L on S.UserID=L.UserID where S.Email = ?',
-      [email]);
+      'select COUNT(*) from systemUser as S join LoginDetails as L on S.UserID=L.UserID where S.Email = ? AND L.Password = ?',
+      [email, password]);
 
-  if (results.length != 1) return false;
-
-  for (var row in results) {
-    if (email == row[0] && password == row[1]) {
-      return true;
-    }
-  }
-  return false;
+  if (results.first[0] == 0) return false;
+  return true;
 }
