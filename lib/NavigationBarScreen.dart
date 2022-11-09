@@ -72,6 +72,32 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
+                Icons.percent_outlined,
+                color: Colors.grey[300],
+                size: 32,
+              ),
+              label: 'BEST DEALS',
+              activeIcon: const Icon(
+                Icons.percent,
+                color: Color.fromARGB(255, 6, 39, 97),
+                size: 32,
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.shopping_cart_outlined,
+                color: Colors.grey[300],
+                size: 32,
+              ),
+              label: 'LIST',
+              activeIcon: const Icon(
+                Icons.shopping_cart,
+                color: Color.fromARGB(255, 6, 39, 97),
+                size: 32,
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
                 Icons.favorite_border_outlined,
                 color: Colors.grey[300],
                 size: 32,
@@ -85,39 +111,13 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.category_outlined,
+                Icons.person_outline,
                 color: Colors.grey[300],
                 size: 32,
               ),
-              label: 'CATEGORIES',
+              label: 'ACCOUNT',
               activeIcon: const Icon(
-                Icons.category,
-                color: Color.fromARGB(255, 6, 39, 97),
-                size: 32,
-              ),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.store_outlined,
-                color: Colors.grey[300],
-                size: 32,
-              ),
-              label: 'STORES',
-              activeIcon: const Icon(
-                Icons.store,
-                color: Color.fromARGB(255, 6, 39, 97),
-                size: 32,
-              ),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.shopping_cart_outlined,
-                color: Colors.grey[300],
-                size: 32,
-              ),
-              label: 'LISTS',
-              activeIcon: const Icon(
-                Icons.shopping_cart,
+                Icons.person,
                 color: Color.fromARGB(255, 6, 39, 97),
                 size: 32,
               ),
