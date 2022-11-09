@@ -3,6 +3,7 @@ import 'package:shoppy/screens/SignUpScreen.dart';
 import 'NavigationBarScreen.dart';
 import 'styles/colors.dart';
 import 'screens/ForgotPasswordScreen.dart';
+import 'DataController.dart';
 
 void main() {
   runApp(const MyApp());
@@ -222,8 +223,8 @@ class _LoginDemoState extends State<LoginDemo> {
     );
   }
 
-  void login() {
-    // if (userController.text == username && passController.text == password) {
+  Future<void> login() async {
+    // if (await checkCredentials(userController.text, passController.text)) {
     //   Navigator.pushReplacement(
     //     context,
     //     MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
