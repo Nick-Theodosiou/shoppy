@@ -156,12 +156,42 @@ decoration: const BoxDecoration(
     );
 }
 
-TextFormField textFormField(String textH) {
+Tooltip textFormField(String textH) {
   bool hide = false;
-  if(textH=='Password'|| textH=='Confirm Password') {
-    hide = true;
-  }
-    return TextFormField(
+  String tipMessage='';
+  // if(textH=='Password'|| textH=='Confirm Password') {
+  //   hide = true;
+  // }
+  switch(textH) { 
+      case 'Name':{
+        tipMessage='Enter your Name';
+      }
+      break;
+      case 'E-mail':{
+      tipMessage='Enter valid email id as abc@gamil.com';
+      }
+      break;
+      case   'Password': { 
+      hide=true;
+      tipMessage='Enter your Password';
+   } 
+   break;
+   case   'Confirm Password': { 
+      hide=true;
+      tipMessage='Please enter the same Password as above';
+   } 
+   break;
+   default: { 
+      //statements;  
+   }
+   break; 
+} 
+    return Tooltip( 
+        triggerMode: TooltipTriggerMode.tap,
+          //richMessage: ,
+        //  showDuration: const Duration(milliseconds: 500),
+          message: tipMessage,
+    child:TextFormField(
         obscureText: hide,
       style: TextStyle(color: ShoppyColors.blue),
       decoration: InputDecoration(
@@ -177,6 +207,7 @@ TextFormField textFormField(String textH) {
             hintText: textH,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
       ),
+    ),
     );
   }
 }
