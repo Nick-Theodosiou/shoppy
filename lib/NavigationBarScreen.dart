@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'screens/CategoriesScreen.dart';
 import 'screens/FavoritesScreen.dart';
-import 'screens/ListsScreen.dart';
-import 'screens/StoresScreen.dart';
+import 'screens/AccountScreen.dart';
+import 'screens/BestDealsScreen.dart';
 import 'screens/HomeScreen.dart';
+import 'screens/ListScreen.dart';
 
 class NavigationBarScreen extends StatefulWidget {
   const NavigationBarScreen({super.key});
@@ -17,10 +17,10 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
 
   final List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
+    BestDealsScreen(),
+    ListScreen(),
     FavoritesScreen(),
-    CategoriesScreen(),
-    StoresScreen(),
-    ListScreen()
+    AccountScreen(),
   ];
 
   @override
