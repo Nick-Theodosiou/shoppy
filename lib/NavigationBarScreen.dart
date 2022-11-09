@@ -40,7 +40,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                 child: GestureDetector(
                   onTap: () {},
                   child: const Icon(
-                    Icons.account_circle_outlined,
+                    Icons.notifications_active_outlined,
                     size: 26.0,
                   ),
                 )),
