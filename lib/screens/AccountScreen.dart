@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoppy/DataController.dart';
+import 'package:shoppy/main.dart';
 import 'package:shoppy/styles/colors.dart';
 import '../models/User.dart';
 import 'ForgotPasswordScreen.dart';
@@ -12,10 +13,7 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  static User user = localUser;
-  String email = user.email;
-  String name = user.name;
-  String surname = user.surname;
+  User user = localUser;
 
   @override
   Widget build(BuildContext context) {
@@ -54,19 +52,29 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             Column(
               children: [
-                Text(email),
-                Text(name),
-                Text(surname),
+                Text(user.email),
+                Text(user.name),
+                Text(user.surname),
               ],
             ),
             TextButton(
               child: Text("Refresh"),
               onPressed: () {
+                getAccountDataDB(user.email);
                 setState(() {
-                  email = "Changed text. So refresh button works just fine.";
-                  name = "This works too.";
-                  surname = "Yeah OK we get it... It works";
+                  user = localUser;
                 });
+              },
+            ),
+            TextButton(
+              child: Text("Log out"),
+              onPressed: () {
+                localUser = null;
+
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => const MyApp()),
+                );
               },
             ),
           ],
