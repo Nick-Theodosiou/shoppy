@@ -70,7 +70,6 @@ class _AccountScreenState extends State<AccountScreen> {
               child: Text("Log out"),
               onPressed: () {
                 localUser = null;
-
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (_) => const MyApp()),
