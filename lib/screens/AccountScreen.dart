@@ -12,8 +12,13 @@ class AccountScreen extends StatefulWidget {
   State<AccountScreen> createState() => _AccountScreenState();
 }
 
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
+}
+
 class _AccountScreenState extends State<AccountScreen> {
-  User user = localUser;
+  // User user = localUser;
 
   @override
   Widget build(BuildContext context) {
@@ -50,31 +55,182 @@ class _AccountScreenState extends State<AccountScreen> {
                 ],
               ),
             ),
-            Column(
-              children: [
-                Text(user.email),
-                Text(user.name),
-                Text(user.surname),
-              ],
-            ),
-            TextButton(
-              child: Text("Refresh"),
-              onPressed: () {
-                getAccountDataDB(user.email);
-                setState(() {
-                  user = localUser;
-                });
-              },
-            ),
-            TextButton(
-              child: Text("Log out"),
-              onPressed: () {
-                localUser = null;
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) => const MyApp()),
-                );
-              },
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 40,
+                right: 40,
+                bottom: 60,
+                top: 100,
+              ),
+              child: Column(
+                children: [
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Name",
+                        style: TextStyle(fontSize: 10, height: 0.6)),
+                  ),
+                  Stack(
+                    children: [
+                      TextFormField(
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                          decoration: const InputDecoration(
+                              hintText: 'Constantinos',
+                              hintStyle:
+                                  TextStyle(fontSize: 20, color: Colors.black)),
+                          textAlign: TextAlign.left),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Icon(
+                            Icons.edit,
+                            size: 25,
+                            color: ShoppyColors.blue,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Surname",
+                        style: TextStyle(fontSize: 10, height: 0.6)),
+                  ),
+                  Stack(
+                    children: [
+                      TextFormField(
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                          decoration: const InputDecoration(
+                              hintText: 'Paphitis',
+                              hintStyle:
+                                  TextStyle(fontSize: 20, color: Colors.black)),
+                          textAlign: TextAlign.left),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Icon(
+                            Icons.edit,
+                            size: 25,
+                            color: ShoppyColors.blue,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     AlwaysDisabledFocusNode.flag =
+                  //         !(AlwaysDisabledFocusNode.flag);
+                  //   },
+                  //   child: const Text(
+                  //     'Log In',
+                  //     style: TextStyle(
+                  //       fontSize: 20,
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("E-mail",
+                        style: TextStyle(fontSize: 10, height: 0.6)),
+                  ),
+                  TextFormField(
+                      decoration: const InputDecoration(
+                          hintText: 'paphitis@yahoo.com',
+                          hintStyle:
+                              TextStyle(fontSize: 20, color: Colors.black)),
+                      enableInteractiveSelection: false,
+                      focusNode: AlwaysDisabledFocusNode(),
+                      textAlign: TextAlign.left),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Do you want to change password?',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationColor: ShoppyColors.blue,
+                          decorationThickness: 1.8,
+                          color: ShoppyColors.blue,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(47),
+                        backgroundColor: ShoppyColors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Text(
+                        'Save Changes',
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    child: Text("Refresh"),
+                    onPressed: () {
+                      // getAccountDataDB(user.email);
+                      // setState(() {
+                      //   user = localUser;
+                      // });
+                    },
+                  ),
+
+                  TextButton(
+                    style: ButtonStyle(
+                      overlayColor:
+                          MaterialStateProperty.all(Colors.transparent),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: RichText(
+                        softWrap: true,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text: "Log Out ",
+                                style: TextStyle(
+                                    fontSize: 25, color: ShoppyColors.red)),
+                            WidgetSpan(
+                              child: Icon(
+                                Icons.logout_outlined,
+                                size: 25,
+                                color: ShoppyColors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      // localUser = null;
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => const MyApp()),
+                      );
+                    },
+                  ),
+                ],
+              ), //
             ),
           ],
         ),

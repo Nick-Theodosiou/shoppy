@@ -245,19 +245,19 @@ class _LoginDemoState extends State<LoginDemo> {
   }
 
   Future<void> login() async {
-    if (await checkCredentials(userController.text, passController.text)) {
-      getAccountDataDB(userController.text);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
-      );
-    } else {
-      _changed(true, "incorrect");
-    }
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
-    // );
+    // if (await checkCredentials(userController.text, passController.text)) {
+    //   getAccountDataDB(userController.text);
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
+    //   );
+    // } else {
+    //   _changed(true, "incorrect");
+    // }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
+    );
   }
 }
 
