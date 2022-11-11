@@ -30,9 +30,9 @@ class SignUpDemo extends StatefulWidget {
 class _SignUpDemoState extends State<SignUpDemo> {
   var username = "user";
   var password = "password";
-Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Container(
-decoration: const BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage("asset/images/background_1.png"),
             fit: BoxFit.cover),
@@ -154,60 +154,65 @@ decoration: const BoxDecoration(
         ),
       ),
     );
-}
+  }
 
-Tooltip textFormField(String textH) {
-  bool hide = false;
-  String tipMessage='';
-  // if(textH=='Password'|| textH=='Confirm Password') {
-  //   hide = true;
-  // }
-  switch(textH) { 
-      case 'Name':{
-        tipMessage='Enter your Name';
-      }
-      break;
-      case 'E-mail':{
-      tipMessage='Enter valid email id as abc@gamil.com';
-      }
-      break;
-      case   'Password': { 
-      hide=true;
-      tipMessage='Enter your Password';
-   } 
-   break;
-   case   'Confirm Password': { 
-      hide=true;
-      tipMessage='Please enter the same Password as above';
-   } 
-   break;
-   default: { 
-      //statements;  
-   }
-   break; 
-} 
-    return Tooltip( 
-        triggerMode: TooltipTriggerMode.tap,
-          //richMessage: ,
-        //  showDuration: const Duration(milliseconds: 500),
-          message: tipMessage,
-    child:TextFormField(
+  Tooltip textFormField(String textH) {
+    bool hide = false;
+    String tipMessage = '';
+    // if(textH=='Password'|| textH=='Confirm Password') {
+    //   hide = true;
+    // }
+    switch (textH) {
+      case 'Name':
+        {
+          tipMessage = 'Enter your Name';
+        }
+        break;
+      case 'E-mail':
+        {
+          tipMessage = 'Enter valid email id as abc@gamil.com';
+        }
+        break;
+      case 'Password':
+        {
+          hide = true;
+          tipMessage = 'Enter your Password';
+        }
+        break;
+      case 'Confirm Password':
+        {
+          hide = true;
+          tipMessage = 'Please enter the same Password as above';
+        }
+        break;
+      default:
+        {
+          //statements;
+        }
+        break;
+    }
+    return Tooltip(
+      triggerMode: TooltipTriggerMode.tap,
+      //richMessage: ,
+      //  showDuration: const Duration(milliseconds: 500),
+      message: tipMessage,
+      child: TextFormField(
         obscureText: hide,
-      style: TextStyle(color: ShoppyColors.blue),
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
-        fillColor: const Color.fromARGB(240, 225, 225, 225),
-        filled: true,
-         hintStyle: TextStyle(color: ShoppyColors.blue),
-     //  labelStyle: TextStyle(color:ShoppyColors.blue ),
-     // labelText: textH,
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(35),
-            borderSide: BorderSide(color: ShoppyColors.red)),
-            hintText: textH,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
+        style: TextStyle(color: ShoppyColors.blue),
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
+          fillColor: const Color.fromARGB(240, 225, 225, 225),
+          filled: true,
+          hintStyle: TextStyle(color: ShoppyColors.blue),
+          //  labelStyle: TextStyle(color:ShoppyColors.blue ),
+          // labelText: textH,
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35),
+              borderSide: BorderSide(color: ShoppyColors.red)),
+          hintText: textH,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
+        ),
       ),
-    ),
     );
   }
 }
