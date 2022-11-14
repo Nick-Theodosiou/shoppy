@@ -125,18 +125,6 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ],
                   ),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     AlwaysDisabledFocusNode.flag =
-                  //         !(AlwaysDisabledFocusNode.flag);
-                  //   },
-                  //   child: const Text(
-                  //     'Log In',
-                  //     style: TextStyle(
-                  //       fontSize: 20,
-                  //     ),
-                  //   ),
-                  // ),
                   SizedBox(
                     height: 20,
                   ),
@@ -194,7 +182,6 @@ class _AccountScreenState extends State<AccountScreen> {
                       // });
                     },
                   ),
-
                   TextButton(
                     style: ButtonStyle(
                       overlayColor:
