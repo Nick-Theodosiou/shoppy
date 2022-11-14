@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoppy/styles/colors.dart';
 
 class ListScreen extends StatefulWidget {
   @override
@@ -13,35 +14,112 @@ class _ListScreenState extends State<ListScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 40),
-            child: Row(
-              children: [
-                Image.network(
-                  imgURL,
-                  height: 30,
-                  alignment: Alignment.topLeft,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 40),
-                  child: Checkbox(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    value: isChecked,
-                    onChanged: (v) {
-                      setState(() {
-                        isChecked = v!;
-                      });
-                    },
+      body: ListView.builder(
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+        shrinkWrap: true,
+        //itemCount: products.length,
+        itemCount: 2,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            color: ShoppyColors.gray,
+            elevation: 5.0,
+            child: Padding(
+              padding: EdgeInsets.only(top: 40),
+              child: Row(
+                children: [
+                  Image(
+                      height: 80,
+                      width: 80,
+                      image: AssetImage("asset/images/background_1.png")
+                      //  image: AssetImage(products[index].image.toString()),
+                      ),
+                  SizedBox(
+                    width: 130,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        RichText(
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          text: TextSpan(
+                              text: 'Name: ',
+                              style: TextStyle(
+                                  color: Colors.blueGrey.shade800,
+                                  fontSize: 16.0),
+                              children: [
+                                TextSpan(
+                                    text: 'ProductName\n',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold)),
+                              ]),
+                        ),
+                        RichText(
+                          maxLines: 1,
+                          text: TextSpan(
+                              text: 'Unit: ',
+                              style: TextStyle(
+                                  color: Colors.blueGrey.shade800,
+                                  fontSize: 16.0),
+                              children: [
+                                TextSpan(
+                                    text: 'Brand\n',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold)),
+                              ]),
+                        ),
+                        RichText(
+                          maxLines: 1,
+                          text: TextSpan(
+                              text: 'Price: ' r"$",
+                              style: TextStyle(
+                                  color: Colors.blueGrey.shade800,
+                                  fontSize: 16.0),
+                              children: [
+                                TextSpan(
+                                    text: 'ProductPrice\n',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold)),
+                              ]),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const Text("Check All")
-              ],
+                ],
+              ),
             ),
-          )
-        ],
+          );
+        },
+        // children: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(top: 40),
+        //     child: Row(
+        //       children: [
+        //         Image.network(
+        //           imgURL,
+        //           height: 30,
+        //           alignment: Alignment.topLeft,
+        //         ),
+        //         Padding(
+        //           padding: const EdgeInsets.only(left: 40),
+        //           child: Checkbox(
+        //             shape: RoundedRectangleBorder(
+        //                 borderRadius: BorderRadius.all(Radius.circular(5.0))),
+        //             value: isChecked,
+        //             onChanged: (v) {
+        //               setState(() {
+        //                 isChecked = v!;
+        //               });
+        //             },
+        //           ),
+        //         ),
+        //         const Text("Check All")
+        //       ],
+        //     ),
+        //   )
+        // ],
       ),
     );
   }
