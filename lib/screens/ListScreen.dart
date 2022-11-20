@@ -18,6 +18,27 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: BottomAppBar(
+          color: ShoppyColors.blue,
+          elevation: 15,
+          shape: const AutomaticNotchedShape(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+            ),
+          ),
+          child: const SizedBox(
+              height: 40,
+              child: Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: Text(
+                  "Total",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              )),
+        ),
+      ),
       body: ListView.builder(
         itemCount: 2,
         itemBuilder: (BuildContext context, int indexS) {
@@ -77,7 +98,7 @@ class _ListScreenState extends State<ListScreen> {
                               value: stores[indexS] || offers[indexS]![index],
                               onChanged: (v) {
                                 setState(() {
-                                  print(indexS);
+                                  //print(indexS);
                                   offers[indexS]![index] = v!;
                                 });
                               },
