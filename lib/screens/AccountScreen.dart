@@ -233,13 +233,9 @@ class _AccountScreenState extends State<AccountScreen> {
                       height: 40,
                     ),
                     Column(
-                      mainAxisSize: MainAxisSize.max,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         TextButton(
-                          // style: ButtonStyle(
-                          //   overlayColor:
-                          //       MaterialStateProperty.all(Colors.transparent),
-                          // ),
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: RichText(
