@@ -1,4 +1,4 @@
-import 'dart:js_util';
+//import 'dart:js_util';
 import 'dart:developer';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/gestures.dart';
