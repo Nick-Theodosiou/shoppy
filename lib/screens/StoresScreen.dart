@@ -34,9 +34,14 @@ class _StoresScreenState extends State<StoresScreenDemo> {
     'https://nicolastheodosiou.pages.dev/images/prof.png',
   ];
   List<String> NamesofSM = ['Carrefour', 'Lidl', 'Coles', 'Ioannides', 'TOP G'];
-  List<Color> iconColors = <Color>[];
+  static List<Color> iconColors = <Color>[];
+  //set to static to show when the DB ready we will request the liked Supermarkets
+  //static  List<Color> LastState =<Color>[];
+
   Widget build(BuildContext context) {
-    createIconColorList();
+    if(iconColors.isEmpty) {
+      createIconColorList();
+    }
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
@@ -44,6 +49,7 @@ class _StoresScreenState extends State<StoresScreenDemo> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             // Navigator.pop(context, true);
+            //SaveChanges(iconColors);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
@@ -144,4 +150,19 @@ class _StoresScreenState extends State<StoresScreenDemo> {
       iconColors.add(ShoppyColors.blue);
     }
   }
+//   SaveChanges(List StateC )
+// {
+// for(int i=0 ;i<StateC.length;i++) {
+//   LastState[i]=StateC[i];
+// }
+// }
+// List GetState(List LastState){
+//   if(LastState.length>0) {
+//     return LastState;
+//   } else
+//   return new List<Color>;
+// }
 }
+
+
+// ignore: avoid_types_as_parameter_names, non_constant_identifier_names
