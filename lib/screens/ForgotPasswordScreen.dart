@@ -79,6 +79,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           right: MediaQuery.of(context).size.width * 0.1),
                       child: Column(
                         children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.07,
+                          ),
                           const Align(
                             alignment: Alignment.center,
                             child: Text(
