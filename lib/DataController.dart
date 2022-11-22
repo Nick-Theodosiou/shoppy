@@ -211,8 +211,8 @@ Future<List<Category>> getCategories() async {
         row['CategoryID'],
         row['Name'],
         "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
-        row['categorySubcategories'],
-        row['categoryOffers']);
+        [],
+        []);
     list.add(C);
   }
   return list;
