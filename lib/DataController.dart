@@ -64,8 +64,15 @@ Future<User> getAccountDataDB(String email) async {
         row["SubcategoryID"],
         row["CategoryID"], []);
 
-    Offer o = Offer(row["OfferID"], p, row["Price"], row["OldPrice"],
-        row["SupermarketID"], row["Name"], row["StorePictureURL"]);
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
     ItemOffer ioff = ItemOffer(o, false, row["Quantity"]);
 
     for (var ist in shoppingList) {
