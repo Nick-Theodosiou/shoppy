@@ -64,8 +64,15 @@ Future<User> getAccountDataDB(String email) async {
         row["SubcategoryID"],
         row["CategoryID"], []);
 
-    Offer o = Offer(row["OfferID"], p, row["Price"], row["OldPrice"],
-        row["SupermarketID"], row["Name"], row["StorePictureURL"]);
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
     ItemOffer ioff = ItemOffer(o, false, row["Quantity"]);
 
     for (var ist in shoppingList) {
@@ -152,4 +159,26 @@ Future<List<Offer>> getBestDeals(int size) async {
   }
 
   return list;
+}
+
+void deleteOfferFromList(ItemOffer iof, int indexS) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query(
+      'CALL deleteShoppingList(?,?);', [localUser.userID, iof.offer.offerID]);
+
+  localUser.itemsInCart[indexS].itemOffers.remove(iof);
+
+  await conn.close();
+}
+
+void updateQtyList(ItemOffer iof, int change) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  iof.quantity += change;
+
+  var results = await conn.query('CALL updateQty(?,?,?);',
+      [localUser.userID, iof.offer.offerID, iof.quantity]);
+
+  await conn.close();
 }
