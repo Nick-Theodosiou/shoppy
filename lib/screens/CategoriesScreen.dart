@@ -30,7 +30,7 @@ class CategoriesScreenDemo extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreenDemo> {
   @override
   final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: true);
   List<Category> Categories = [];
 
   void _onRefresh() async {
