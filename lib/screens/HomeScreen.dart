@@ -90,7 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           const EdgeInsets.only(top: 15, bottom: 15, left: 15),
                       fillColor: const Color.fromARGB(108, 225, 225, 225),
                       filled: true,
-                      hintStyle: TextStyle(color: ShoppyColors.blue),
+                      hintStyle:
+                          TextStyle(color: ShoppyColors.blue, fontSize: 20),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(35),
                           borderSide: BorderSide(color: ShoppyColors.blue)),
@@ -435,24 +436,28 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisCount: 3,
                       crossAxisSpacing: 10.0,
                       mainAxisSpacing: 20.0,
+                      childAspectRatio: (500 / 650),
                     ),
                     itemCount: _categories.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
                           GestureDetector(
-                            onTap:
-                                () {}, // Image tapped, takes you to category screen
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const CategoriesScreen()),
+                              );
+                            }, // Image tapped, takes you to category screen
                             child: Image.network(
                               _categories.elementAt(index).categoryImage,
-                              fit: BoxFit.cover, // Fixes border issues
-                              width: 110.0,
-                              height: 110.0,
                             ),
                           ),
                           Text(
                             _categories.elementAt(index).categoryName,
                             style: const TextStyle(
+                              overflow: TextOverflow.ellipsis,
                               fontSize: 20,
                             ),
                           ),
