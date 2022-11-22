@@ -161,26 +161,38 @@ Future<List<Offer>> getBestDeals(int size) async {
   return list;
 }
 
-void deleteOfferFromList(ItemOffer iof, int indexS) async {
+void deleteOfferFromList(int indexS, int index) async {
+  int offerID = localUser.itemsInCart[indexS].itemOffers[index].offer.offerID;
+
+  localUser.itemsInCart[indexS].itemOffers.removeAt(index);
+  if (localUser.itemsInCart[indexS].itemOffers.isEmpty) {
+    localUser.itemsInCart.removeAt(indexS);
+  }
+
   var conn = await MySqlConnection.connect(settings);
 
-  var results = await conn.query(
-      'CALL deleteShoppingList(?,?);', [localUser.userID, iof.offer.offerID]);
-
-  localUser.itemsInCart[indexS].itemOffers.remove(iof);
-
-  await conn.close();
+  var results =
+      conn.query('CALL deleteShoppingList(?,?);', [localUser.userID, offerID]);
 }
 
-void updateQtyList(ItemOffer iof, int change) async {
+void updateQtyList(int indexS, int index, int change) async {
+  int offerID = localUser.itemsInCart[indexS].itemOffers[index].offer.offerID;
+  int qty = localUser.itemsInCart[indexS].itemOffers[index].quantity + change;
+
+  localUser.itemsInCart[indexS].itemOffers[index].quantity = qty;
+  if (localUser.itemsInCart[indexS].itemOffers[index].quantity == 0) {
+    localUser.itemsInCart[indexS].itemOffers.removeAt(index);
+    if (localUser.itemsInCart[indexS].itemOffers.isEmpty) {
+      localUser.itemsInCart.removeAt(indexS);
+    }
+  }
+
   var conn = await MySqlConnection.connect(settings);
-
-  iof.quantity += change;
-
-  var results = await conn.query('CALL updateQty(?,?,?);',
-      [localUser.userID, iof.offer.offerID, iof.quantity]);
-
-  await conn.close();
+  if (qty > 0) {
+    conn.query('CALL updateQty(?,?,?);', [localUser.userID, offerID, qty]);
+  } else {
+    conn.query('CALL deleteShoppingList(?,?);', [localUser.userID, offerID]);
+  }
 }
 
 Future<List<Store>> getStores() async {
