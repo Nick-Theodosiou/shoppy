@@ -245,18 +245,48 @@ class _LoginDemoState extends State<LoginDemo> {
   }
 
   Future<void> login() async {
-    // if (await checkCredentials(userController.text, passController.text)) {
-    //   getAccountDataDB(userController.text);
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
-    //   );
-    // } else {
-    //   _changed(true, "incorrect");
-    // }
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
+    if (await checkCredentials(userController.text, passController.text)) {
+      final GlobalKey<State> _LoaderDialog = new GlobalKey<State>();
+      LoaderDialog.showLoadingDialog(context, _LoaderDialog);
+      await getAccountDataDB(userController.text);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
+      );
+    } else {
+      _changed(true, "incorrect");
+    }
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
+    // );
+  }
+}
+
+class LoaderDialog {
+  static Future<void> showLoadingDialog(
+      BuildContext context, GlobalKey key) async {
+    var wid = MediaQuery.of(context).size.width / 2;
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Dialog(
+              key: key,
+              backgroundColor: Colors.transparent,
+              child: SizedBox(
+                width: 260.0,
+                height: 260.0,
+                child: Image.asset(
+                  'asset/images/spinner.gif',
+                  height: 260,
+                  width: 260,
+                ),
+              )),
+        );
+      },
     );
   }
 }

@@ -40,6 +40,7 @@ dependencies:
   flutter_keyboard_visibility: ^5.4.0
   carousel_slider: ^4.1.1
   dots_indicator: ^2.1.0
+  pull_to_refresh: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,7 @@ flutter:
   assets:
      - asset/images/background_1.png
      - asset/images/logo.png
+     - asset/images/spinner.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
