@@ -59,102 +59,110 @@ class _StoresScreenState extends State<StoresScreenDemo> {
     }
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
-      // appBar: AppBar(
-      //   leading: IconButton(
-      //     icon: Icon(Icons.arrow_back, color: Colors.white),
-      //     onPressed: () {
-      //       // Navigator.pop(context, true);
-      //       //SaveChanges(iconColors);
-      //       Navigator.pushReplacement(
-      //         context,
-      //         MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
-      //       );
-      //     },
-      //   ),
-      //   title: Text(
-      //     "Supermarkets",
-      //     style: TextStyle(
-      //       color: ShoppyColors.gray,
-      //       fontSize: 25,
-      //     ),
-      //   ),
-      //   centerTitle: true,
-      //   backgroundColor: ShoppyColors.blue,
-      // ),
-      body: SingleChildScrollView(
-        child: ListView.builder(
-            padding: EdgeInsets.zero,
-            primary: false,
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            itemCount: Stores.length,
-            //itemCount: cartItems.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.01,
-                  left: MediaQuery.of(context).size.width * 0.01,
-                  right: MediaQuery.of(context).size.width * 0.01,
-                  //bottom:MediaQuery.of(context).size.height * 0.05
-                ),
-                child: Container(
-                  width: double.infinity,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    boxShadow: [
-                      const BoxShadow(
-                        blurRadius: 4,
-                        color: Color(0x320E151B),
-                        offset: Offset(0, 1),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(12),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            // Navigator.pop(context, true);
+            //SaveChanges(iconColors);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
+            );
+          },
+        ),
+        title: Text(
+          "Supermarkets",
+          style: TextStyle(
+            color: ShoppyColors.gray,
+            fontSize: 25,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: ShoppyColors.blue,
+      ),
+      body: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        header: const WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: SingleChildScrollView(
+          child: ListView.builder(
+              padding: EdgeInsets.zero,
+              primary: false,
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: Stores.length,
+              //itemCount: cartItems.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.01,
+                    left: MediaQuery.of(context).size.width * 0.01,
+                    right: MediaQuery.of(context).size.width * 0.01,
+                    //bottom:MediaQuery.of(context).size.height * 0.05
                   ),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 8, 8, 8),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.network(
-                          Stores[index].storeImage,
-                          //cartItems[index].image,
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.fitWidth,
-                        ),
-                        Text(
-                          Stores[index].storeName,
-                          style: TextStyle(
-                              color: ShoppyColors.blue,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.favorite,
-                            color: iconColors[index],
-                            //color: Color(0xFFE86969),
-                            size: 20,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              if (iconColors[index] == ShoppyColors.blue)
-                                iconColors[index] = ShoppyColors.red;
-                              else
-                                iconColors[index] = ShoppyColors.blue;
-                            });
-                            // Favorite Supermarket /Unfavorite Supermarket
-                          },
-                        ),
+                  child: Container(
+                    width: double.infinity,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      // ignore: prefer_const_literals_to_create_immutables
+                      boxShadow: [
+                        const BoxShadow(
+                          blurRadius: 4,
+                          color: Color(0x320E151B),
+                          offset: Offset(0, 1),
+                        )
                       ],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(16, 8, 8, 8),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.network(
+                            Stores[index].storeImage,
+                            //cartItems[index].image,
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.fitWidth,
+                          ),
+                          Text(
+                            Stores[index].storeName,
+                            style: TextStyle(
+                                color: ShoppyColors.blue,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              Icons.favorite,
+                              color: iconColors[index],
+                              //color: Color(0xFFE86969),
+                              size: 20,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                if (iconColors[index] == ShoppyColors.blue)
+                                  iconColors[index] = ShoppyColors.red;
+                                else
+                                  iconColors[index] = ShoppyColors.blue;
+                              });
+                              // Favorite Supermarket /Unfavorite Supermarket
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            }),
+                );
+              }),
+        ),
       ),
     );
   }
