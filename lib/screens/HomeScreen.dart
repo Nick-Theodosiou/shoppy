@@ -340,7 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 1,
-                    height: MediaQuery.of(context).size.height * 0.1,
+                    height: MediaQuery.of(context).size.height * 0.085,
                     child: ListView(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
@@ -355,9 +355,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                           },
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
+                            borderRadius: BorderRadius.circular(15.0),
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 5, right: 5),
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.3,
                                 height:
@@ -366,6 +367,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   image: DecorationImage(
                                       fit: BoxFit.fill,
                                       image: NetworkImage(s.storeImage)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.4),
+                                      spreadRadius: 0.2,
+                                      blurRadius: 7,
+                                      offset: const Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(8.0)),
                                 ),

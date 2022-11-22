@@ -190,10 +190,14 @@ Future<List<Store>> getStores() async {
 
   await conn.close();
   List<Store> list = [];
+  List<String> test = [];
 
   for (var row in results) {
-    Store S = Store(row['storeID'], row['storeName'], row['storeImage'],
-        row['storeLocations']);
+    Store S = Store(
+        row['SupermarketID'],
+        row['Name'],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
+        test);
     list.add(S);
   }
 
