@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'Product.dart';
 
 class Offer {
