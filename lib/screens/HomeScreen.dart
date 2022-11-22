@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onLoading: _onLoading,
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(10.0),
             child: Align(
               alignment: Alignment.topCenter,
               child: Column(
@@ -98,12 +98,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     decoration: BoxDecoration(
                       color: ShoppyColors.yellow,
                       borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 7,
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: RichText(
@@ -113,7 +122,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   TextSpan(
                                     text: "Best Offers ",
                                     style: TextStyle(
-                                        fontSize: 25, color: ShoppyColors.blue),
+                                        fontSize: 25,
+                                        color: ShoppyColors.blue,
+                                        fontWeight: FontWeight.w500),
                                   ),
                                   WidgetSpan(
                                     child: Icon(
@@ -128,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          padding: const EdgeInsets.only(left: 10, right: 10),
                           child: CarouselSlider(
                             options: CarouselOptions(
                               autoPlay: true,
@@ -183,12 +194,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .height *
-                                                            0.06,
+                                                            0.05,
                                                     width:
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.2,
+                                                            0.1,
                                                   ),
                                                 ),
                                               ],
@@ -198,8 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 Expanded(
                                                   flex: 6,
                                                   child: Image(
-                                                    alignment:
-                                                        Alignment.centerLeft,
+                                                    alignment: Alignment.center,
                                                     image: NetworkImage(item
                                                         .product.productImage),
                                                     height:
@@ -227,8 +237,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 .end,
                                                         children: [
                                                           Text(
-                                                            "€${item.oldprice}",
+                                                            "€${item.oldprice.toStringAsFixed(2)}",
                                                             style: TextStyle(
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .lineThrough,
                                                                 fontSize: MediaQuery.of(
                                                                             context)
                                                                         .size
@@ -236,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     0.04),
                                                           ),
                                                           Text(
-                                                            "€${item.price}",
+                                                            "€${item.price.toStringAsFixed(2)}",
                                                             style: TextStyle(
                                                                 fontSize: MediaQuery.of(
                                                                             context)
@@ -268,8 +281,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 dotsCount: _bestOffers.length,
                                 position: _currentIndex.toDouble(),
                                 decorator: DotsDecorator(
-                                  color: Colors.grey,
-                                  activeColor: ShoppyColors.blue,
+                                  color:
+                                      const Color.fromARGB(101, 255, 255, 255),
+                                  activeColor: ShoppyColors.gray,
                                 ),
                               )
                             : Container(),
@@ -291,7 +305,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 TextSpan(
                                   text: "Supermarkets ",
                                   style: TextStyle(
-                                      fontSize: 25, color: ShoppyColors.blue),
+                                      fontSize: 25,
+                                      color: ShoppyColors.blue,
+                                      fontWeight: FontWeight.w500),
                                 ),
                                 WidgetSpan(
                                   child: Icon(
@@ -364,7 +380,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 TextSpan(
                                   text: "Categories ",
                                   style: TextStyle(
-                                      fontSize: 25, color: ShoppyColors.blue),
+                                      fontSize: 25,
+                                      color: ShoppyColors.blue,
+                                      fontWeight: FontWeight.w500),
                                 ),
                                 WidgetSpan(
                                   child: Icon(
