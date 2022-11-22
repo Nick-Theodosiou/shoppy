@@ -63,7 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
         onLoading: _onLoading,
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.02,
+                left: 10,
+                right: 10,
+                bottom: 10),
             child: Align(
               alignment: Alignment.topCenter,
               child: Column(
@@ -92,12 +96,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.03,
+                    height: MediaQuery.of(context).size.height * 0.02,
                   ),
                   Container(
                     decoration: BoxDecoration(
                       color: ShoppyColors.yellow,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.5),
@@ -143,12 +147,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: CarouselSlider(
                             options: CarouselOptions(
                               autoPlay: true,
-                              height: MediaQuery.of(context).size.height * 0.2,
+                              height: MediaQuery.of(context).size.height * 0.16,
                               autoPlayInterval: const Duration(seconds: 3),
                               enlargeCenterPage: false,
                               disableCenter: true,
                               scrollDirection: Axis.horizontal,
-                              viewportFraction: 0.7,
+                              viewportFraction: 0.65,
                               onPageChanged: (index, reason) {
                                 _currentIndex = index;
                                 setState(() {});
@@ -170,37 +174,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                Expanded(
+                                                Flexible(
                                                   flex: 6,
                                                   child: Text(
                                                     item.product.productName,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     style: TextStyle(
                                                         fontSize: MediaQuery.of(
                                                                     context)
                                                                 .size
                                                                 .width *
-                                                            0.05),
+                                                            0.045),
                                                   ),
                                                 ),
-                                                Expanded(
-                                                  flex: 4,
-                                                  child: Image(
-                                                    alignment:
-                                                        Alignment.topRight,
-                                                    image: NetworkImage(
-                                                        item.storePictureURL),
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.05,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.1,
-                                                  ),
+                                                Image(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  image: NetworkImage(
+                                                      item.storePictureURL),
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.04,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.18,
                                                 ),
                                               ],
                                             ),
