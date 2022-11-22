@@ -160,3 +160,25 @@ Future<List<Offer>> getBestDeals(int size) async {
 
   return list;
 }
+
+Future<void> deleteOfferFromList(ItemOffer iof, int indexS) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query(
+      'CALL deleteShoppingList(?,?);', [localUser.userID, iof.offer.offerID]);
+
+  localUser.itemsInCart[indexS].itemOffers.remove(iof);
+
+  await conn.close();
+}
+
+Future<void> updateQtyList(ItemOffer iof, int change) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  iof.quantity += change;
+
+  var results = await conn.query('CALL updateQty(?,?,?);',
+      [localUser.userID, iof.offer.offerID, iof.quantity]);
+
+  await conn.close();
+}
