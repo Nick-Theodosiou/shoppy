@@ -38,26 +38,26 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
     getLists(ProductImage, ProductName, subname);
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            // Navigator.pop(context, true);
-            //SaveChanges(iconColors);
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (_) => const NavigationBarScreen()));
-          },
-        ),
-        title: Text(
-          this.subname,
-          style: TextStyle(
-            color: ShoppyColors.gray,
-            fontSize: 25,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: ShoppyColors.blue,
-      ),
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //     icon: Icon(Icons.arrow_back, color: Colors.white),
+      //     onPressed: () {
+      //       // Navigator.pop(context, true);
+      //       //SaveChanges(iconColors);
+      //       Navigator.pushReplacement(context,
+      //           MaterialPageRoute(builder: (_) => const NavigationBarScreen()));
+      //     },
+      //   ),
+      //   title: Text(
+      //     this.subname,
+      //     style: TextStyle(
+      //       color: ShoppyColors.gray,
+      //       fontSize: 25,
+      //     ),
+      //   ),
+      //   centerTitle: true,
+      //   backgroundColor: ShoppyColors.blue,
+      // ),
       body: SingleChildScrollView(
         child: ListView.builder(
             padding: EdgeInsets.zero,
