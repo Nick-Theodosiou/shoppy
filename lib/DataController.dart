@@ -64,8 +64,15 @@ Future<User> getAccountDataDB(String email) async {
         row["SubcategoryID"],
         row["CategoryID"], []);
 
-    Offer o = Offer(row["OfferID"], p, row["Price"], row["OldPrice"],
-        row["SupermarketID"], row["Name"], row["StorePictureURL"]);
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
     ItemOffer ioff = ItemOffer(o, false, row["Quantity"]);
 
     for (var ist in shoppingList) {
@@ -149,6 +156,57 @@ Future<List<Offer>> getBestDeals(int size) async {
             row["StorePictureURL"]);
 
     list.add(o);
+  }
+
+  return list;
+}
+
+void deleteOfferFromList(int indexS, int index) async {
+  int offerID = localUser.itemsInCart[indexS].itemOffers[index].offer.offerID;
+
+  localUser.itemsInCart[indexS].itemOffers.removeAt(index);
+  if (localUser.itemsInCart[indexS].itemOffers.isEmpty) {
+    localUser.itemsInCart.removeAt(indexS);
+  }
+
+  var conn = await MySqlConnection.connect(settings);
+
+  var results =
+      conn.query('CALL deleteShoppingList(?,?);', [localUser.userID, offerID]);
+}
+
+void updateQtyList(int indexS, int index, int change) async {
+  int offerID = localUser.itemsInCart[indexS].itemOffers[index].offer.offerID;
+  int qty = localUser.itemsInCart[indexS].itemOffers[index].quantity + change;
+
+  localUser.itemsInCart[indexS].itemOffers[index].quantity = qty;
+  if (localUser.itemsInCart[indexS].itemOffers[index].quantity == 0) {
+    localUser.itemsInCart[indexS].itemOffers.removeAt(index);
+    if (localUser.itemsInCart[indexS].itemOffers.isEmpty) {
+      localUser.itemsInCart.removeAt(indexS);
+    }
+  }
+
+  var conn = await MySqlConnection.connect(settings);
+  if (qty > 0) {
+    conn.query('CALL updateQty(?,?,?);', [localUser.userID, offerID, qty]);
+  } else {
+    conn.query('CALL deleteShoppingList(?,?);', [localUser.userID, offerID]);
+  }
+}
+
+Future<List<Store>> getStores() async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query('CALL getStores();');
+
+  await conn.close();
+  List<Store> list = [];
+
+  for (var row in results) {
+    Store S = Store(row['storeID'], row['storeName'], row['storeImage'],
+        row['storeLocations']);
+    list.add(S);
   }
 
   return list;
