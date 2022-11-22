@@ -183,11 +183,10 @@ void updateQtyList(ItemOffer iof, int change) async {
   await conn.close();
 }
 
-
 Future<List<Store>> getStores() async {
   var conn = await MySqlConnection.connect(settings);
 
-  var results = await conn.query('CALL getStores(?);');
+  var results = await conn.query('CALL getStores();');
 
   await conn.close();
   List<Store> list = [];
@@ -200,4 +199,3 @@ Future<List<Store>> getStores() async {
 
   return list;
 }
-
