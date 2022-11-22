@@ -182,3 +182,22 @@ void updateQtyList(ItemOffer iof, int change) async {
 
   await conn.close();
 }
+
+
+Future<List<Store>> getStores() async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query('CALL getStores(?);');
+
+  await conn.close();
+  List<Store> list = [];
+
+  for (var row in results) {
+    Store S = Store(row['storeID'], row['storeName'], row['storeImage'],
+        row['storeLocations']);
+    list.add(S);
+  }
+
+  return list;
+}
+
