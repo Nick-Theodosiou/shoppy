@@ -1,11 +1,8 @@
 //import 'dart:js_util';
-import 'dart:developer';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:flutter/gestures.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/models/Offer.dart';
-import 'package:shoppy/models/Product.dart';
 import 'package:shoppy/models/Store.dart';
 import 'package:shoppy/models/Category.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SmartRefresher(
         enablePullDown: true,
-        enablePullUp: true,
+        enablePullUp: false,
         header: const WaterDropHeader(),
         controller: _refreshController,
         onRefresh: _onRefresh,
@@ -458,7 +455,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             _categories.elementAt(index).categoryName,
                             style: const TextStyle(
                               overflow: TextOverflow.ellipsis,
-                              fontSize: 20,
+                              fontSize: 16,
                             ),
                           ),
                         ],
