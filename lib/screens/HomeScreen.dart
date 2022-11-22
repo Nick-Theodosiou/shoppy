@@ -38,9 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onRefresh() async {
     var bestDeals = await getBestDeals(10);
     var stores = await getStores();
+    var categories = await getCategories();
     setState(() {
       _bestOffers = bestDeals;
       _supermarkets = stores;
+      _categories = categories;
     });
     _refreshController.refreshCompleted();
   }
@@ -48,9 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onLoading() async {
     var bestDeals = await getBestDeals(10);
     var stores = await getStores();
+    var categories = await getCategories();
     setState(() {
       _bestOffers = bestDeals;
       _supermarkets = stores;
+      _categories = categories;
     });
     _refreshController.loadComplete();
   }

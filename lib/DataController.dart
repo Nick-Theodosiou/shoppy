@@ -205,14 +205,16 @@ Future<List<Category>> getCategories() async {
 
   await conn.close();
   List<Category> list = [];
+  List<Subcategory> p = [];
+  List<Offer> p2 = [];
 
   for (var row in results) {
     Category C = Category(
         row['CategoryID'],
         row['Name'],
         "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
-        [],
-        []);
+        p,
+        p2);
     list.add(C);
   }
   return list;
