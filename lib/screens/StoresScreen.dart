@@ -30,7 +30,7 @@ class StoresScreenDemo extends StatefulWidget {
 class _StoresScreenState extends State<StoresScreenDemo> {
   @override
   final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: true);
   List<Store> Stores = [];
 
   void _onRefresh() async {
