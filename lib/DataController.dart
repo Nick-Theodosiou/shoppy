@@ -161,7 +161,7 @@ Future<List<Offer>> getBestDeals(int size) async {
   return list;
 }
 
-Future<void> deleteOfferFromList(ItemOffer iof, int indexS) async {
+void deleteOfferFromList(ItemOffer iof, int indexS) async {
   var conn = await MySqlConnection.connect(settings);
 
   var results = await conn.query(
@@ -172,7 +172,7 @@ Future<void> deleteOfferFromList(ItemOffer iof, int indexS) async {
   await conn.close();
 }
 
-Future<void> updateQtyList(ItemOffer iof, int change) async {
+void updateQtyList(ItemOffer iof, int change) async {
   var conn = await MySqlConnection.connect(settings);
 
   iof.quantity += change;
