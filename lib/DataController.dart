@@ -125,7 +125,7 @@ Future<List<Offer>> getBestDeals(int size) async {
 
   List<Offer> list = [];
 
-  var results = await conn.query('CALL getUserDetailsByEmail(?);');
+  var results = await conn.query('CALL getBestDeals();');
 
   await conn.close();
 
@@ -138,8 +138,15 @@ Future<List<Offer>> getBestDeals(int size) async {
         row["SubcategoryID"],
         row["CategoryID"], []);
 
-    Offer o = Offer(row["OfferID"], p, row["Price"], row["OldPrice"],
-        row["SupermarketID"], row["Name"], row["StorePictureURL"]);
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
 
     list.add(o);
   }
