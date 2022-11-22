@@ -218,26 +218,46 @@ Future<List<Category>> getCategories() async {
   return list;
 }
 
+// Future<List<Subcategory>> getSubcategoriesByCategory(Category C) async {
+//   var conn = await MySqlConnection.connect(settings);
 
+//   var results = await conn.query('CALL getSubcategories();');
 
-Future<List<Subcategory>> getSubCategories(Category C) async {
-  var conn = await MySqlConnection.connect(settings);
+//   await conn.close();
+//   List<Subcategory> list = [];
 
-  var results = await conn.query('CALL getSubcategories();');
+//   for (var row in results) {
+//     Subcategory S = Subcategory(
+//         row['SubcategoryID'],
+//         row['Name'],
+//         "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
+//         getOffersBySubcategory(row['SubcategoryID']););
+//     list.add(S);
+//   }
+//   return list;
+// }
 
-  await conn.close();
-  List<Subcategory> list = [];
+// Future<List<Offer>> getOffersBySubcategory(Category C) async {
+//   var conn = await MySqlConnection.connect(settings);
 
-  for (var row in results) {
-    Subcategory S = Subcategory(
-        row['SubcategoryID'],
-        row['Name'],
-        "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
-        row['subcategoryOffers']
-    list.add(S);
-  }
-  return list;
-}
+//   var results = await conn.query('CALL getSubcategories();');
+
+//   await conn.close();
+//   List<Subcategory> list = [];
+
+//   for (var row in results) {
+//     Subcategory S = Subcategory(
+//         row['SubcategoryID'],
+//         row['Name'],
+//         "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
+//         getOffersBySubcategory(row['SubcategoryID']););
+//     list.add(S);
+//   }
+//   return list;
+// }
+
+// Subcategory(this.subcategoryID, this.subcategoryName, this.subcategoryImage,
+//     this.subcategoryOffers);
 
 void deleteOfferFromList(int indexS, int index) async {
   int offerID = localUser.itemsInCart[indexS].itemOffers[index].offer.offerID;
