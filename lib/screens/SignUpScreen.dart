@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:shoppy/main.dart';
 import '../NavigationBarScreen.dart';
 import '../styles/colors.dart';
@@ -31,41 +32,56 @@ class _SignUpDemoState extends State<SignUpDemo> {
   var username = "user";
   var password = "password";
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("asset/images/background_1.png"),
-            fit: BoxFit.cover),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 600),
+     return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
+      return Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("asset/images/background_1.png"),
+              fit: BoxFit.cover),
+        ),
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.transparent,
+          body: Stack(
+            children: [
+              isKeyboardVisible
+                  ? Container()
+                  : Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 400),
+                        padding: EdgeInsets.only(
+                            top: isKeyboardVisible
+                                ? 0
+                                : MediaQuery.of(context).size.height * 0.25,
+                            left: MediaQuery.of(context).size.width * 0.1,
+                            right: MediaQuery.of(context).size.width * 0.1),
+                        child: Image(
+                          image: const AssetImage('asset/images/logo.png'),
+                          height: MediaQuery.of(context).size.height * 0.1,
+                        ),
+                      ),
+                    ),
+              Padding(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.25,
-                    left: MediaQuery.of(context).size.width * 0.1,
-                    right: MediaQuery.of(context).size.width * 0.1),
-                child: Image(
-                  image: const AssetImage('asset/images/logo.png'),
-                  width: MediaQuery.of(context).size.width * 0.5,
+                  top: isKeyboardVisible
+                      ? 0
+                      : MediaQuery.of(context).size.height * 0.4,
                 ),
-              ),
-            ),
-            SingleChildScrollView(
+            child:SingleChildScrollView(
+              reverse: true,
               child: Container(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.32,
-                      left: MediaQuery.of(context).size.width * 0.1,
-                      right: MediaQuery.of(context).size.width * 0.1),
-                  child: Column(
+                          top: isKeyboardVisible
+                              ? MediaQuery.of(context).size.height * 0.25
+                              : MediaQuery.of(context).size.height * 0.15,
+                          left: MediaQuery.of(context).size.width * 0.1,
+                          right: MediaQuery.of(context).size.width * 0.1),
+                      child: Column(
                     children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.20,
-                      ),
+                      // SizedBox(
+                      //   height: MediaQuery.of(context).size.height * 0.20,
+                      // ),
                       const Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -147,13 +163,20 @@ class _SignUpDemoState extends State<SignUpDemo> {
                           ),
                         ],
                       ),
+                      Padding(
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                          ),
                     ],
                   )),
             ),
+              ),
           ],
         ),
       ),
     );
+  });
   }
 
   Tooltip textFormField(String textH) {

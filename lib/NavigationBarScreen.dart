@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoppy/main.dart';
 import 'screens/FavoritesScreen.dart';
 import 'screens/AccountScreen.dart';
 import 'screens/BestDealsScreen.dart';
@@ -27,7 +28,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Image.asset('asset/images/logo.png'),
+          title: Image.asset('asset/images/logo.png', height: 60),
           titleSpacing: MediaQuery.of(context).size.width * 0.26,
           centerTitle: true,
           toolbarHeight: 60.2,
@@ -134,5 +135,3 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
     );
   }
 }
-
-
