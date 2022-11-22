@@ -5,6 +5,8 @@ import 'package:shoppy/models/ItemStore.dart';
 import 'package:shoppy/models/Offer.dart';
 import 'package:shoppy/models/Product.dart';
 import 'package:shoppy/models/Store.dart';
+import 'package:shoppy/models/Category.dart';
+import 'package:shoppy/models/Subcategory.dart';
 
 import 'models/User.dart';
 
@@ -158,6 +160,82 @@ Future<List<Offer>> getBestDeals(int size) async {
     list.add(o);
   }
 
+  return list;
+}
+
+Future<void> deleteAccount() async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query('CALL deleteAccount(?);', [localUser.userID]);
+
+  await conn.close();
+}
+
+Future<void> deleteFavoriteProduct(int productID) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn
+      .query('CALL deleteFavoriteProduct(?,?);', [localUser.userID, productID]);
+
+  await conn.close();
+}
+
+Future<void> deleteFavoriteStore(int storeID) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn
+      .query('CALL deleteFavoriteStore(?,?);', [localUser.userID, storeID]);
+
+  await conn.close();
+}
+
+Future<void> deleteShoppingList(int offerID) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn
+      .query('CALL deleteShoppingList(?);', [localUser.userID, offerID]);
+
+  await conn.close();
+}
+
+Future<List<Category>> getCategories() async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query('CALL getCategories();');
+
+  await conn.close();
+  List<Category> list = [];
+
+  for (var row in results) {
+    Category C = Category(
+        row['CategoryID'],
+        row['Name'],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
+        row['categorySubcategories'],
+        row['categoryOffers']);
+    list.add(C);
+  }
+  return list;
+}
+
+
+
+Future<List<Subcategory>> getSubCategories(Category C) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query('CALL getSubcategories();');
+
+  await conn.close();
+  List<Subcategory> list = [];
+
+  for (var row in results) {
+    Subcategory S = Subcategory(
+        row['SubcategoryID'],
+        row['Name'],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
+        row['subcategoryOffers']
+    list.add(S);
+  }
   return list;
 }
 
