@@ -151,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: CarouselSlider(
                             options: CarouselOptions(
                               autoPlay: true,
-                              height: MediaQuery.of(context).size.height * 0.16,
+                              height: MediaQuery.of(context).size.height * 0.17,
                               autoPlayInterval: const Duration(seconds: 3),
                               enlargeCenterPage: false,
                               disableCenter: true,
@@ -369,8 +369,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       image: NetworkImage(s.storeImage)),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.grey.withOpacity(0.4),
-                                      spreadRadius: 0.2,
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: -2,
                                       blurRadius: 7,
                                       offset: const Offset(
                                           0, 3), // changes position of shadow
