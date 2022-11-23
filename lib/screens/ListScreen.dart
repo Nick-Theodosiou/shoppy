@@ -34,6 +34,15 @@ class _ListScreenState extends State<ListScreen> {
     _refreshController.loadComplete();
   }
 
+  getTotal() {
+    var total = 0.0;
+    for (var i = 0; i < _shoppingList.length; i++)
+      for (var j = 0; j < _shoppingList[i].itemOffers.length; j++)
+        if (_shoppingList[i].itemOffers[j].isChecked)
+          total += _shoppingList[i].itemOffers[j].offer.price;
+    return total * 1.0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,142 +112,144 @@ class _ListScreenState extends State<ListScreen> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 0.0),
                           shrinkWrap: true,
-                          //itemCount: products.length,
                           itemCount: _shoppingList[indexS].itemOffers.length,
                           itemBuilder: (BuildContext context, int index) {
-                            //List<bool> offers = List.filled(2, false);
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 2.0),
-                              child: Card(
-                                color: Colors.white,
-                                elevation: 5.0,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 10),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Checkbox(
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    5.0))),
-                                                value: _shoppingList[indexS]
-                                                    .itemOffers[index]
-                                                    .isChecked,
-                                                onChanged: (v) {
-                                                  setState(() {
-                                                    print(indexS);
-                                                    _shoppingList[indexS]
-                                                        .itemOffers[index]
-                                                        .isChecked = v!;
-                                                    if (v! == false) {
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    const BoxShadow(
+                                      blurRadius: 4,
+                                      color: Color(0x320E151B),
+                                      offset: Offset(0, 1),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30)),
+                                  color: Colors.white,
+                                  elevation: 5.0,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Checkbox(
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          5.0))),
+                                                  value: _shoppingList[indexS]
+                                                      .itemOffers[index]
+                                                      .isChecked,
+                                                  onChanged: (v) {
+                                                    setState(() {
+                                                      print(indexS);
                                                       _shoppingList[indexS]
-                                                          .isChecked = false;
-                                                    }
-                                                  });
-                                                },
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 18.0),
-                                                child: RichText(
-                                                  text: TextSpan(
-                                                    text:
-                                                        '${_shoppingList[indexS].itemOffers[index].offer.product.productName}\n',
-                                                    style: TextStyle(
-                                                        color: Colors
-                                                            .blueGrey.shade800,
-                                                        fontSize: 16.0,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                          .itemOffers[index]
+                                                          .isChecked = v!;
+                                                      if (v! == false) {
+                                                        _shoppingList[indexS]
+                                                            .isChecked = false;
+                                                      }
+                                                    });
+                                                  },
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 18.0),
+                                                  child: RichText(
+                                                    text: TextSpan(
+                                                      text:
+                                                          '${_shoppingList[indexS].itemOffers[index].offer.product.productName}\n',
+                                                      style: TextStyle(
+                                                          color: Colors.blueGrey
+                                                              .shade800,
+                                                          fontSize: 16.0,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                elevation: 0),
-                                            onPressed: () {
-                                              setState(() {
-                                                deleteOfferFromList(
-                                                    indexS, index);
-
-                                                _shoppingList =
-                                                    localUser.itemsInCart;
-                                              });
-                                            },
-                                            child: Icon(
-                                              Icons.delete,
-                                              color: ShoppyColors.blue,
-                                              size: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.08,
+                                              ],
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Image.network(
-                                            _shoppingList[indexS]
-                                                .itemOffers[index]
-                                                .offer
-                                                .product
-                                                .productImage,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.25,
-                                          ),
-                                          Align(
-                                            alignment: Alignment.center,
-                                            child: SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.35,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const SizedBox(
-                                                    height: 5.0,
-                                                  ),
-                                                  RichText(
-                                                    maxLines: 10,
-                                                    text: TextSpan(
-                                                        // text:
-                                                        //     'Qty: ${_shoppingList[indexS].itemOffers[index].quantity}\n',
-                                                        // style: TextStyle(
-                                                        //     color:
-                                                        //         Colors.blueGrey.shade800,
-                                                        //     fontSize: 16.0),
-                                                        children: [
-                                                          // TextSpan(
-                                                          //   text:
-                                                          //       '${_shoppingList[indexS].itemOffers[index].offer.product.productName}\n',
-                                                          //   style: TextStyle(
-                                                          //       color: Colors
-                                                          //           .blueGrey
-                                                          //           .shade800,
-                                                          //       fontSize: 16.0,
-                                                          //       fontWeight:
-                                                          //           FontWeight
-                                                          //               .bold),
-                                                          // ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  elevation: 0),
+                                              onPressed: () {
+                                                setState(() {
+                                                  deleteOfferFromList(
+                                                      indexS, index);
+
+                                                  _shoppingList =
+                                                      localUser.itemsInCart;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.delete,
+                                                color: ShoppyColors.blue,
+                                                size: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.08,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 15.0),
+                                              child: Image.network(
+                                                _shoppingList[indexS]
+                                                    .itemOffers[index]
+                                                    .offer
+                                                    .product
+                                                    .productImage,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.23,
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.center,
+                                              child: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.35,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 5.0,
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: RichText(
+                                                        maxLines: 10,
+                                                        text:
+                                                            TextSpan(children: [
                                                           (_shoppingList[indexS]
                                                                       .itemOffers[
                                                                           index]
@@ -254,7 +265,7 @@ class _ListScreenState extends State<ListScreen> {
                                                                           .blueGrey
                                                                           .shade800,
                                                                       fontSize:
-                                                                          16.0))
+                                                                          18.0))
                                                               : const TextSpan(),
                                                           TextSpan(
                                                             text:
@@ -263,7 +274,7 @@ class _ListScreenState extends State<ListScreen> {
                                                                 color: Colors
                                                                     .blueGrey
                                                                     .shade800,
-                                                                fontSize: 16.0),
+                                                                fontSize: 18.0),
                                                           ),
                                                           TextSpan(
                                                             text:
@@ -272,102 +283,104 @@ class _ListScreenState extends State<ListScreen> {
                                                                 color: Colors
                                                                     .blueGrey
                                                                     .shade800,
-                                                                fontSize: 16.0),
+                                                                fontSize: 18.0),
                                                           )
                                                         ]),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Column(
-                                            children: [
-                                              ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  elevation: 0,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                ),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    updateQtyList(
-                                                        indexS, index, 1);
-
-                                                    _shoppingList =
-                                                        localUser.itemsInCart;
-                                                  });
-                                                },
-                                                child: Stack(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.circle,
-                                                      color: ShoppyColors.red,
-                                                      size: 40,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 5.0,
-                                                              top: 5.0),
-                                                      child: Icon(
-                                                        Icons.add,
-                                                        color: Colors.white,
-                                                        size: 30,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                              ElevatedButton(
+                                            ),
+                                            Column(
+                                              children: [
+                                                ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    elevation: 0,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                  ),
                                                   onPressed: () {
                                                     setState(() {
                                                       updateQtyList(
-                                                          indexS, index, -1);
+                                                          indexS, index, 1);
 
                                                       _shoppingList =
                                                           localUser.itemsInCart;
                                                     });
                                                   },
-                                                  child: const Icon(
-                                                      Icons.arrow_downward))
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ],
+                                                  child: Stack(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.circle,
+                                                        color: ShoppyColors.red,
+                                                        size: 40,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 5.0,
+                                                                top: 5.0),
+                                                        child: Icon(
+                                                          Icons.add,
+                                                          color: Colors.white,
+                                                          size: 30,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    elevation: 0,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                  ),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      updateQtyList(
+                                                          indexS, index, 1);
+
+                                                      _shoppingList =
+                                                          localUser.itemsInCart;
+                                                    });
+                                                  },
+                                                  child: Stack(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.circle,
+                                                        color: ShoppyColors.red,
+                                                        size: 40,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 5.0,
+                                                                top: 5.0),
+                                                        child: Icon(
+                                                          Icons.remove,
+                                                          color: Colors.white,
+                                                          size: 30,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             );
                           },
-                          // children: [
-                          //   Padding(
-                          //     padding: const EdgeInsets.only(top: 40),
-                          //     child: Row(
-                          //       children: [
-                          //         Image.network(
-                          //           imgURL,
-                          //           height: 30,
-                          //           alignment: Alignment.topLeft,
-                          //         ),
-                          //         Padding(
-                          //           padding: const EdgeInsets.only(left: 40),
-                          //           child: Checkbox(
-                          //             shape: RoundedRectangleBorder(
-                          //                 borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                          //             value: isChecked,
-                          //             onChanged: (v) {
-                          //               setState(() {
-                          //                 isChecked = v!;
-                          //               });
-                          //             },
-                          //           ),
-                          //         ),
-                          //         const Text("Check All")
-                          //       ],
-                          //     ),
-                          //   )
-                          // ],
                         ),
                       ],
                     ),
@@ -378,22 +391,32 @@ class _ListScreenState extends State<ListScreen> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                child: Row(
-                  // mainAxisAlignment: ,
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        'Total',
-                        style: TextStyle(fontSize: 25, color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
                 decoration: BoxDecoration(
+                    boxShadow: const [
+                      BoxShadow(
+                        blurRadius: 4,
+                        color: Color(0x320E151B),
+                        offset: Offset(0, 1),
+                      )
+                    ],
                     color: ShoppyColors.blue,
                     border: Border.all(color: ShoppyColors.blue, width: 1),
                     borderRadius: BorderRadius.circular(15)),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Total',
+                        style: TextStyle(fontSize: 25, color: Colors.white),
+                      ),
+                      Text('€' + getTotal().toString(),
+                          style: const TextStyle(
+                              fontSize: 25, color: Colors.white))
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
