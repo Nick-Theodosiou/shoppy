@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shoppy/screens/SignUpScreen.dart';
 import 'NavigationBarScreen.dart';
 import 'styles/colors.dart';
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginDemo(),
@@ -277,12 +281,12 @@ class LoaderDialog {
               key: key,
               backgroundColor: Colors.transparent,
               child: SizedBox(
-                width: 260.0,
-                height: 260.0,
+                width: 100.0,
+                height: 100.0,
                 child: Image.asset(
-                  'asset/images/spinner.gif',
-                  height: 260,
-                  width: 260,
+                  'asset/images/loading.gif',
+                  height: 100,
+                  width: 100,
                 ),
               )),
         );

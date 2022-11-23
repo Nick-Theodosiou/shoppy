@@ -1,5 +1,5 @@
 name: shoppy
-description: A new Flutter project.
+description: Supermarket offers app.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -41,8 +41,10 @@ dependencies:
   carousel_slider: ^4.1.1
   dots_indicator: ^2.1.0
   pull_to_refresh: ^2.0.0
+  cached_network_image: ^3.2.2
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.10.0"
   flutter_test:
     sdk: flutter
 
@@ -52,6 +54,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "asset/images/shoppyIcon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -68,7 +76,8 @@ flutter:
   assets:
      - asset/images/background_1.png
      - asset/images/logo.png
-     - asset/images/spinner.gif
+     - asset/images/loading.gif
+     - asset/images/shoppyIcon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -5,6 +5,8 @@ import 'package:shoppy/models/ItemStore.dart';
 import 'package:shoppy/models/Offer.dart';
 import 'package:shoppy/models/Product.dart';
 import 'package:shoppy/models/Store.dart';
+import 'package:shoppy/models/Category.dart';
+import 'package:shoppy/models/Subcategory.dart';
 
 import 'models/User.dart';
 
@@ -160,6 +162,118 @@ Future<List<Offer>> getBestDeals(int size) async {
 
   return list;
 }
+
+Future<void> deleteAccount() async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query('CALL deleteAccount(?);', [localUser.userID]);
+
+  await conn.close();
+}
+
+Future<void> deleteFavoriteProduct(int productID) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn
+      .query('CALL deleteFavoriteProduct(?,?);', [localUser.userID, productID]);
+
+  await conn.close();
+}
+
+Future<void> deleteFavoriteStore(int storeID) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn
+      .query('CALL deleteFavoriteStore(?,?);', [localUser.userID, storeID]);
+
+  await conn.close();
+}
+
+Future<void> deleteShoppingList(int offerID) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn
+      .query('CALL deleteShoppingList(?);', [localUser.userID, offerID]);
+
+  await conn.close();
+}
+
+Future<List<Category>> getCategories() async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query('CALL getCategories();');
+
+  await conn.close();
+  List<Category> list = [];
+  List<Subcategory> p = [];
+  List<Offer> p2 = [];
+
+  for (var row in results) {
+    Category C = Category(
+        row['CategoryID'],
+        row['Name'],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
+        p,
+        p2);
+    list.add(C);
+  }
+  return list;
+}
+
+Future<List<Subcategory>> getSubcategoriesByCategory(Category C) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query('CALL getSubcategories(?);', [C.categoryID]);
+
+  await conn.close();
+  List<Subcategory> list = [];
+
+  for (var row in results) {
+    Subcategory S = Subcategory(
+        row['SubcategoryID'],
+        row['Name'],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
+        []);
+    list.add(S);
+  }
+  return list;
+}
+
+Future<List<Offer>> getOffersBySubcategory(Subcategory C) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results =
+      await conn.query('CALL getSubcategoryOffers(?);', [C.subcategoryID]);
+
+  await conn.close();
+  List<Offer> list = [];
+
+  for (var row in results) {
+    Product p = Product(
+        row["ProductID"],
+        row["Product_Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row["PictureURL"],
+        row["Brand"] ?? "",
+        row["SubcategoryID"],
+        row["CategoryID"], []);
+
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
+
+    list.add(o);
+  }
+  return list;
+}
+
+// Subcategory(this.subcategoryID, this.subcategoryName, this.subcategoryImage,
+//     this.subcategoryOffers);
 
 void deleteOfferFromList(int indexS, int index) async {
   int offerID = localUser.itemsInCart[indexS].itemOffers[index].offer.offerID;

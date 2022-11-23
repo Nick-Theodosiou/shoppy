@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shoppy/models/Category.dart';
+import 'package:shoppy/models/Subcategory.dart';
 import 'package:shoppy/screens/CategoriesScreen.dart';
 import 'package:shoppy/screens/SubCategoryScreen.dart';
 
+import '../DataController.dart';
 import '../styles/colors.dart';
 
 class BestDealsScreen extends StatefulWidget {
@@ -43,49 +46,51 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
                   ),
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
+                List<Category> listC= await getCategories();
+                List<Subcategory> listS = await getSubcategoriesByCategory(listC.first);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => const SubCategoryScreen(
-                            Subname: 'Nicolas',
+                      builder: (_) =>  SubCategoryScreen(
+                            subcategory: listS.first,
                           )),
                 );
               },
             ),
-            TextButton(
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: RichText(
-                  softWrap: true,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Sub Categories-Banana",
-                        style:
-                            TextStyle(fontSize: 25, color: ShoppyColors.blue),
-                      ),
-                      WidgetSpan(
-                        child: Icon(
-                          Icons.arrow_right_alt,
-                          size: 25,
-                          color: ShoppyColors.blue,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => const SubCategoryScreen(
-                            Subname: 'Banana',
-                          )),
-                );
-              },
-            ),
+            // TextButton(
+            //   child: Align(
+            //     alignment: Alignment.topLeft,
+            //     child: RichText(
+            //       softWrap: true,
+            //       text: TextSpan(
+            //         children: [
+            //           TextSpan(
+            //             text: "Sub Categories-Banana",
+            //             style:
+            //                 TextStyle(fontSize: 25, color: ShoppyColors.blue),
+            //           ),
+            //           WidgetSpan(
+            //             child: Icon(
+            //               Icons.arrow_right_alt,
+            //               size: 25,
+            //               color: ShoppyColors.blue,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            //   onPressed: () {
+            //     Navigator.pushReplacement(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (_) => const SubCategoryScreen(
+            //                 Subname: 'Banana',
+            //               )),
+            //     );
+            //   },
+            // ),
           ]),
         ));
   }

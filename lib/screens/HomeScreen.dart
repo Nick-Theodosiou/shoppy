@@ -1,11 +1,9 @@
 //import 'dart:js_util';
-import 'dart:developer';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:flutter/gestures.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/models/Offer.dart';
-import 'package:shoppy/models/Product.dart';
 import 'package:shoppy/models/Store.dart';
 import 'package:shoppy/models/Category.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: true);
 
   List<Offer> _bestOffers = [];
   List<Store> _supermarkets = [];
@@ -38,9 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onRefresh() async {
     var bestDeals = await getBestDeals(10);
     var stores = await getStores();
+    var categories = await getCategories();
     setState(() {
       _bestOffers = bestDeals;
       _supermarkets = stores;
+      _categories = categories;
     });
     _refreshController.refreshCompleted();
   }
@@ -48,9 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onLoading() async {
     var bestDeals = await getBestDeals(10);
     var stores = await getStores();
+    var categories = await getCategories();
     setState(() {
       _bestOffers = bestDeals;
       _supermarkets = stores;
+      _categories = categories;
     });
     _refreshController.loadComplete();
   }
@@ -60,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SmartRefresher(
         enablePullDown: true,
-        enablePullUp: true,
+        enablePullUp: false,
         header: const WaterDropHeader(),
         controller: _refreshController,
         onRefresh: _onRefresh,
@@ -86,7 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           const EdgeInsets.only(top: 15, bottom: 15, left: 15),
                       fillColor: const Color.fromARGB(108, 225, 225, 225),
                       filled: true,
-                      hintStyle: TextStyle(color: ShoppyColors.blue),
+                      hintStyle:
+                          TextStyle(color: ShoppyColors.blue, fontSize: 20),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(35),
                           borderSide: BorderSide(color: ShoppyColors.blue)),
@@ -151,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: CarouselSlider(
                             options: CarouselOptions(
                               autoPlay: true,
-                              height: MediaQuery.of(context).size.height * 0.16,
+                              height: MediaQuery.of(context).size.height * 0.17,
                               autoPlayInterval: const Duration(seconds: 3),
                               enlargeCenterPage: false,
                               disableCenter: true,
@@ -196,11 +199,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             0.045),
                                                   ),
                                                 ),
-                                                Image(
+                                                CachedNetworkImage(
                                                   alignment:
                                                       Alignment.centerRight,
-                                                  image: NetworkImage(
-                                                      item.storePictureURL),
                                                   height: MediaQuery.of(context)
                                                           .size
                                                           .height *
@@ -209,6 +210,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           .size
                                                           .width *
                                                       0.18,
+                                                  imageUrl:
+                                                      item.storePictureURL,
+                                                  placeholder: (context, url) =>
+                                                      CircularProgressIndicator(),
+                                                  errorWidget:
+                                                      ((context, url, error) =>
+                                                          Icon(Icons.error)),
                                                 ),
                                               ],
                                             ),
@@ -216,10 +224,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                               children: [
                                                 Expanded(
                                                   flex: 6,
-                                                  child: Image(
+                                                  child: CachedNetworkImage(
                                                     alignment: Alignment.center,
-                                                    image: NetworkImage(item
-                                                        .product.productImage),
+                                                    imageUrl: item
+                                                        .product.productImage,
                                                     height:
                                                         MediaQuery.of(context)
                                                                 .size
@@ -359,26 +367,30 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Padding(
                               padding: const EdgeInsets.only(
                                   top: 8, bottom: 8, left: 5, right: 5),
-                              child: Container(
+                              child: CachedNetworkImage(
                                 width: MediaQuery.of(context).size.width * 0.3,
                                 height:
                                     MediaQuery.of(context).size.height * 0.1,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: NetworkImage(s.storeImage)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.4),
-                                      spreadRadius: 0.2,
-                                      blurRadius: 7,
-                                      offset: const Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(8.0)),
-                                ),
+                                imageUrl: s.storeImage,
+                                imageBuilder: ((context, imageProvider) =>
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: NetworkImage(s.storeImage)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.5),
+                                            spreadRadius: -2,
+                                            blurRadius: 7,
+                                            offset: const Offset(0,
+                                                3), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(8.0)),
+                                      ),
+                                    )),
                               ),
                             ),
                           ),
@@ -431,25 +443,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisCount: 3,
                       crossAxisSpacing: 10.0,
                       mainAxisSpacing: 20.0,
+                      childAspectRatio: (500 / 650),
                     ),
                     itemCount: _categories.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
                           GestureDetector(
-                            onTap:
-                                () {}, // Image tapped, takes you to category screen
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const CategoriesScreen()),
+                              );
+                            }, // Image tapped, takes you to category screen
                             child: Image.network(
                               _categories.elementAt(index).categoryImage,
-                              fit: BoxFit.cover, // Fixes border issues
-                              width: 110.0,
-                              height: 110.0,
                             ),
                           ),
                           Text(
                             _categories.elementAt(index).categoryName,
                             style: const TextStyle(
-                              fontSize: 20,
+                              overflow: TextOverflow.ellipsis,
+                              fontSize: 16,
                             ),
                           ),
                         ],
