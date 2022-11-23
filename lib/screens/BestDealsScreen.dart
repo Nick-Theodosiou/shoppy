@@ -48,7 +48,7 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
               ),
               onPressed: () async {
                 List<Category> listC= await getCategories();
-                List<Subcategory> listS = await getSubcategoriesByCategory(listC.first);
+                List<Subcategory> listS = await getSubcategoriesByCategory(listC[0]);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

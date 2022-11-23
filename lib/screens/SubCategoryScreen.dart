@@ -124,24 +124,65 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Image.network(
-                            subcategoryOffers[index].product.productImage,
-                            //cartItems[index].image,
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.fitWidth,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.network(
+                              subcategoryOffers[index].product.productImage,
+                              // alignment:
+                              //                           Alignment.centerRight,
+                              //                       height: MediaQuery.of(context)
+                              //                               .size
+                              //                               .height *
+                              //                           0.08,
+                                                    width: MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.15,
+                              fit: BoxFit.fitWidth,
+                            ),
                           ),
-                          Text(
-                            // NamesofSM[index],
-                           subcategoryOffers[index].product.productName,
-                            style: TextStyle(
-                                color: ShoppyColors.blue,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400),
+                          Expanded(
+                            flex: 2,
+                            child: Align(
+                               alignment:
+                              Alignment.topLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height * 0.01,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                    // NamesofSM[index]
+                                    //textAlign:TextAlign.left,
+                                   subcategoryOffers[index].product.productName,
+                                    style: TextStyle(
+                                        
+                                        color: ShoppyColors.blue,
+                                        fontSize: 15,
+                                        fontWeight :FontWeight.bold
+                                        //fontWeight: FontWeight.w400
+                                        ),
+                                  ),
+                                  SizedBox(
+                                     height: MediaQuery.of(context).size.height * 0.001,
+                                  ),
+                                  Text(
+                                    //textAlign:TextAlign.left,
+                                   subcategoryOffers[index].storeName,
+                                    style: TextStyle(
+                                        color: ShoppyColors.blue,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                  ]
+                                ),
+                              ),
+                            ),
                           ),
                           Image.network(
                             subcategoryOffers[index].storePictureURL,
-                            //cartItems[index].image,
                             width: 80,
                             height: 80,
                             fit: BoxFit.fitWidth,
@@ -173,6 +214,29 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
       ),
     );
   }
+  
+  // TextFormField textFormField(String textH, TextEditingController eController) {
+  //   bool hide = false;
+  //   if (textH == 'Password') {
+  //     hide = true;
+  //   }
+  //   return TextFormField(
+  //     controller: eController,
+  //     obscureText: hide,
+  //     style: TextStyle(color: ShoppyColors.blue),
+  //     decoration: InputDecoration(
+  //       contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
+  //       fillColor: const Color.fromARGB(240, 225, 225, 225),
+  //       filled: true,
+  //       hintStyle: TextStyle(color: ShoppyColors.blue),
+  //       focusedBorder: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(35),
+  //           borderSide: BorderSide(color: ShoppyColors.red)),
+  //       hintText: textH,
+  //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
+  //     ),
+  //   );
+  // }
 }
 
 // void getLists(List<String> image, List<String> Name, String Subname) {
