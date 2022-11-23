@@ -11,6 +11,9 @@ import 'package:shoppy/models/Subcategory.dart';
 import 'models/User.dart';
 
 User localUser = User(-1, "name", "surname", "email", [], [], []);
+List<Offer> DCbestOffers = [];
+List<Store> DCsupermarkets = [];
+List<Category> DCcategories = [];
 
 var settings = ConnectionSettings(
     host: '45.84.205.255',

@@ -25,11 +25,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
+      RefreshController(initialRefresh: false);
 
-  List<Offer> _bestOffers = [];
-  List<Store> _supermarkets = [];
-  List<Category> _categories = [];
+  List<Offer> _bestOffers = DCbestOffers;
+  List<Store> _supermarkets = DCsupermarkets;
+  List<Category> _categories = DCcategories;
 
   var _currentIndex = 0;
 

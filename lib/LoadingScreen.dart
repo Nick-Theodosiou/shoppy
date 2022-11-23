@@ -26,6 +26,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('email', email);
     User u = await getAccountDataDB(email);
+    DCbestOffers = await getBestDeals(10);
+    DCcategories = await getCategories();
+    DCsupermarkets = await getStores();
     return u.email;
   }
 
