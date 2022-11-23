@@ -16,7 +16,8 @@ class SubCategoryScreen extends StatefulWidget {
   const SubCategoryScreen({super.key, required this.subcategory});
 
   @override
-  State<SubCategoryScreen> createState() => _SubCategoryScreennState(subcategory);
+  State<SubCategoryScreen> createState() =>
+      _SubCategoryScreennState(subcategory);
 }
 
 class AlwaysDisabledFocusNode extends FocusNode {
@@ -27,7 +28,7 @@ class AlwaysDisabledFocusNode extends FocusNode {
 class _SubCategoryScreennState extends State<SubCategoryScreen> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
-  List<Offer> subcategoryOffers = [];
+  List<Offer> subcategoryOffers = <Offer>[];
   //List<String> ProductImage = <String>[];
   //List<String> ProductName = <String>[];
   Subcategory subcategory;
@@ -47,6 +48,8 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
     });
     _refreshController.loadComplete();
   }
+
+  static List<Color> iconColors = <Color>[];
   //getLists(ProductImage, ProductName, subname);
   //// User user = localUser;
   //bool _notificationsEnabled = true;
@@ -58,6 +61,9 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     //getLists(ProductImage, ProductName, subname);
+    if (iconColors.isEmpty) {
+      createIconColorList();
+    }
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
@@ -76,8 +82,10 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
             color: ShoppyColors.gray,
             fontSize: 25,
           ),
+          textAlign: TextAlign.left,
         ),
-        centerTitle: true,
+
+        //centerTitle: true,
         backgroundColor: ShoppyColors.blue,
       ),
       body: SmartRefresher(
@@ -99,8 +107,8 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                 return Padding(
                   padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.01,
-                    left: MediaQuery.of(context).size.width * 0.01,
-                    right: MediaQuery.of(context).size.width * 0.01,
+                    left: MediaQuery.of(context).size.width * 0.03,
+                    right: MediaQuery.of(context).size.width * 0.03,
                     //bottom:MediaQuery.of(context).size.height * 0.05
                   ),
                   child: Container(
@@ -119,91 +127,126 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 8, 8, 8),
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 8, 8),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          Container(
+                            height: 100,
+                            width: 30,
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.favorite,
+                                  color: iconColors[index],
+                                  //color: Color(0xFFE86969),
+                                  size: 20,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    if (iconColors[index] == ShoppyColors.blue)
+                                      iconColors[index] = ShoppyColors.red;
+                                    else
+                                      iconColors[index] = ShoppyColors.blue;
+                                  });
+                                  // Favorite Supermarket /Unfavorite Supermarket
+                                },
+                              ),
+                            ),
+                          ),
                           ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: Image.network(
                               subcategoryOffers[index].product.productImage,
-                              // alignment:
-                              //                           Alignment.centerRight,
-                              //                       height: MediaQuery.of(context)
-                              //                               .size
-                              //                               .height *
-                              //                           0.08,
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.15,
+                              width: MediaQuery.of(context).size.width * 0.15,
                               fit: BoxFit.fitWidth,
                             ),
                           ),
                           Expanded(
                             flex: 2,
                             child: Align(
-                               alignment:
-                              Alignment.topLeft,
+                              alignment: Alignment.topLeft,
                               child: Padding(
                                 padding: EdgeInsets.only(
-                                  top: MediaQuery.of(context).size.height * 0.01,
+                                  top:
+                                      MediaQuery.of(context).size.height * 0.01,
+                                  left:
+                                      MediaQuery.of(context).size.height * 0.01,
                                 ),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        // NamesofSM[index]
+                                        //textAlign:TextAlign.left,
+                                        subcategoryOffers[index]
+                                            .product
+                                            .productName,
+                                        style: TextStyle(
+                                            color: ShoppyColors.blue,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold
+                                            //fontWeight: FontWeight.w400
+                                            ),
+                                      ),
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.004,
+                                      ),
+                                      Text(
+                                        //textAlign:TextAlign.left,
+                                        subcategoryOffers[index].storeName,
+                                        style: TextStyle(
+                                            color: ShoppyColors.blue,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w300),
+                                      ),
+                                    ]),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            //flex: 1,
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height *
+                                      0.001,
+                                  //left: MediaQuery.of(context).size.height * 0.01,
+                                ),
+                                child: Column(
                                   children: [
+                                    Image.network(
+                                      subcategoryOffers[index].storePictureURL,
+                                      width: 80,
+                                      height: 50,
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                    // SizedBox(
+                                    //   height:
+                                    //       MediaQuery.of(context).size.height *
+                                    //           0.000,
+                                    // ),
                                     Text(
-                                    // NamesofSM[index]
-                                    //textAlign:TextAlign.left,
-                                   subcategoryOffers[index].product.productName,
-                                    style: TextStyle(
-                                        
-                                        color: ShoppyColors.blue,
-                                        fontSize: 15,
-                                        fontWeight :FontWeight.bold
-                                        //fontWeight: FontWeight.w400
-                                        ),
-                                  ),
-                                  SizedBox(
-                                     height: MediaQuery.of(context).size.height * 0.001,
-                                  ),
-                                  Text(
-                                    //textAlign:TextAlign.left,
-                                   subcategoryOffers[index].storeName,
-                                    style: TextStyle(
-                                        color: ShoppyColors.blue,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                                  ]
+                                      "€${subcategoryOffers[index].price.toStringAsFixed(2)}",
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.05,
+                                          fontWeight: FontWeight.w500,
+                                          color: ShoppyColors.blue),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                          Image.network(
-                            subcategoryOffers[index].storePictureURL,
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.fitWidth,
-                          ),
-                          // IconButton(
-                          //   icon: Icon(
-                          //     Icons.favorite,
-                          //     color: iconColors[index],
-                          //     //color: Color(0xFFE86969),
-                          //     size: 20,
-                          //   ),
-                          //   onPressed: () {
-                          //     setState(() {
-                          //       if (iconColors[index] == ShoppyColors.blue)
-                          //         iconColors[index] = ShoppyColors.red;
-                          //       else
-                          //         iconColors[index] = ShoppyColors.blue;
-                          //     });
-                          //     // Favorite Supermarket /Unfavorite Supermarket
-                          //   },
-                          // ),
                         ],
                       ),
                     ),
@@ -214,7 +257,13 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
       ),
     );
   }
-  
+
+  void createIconColorList() {
+    int length = subcategoryOffers.length;
+    for (var i = 0; i < length; i++) {
+      iconColors.add(ShoppyColors.blue);
+    }
+  }
   // TextFormField textFormField(String textH, TextEditingController eController) {
   //   bool hide = false;
   //   if (textH == 'Password') {
