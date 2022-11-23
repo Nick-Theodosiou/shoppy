@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shoppy/DataController.dart';
 import 'package:shoppy/LoginScreen.dart';
 import 'package:shoppy/NavigationBarScreen.dart';
 import 'package:shoppy/screens/HomeScreen.dart';
+
+import 'LoadingScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,7 +37,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   getId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String email = prefs.getString('email')!;
+    String email = await prefs.getString('email')!;
     return email;
   }
 
@@ -47,12 +48,23 @@ class _MainScreenState extends State<MainScreen> {
         future: getId(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            getAccountDataDB(snapshot.data.toString());
-            return NavigationBarScreen();
+            return LoadingScreen(snapshot.data.toString());
           } else if (snapshot.hasError) {
             return LoginScreen(); //Error getting data
           } else {
-            return Container(); //show Loading
+            return Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("asset/images/background_1.png"),
+                    fit: BoxFit.cover),
+              ),
+              child: const Scaffold(
+                backgroundColor: Colors.transparent,
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            ); //show Loading
           }
         },
       ),

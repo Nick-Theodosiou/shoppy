@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shoppy/LoadingScreen.dart';
 import 'package:shoppy/screens/SignUpScreen.dart';
 import 'NavigationBarScreen.dart';
 import 'styles/colors.dart';
@@ -232,12 +233,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> login() async {
     if (await checkCredentials(userController.text, passController.text)) {
       final GlobalKey<State> _LoaderDialog = new GlobalKey<State>();
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('email', userController.text);
-      await getAccountDataDB(userController.text);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
+        MaterialPageRoute(builder: (_) => LoadingScreen(userController.text)),
       );
     } else {
       _changed(true, "incorrect");
