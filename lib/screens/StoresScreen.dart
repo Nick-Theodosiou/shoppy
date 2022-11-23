@@ -90,7 +90,10 @@ class _StoresScreenState extends State<StoresScreenDemo> {
         onLoading: _onLoading,
         child: SingleChildScrollView(
           child: ListView.builder(
-              padding: EdgeInsets.zero,
+
+              padding: EdgeInsets.only(
+                top: 10
+              ),
               primary: false,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
@@ -98,10 +101,10 @@ class _StoresScreenState extends State<StoresScreenDemo> {
               //itemCount: cartItems.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.01,
-                    left: MediaQuery.of(context).size.width * 0.01,
-                    right: MediaQuery.of(context).size.width * 0.01,
+                  padding: const EdgeInsets.only(
+                   left: 10,
+                  right: 10,
+                  bottom: 10,
                     //bottom:MediaQuery.of(context).size.height * 0.05
                   ),
                   child: Container(
