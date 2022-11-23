@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:shoppy/main.dart';
+import 'package:shoppy/LoginScreen.dart';
 import '../NavigationBarScreen.dart';
 import '../styles/colors.dart';
 import 'ForgotPasswordScreen.dart';
@@ -151,7 +151,7 @@ class _SignUpDemoState extends State<SignUpDemo> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => const LoginDemo()));
+                                      builder: (_) => const LoginScreen()));
                             },
                             child: Text(
                               'Log in',

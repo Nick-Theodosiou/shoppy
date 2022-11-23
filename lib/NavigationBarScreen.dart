@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shoppy/main.dart';
+import 'package:shoppy/LoginScreen.dart';
 import 'screens/FavoritesScreen.dart';
 import 'screens/AccountScreen.dart';
 import 'screens/BestDealsScreen.dart';

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shoppy/screens/SignUpScreen.dart';
+import 'NavigationBarScreen.dart';
+import 'styles/colors.dart';
+import 'screens/ForgotPasswordScreen.dart';
+import 'DataController.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
-import '../LoginScreen.dart';
-import '../styles/colors.dart';
-import 'SignUpScreen.dart';
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
-class ForgotPasswordScreen extends StatefulWidget {
   @override
-  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  //TextEditingController get userController => null;
-  final userController = TextEditingController();
-
+class _LoginScreenState extends State<LoginScreen> {
   bool visibilityIncorrect = false;
 
   void _changed(bool boolean, String field) {
@@ -24,11 +25,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     });
   }
 
+  final userController = TextEditingController();
+  final passController = TextEditingController();
+
+  @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     userController.dispose();
+    passController.dispose();
     super.dispose();
   }
+
+  var username = "user";
+  var password = "password";
 
   @override
   Widget build(BuildContext context) {
@@ -79,59 +88,63 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           right: MediaQuery.of(context).size.width * 0.1),
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                          ),
                           const Align(
-                            alignment: Alignment.center,
+                            alignment: Alignment.centerLeft,
                             child: Text(
-                              'Forgot Password',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02,
-                          ),
-                          const Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Enter your email and we'll send you a link\nto change your password",
-                              textAlign: TextAlign.center,
+                              'Log In',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 12,
+                                fontSize: 30,
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.03,
+                            height: MediaQuery.of(context).size.height * 0.02,
                           ),
                           textFormField('E-mail', userController),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
                           ),
-                          // visibilityIncorrect
-                          //     ? const Align(
-                          //         alignment: Alignment.centerLeft,
-                          //         child: Text(
-                          //           'Incorrect Email',
-                          //           style: TextStyle(
-                          //             color: Colors.white,
-                          //             fontSize: 12,
-                          //           ),
-                          //         ),
-                          //       )
-                          //     : Container(),
+                          textFormField('Password', passController),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            ForgotPasswordScreen()));
+                              },
+                              child: const Text(
+                                'Forgot Password?',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.white,
+                                  decorationThickness: 1.8,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                          visibilityIncorrect
+                              ? const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Incorrect Username and Password',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
                           ElevatedButton(
                             onPressed: () {
-                              //connect to database and send email for Change Password
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const LoginScreen()));
+                              login();
                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size.fromHeight(47),
@@ -141,14 +154,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               ),
                             ),
                             child: const Text(
-                              'Submit',
+                              'Log In',
                               style: TextStyle(
                                 fontSize: 20,
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.04,
+                            height: MediaQuery.of(context).size.height * 0.03,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -192,52 +205,42 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       );
     });
   }
-}
 
-TextFormField textFormField(String textH, TextEditingController eController) {
-  bool hide = false;
-  if (textH == 'Password') {
-    hide = true;
+  TextFormField textFormField(String textH, TextEditingController eController) {
+    bool hide = false;
+    if (textH == 'Password') {
+      hide = true;
+    }
+    return TextFormField(
+      controller: eController,
+      obscureText: hide,
+      style: TextStyle(color: ShoppyColors.blue),
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
+        fillColor: const Color.fromARGB(240, 225, 225, 225),
+        filled: true,
+        hintStyle: TextStyle(color: ShoppyColors.blue),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(35),
+            borderSide: BorderSide(color: ShoppyColors.red)),
+        hintText: textH,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
+      ),
+    );
   }
-  return TextFormField(
-    controller: eController,
-    obscureText: hide,
-    style: TextStyle(color: ShoppyColors.blue),
-    decoration: InputDecoration(
-      contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
-      fillColor: const Color.fromARGB(240, 225, 225, 225),
-      filled: true,
-      hintStyle: TextStyle(color: ShoppyColors.blue),
-      focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(35),
-          borderSide: BorderSide(color: ShoppyColors.red)),
-      hintText: textH,
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
-    ),
-  );
-}
 
-showAlertDialog(BuildContext context) {
-  // set up the button
-  Widget okButton = TextButton(
-    child: const Text("OK"),
-    onPressed: () => Navigator.pop(context, false),
-  );
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: const Text("Question"),
-    content: const Text("Description"),
-    actions: [
-      okButton,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
+  Future<void> login() async {
+    if (await checkCredentials(userController.text, passController.text)) {
+      final GlobalKey<State> _LoaderDialog = new GlobalKey<State>();
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('email', userController.text);
+      await getAccountDataDB(userController.text);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
+      );
+    } else {
+      _changed(true, "incorrect");
+    }
+  }
 }

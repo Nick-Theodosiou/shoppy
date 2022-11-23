@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppy/DataController.dart';
-import 'package:shoppy/main.dart';
+import 'package:shoppy/LoginScreen.dart';
 import 'package:shoppy/styles/colors.dart';
 import '../models/User.dart';
 
@@ -82,9 +83,9 @@ class _AccountScreenState extends State<AccountScreen> {
                             style: const TextStyle(
                               fontSize: 20,
                             ),
-                            decoration: const InputDecoration(
-                                hintText: 'Constantinos',
-                                hintStyle: TextStyle(
+                            decoration: InputDecoration(
+                                hintText: localUser.name,
+                                hintStyle: const TextStyle(
                                     fontSize: 20, color: Colors.black)),
                             textAlign: TextAlign.left),
                         Padding(
@@ -115,9 +116,9 @@ class _AccountScreenState extends State<AccountScreen> {
                             style: const TextStyle(
                               fontSize: 20,
                             ),
-                            decoration: const InputDecoration(
-                                hintText: 'Paphitis',
-                                hintStyle: TextStyle(
+                            decoration: InputDecoration(
+                                hintText: localUser.surname,
+                                hintStyle: const TextStyle(
                                     fontSize: 20, color: Colors.black)),
                             textAlign: TextAlign.left),
                         Padding(
@@ -155,10 +156,10 @@ class _AccountScreenState extends State<AccountScreen> {
                               fontSize: 10, height: 0.5, color: Colors.grey)),
                     ),
                     TextFormField(
-                        decoration: const InputDecoration(
-                            hintText: 'paphitis@yahoo.com',
-                            hintStyle:
-                                TextStyle(fontSize: 20, color: Colors.black)),
+                        decoration: InputDecoration(
+                            hintText: localUser.email,
+                            hintStyle: const TextStyle(
+                                fontSize: 20, color: Colors.black)),
                         enableInteractiveSelection: false,
                         focusNode: AlwaysDisabledFocusNode(),
                         textAlign: TextAlign.left),
@@ -258,11 +259,14 @@ class _AccountScreenState extends State<AccountScreen> {
                               ),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             // localUser = null;
+                            final prefs = await SharedPreferences.getInstance();
+                            final success = await prefs.remove('email');
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (_) => const MyApp()),
+                              MaterialPageRoute(
+                                  builder: (_) => const LoginScreen()),
                             );
                           },
                         ),
