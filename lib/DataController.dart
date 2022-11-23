@@ -220,43 +220,57 @@ Future<List<Category>> getCategories() async {
   return list;
 }
 
-// Future<List<Subcategory>> getSubcategoriesByCategory(Category C) async {
-//   var conn = await MySqlConnection.connect(settings);
+Future<List<Subcategory>> getSubcategoriesByCategory(Category C) async {
+  var conn = await MySqlConnection.connect(settings);
 
-//   var results = await conn.query('CALL getSubcategories();');
+  var results = await conn.query('CALL getSubcategories(?);', [C.categoryID]);
 
-//   await conn.close();
-//   List<Subcategory> list = [];
+  await conn.close();
+  List<Subcategory> list = [];
 
-//   for (var row in results) {
-//     Subcategory S = Subcategory(
-//         row['SubcategoryID'],
-//         row['Name'],
-//         "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
-//         getOffersBySubcategory(row['SubcategoryID']););
-//     list.add(S);
-//   }
-//   return list;
-// }
+  for (var row in results) {
+    Subcategory S = Subcategory(
+        row['SubcategoryID'],
+        row['Name'],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
+        []);
+    list.add(S);
+  }
+  return list;
+}
 
-// Future<List<Offer>> getOffersBySubcategory(Category C) async {
-//   var conn = await MySqlConnection.connect(settings);
+Future<List<Offer>> getOffersBySubcategory(Subcategory C) async {
+  var conn = await MySqlConnection.connect(settings);
 
-//   var results = await conn.query('CALL getSubcategories();');
+  var results =
+      await conn.query('CALL getSubcategoryOffers(?);', [C.subcategoryID]);
 
-//   await conn.close();
-//   List<Subcategory> list = [];
+  await conn.close();
+  List<Offer> list = [];
 
-//   for (var row in results) {
-//     Subcategory S = Subcategory(
-//         row['SubcategoryID'],
-//         row['Name'],
-//         "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
-//         getOffersBySubcategory(row['SubcategoryID']););
-//     list.add(S);
-//   }
-//   return list;
-// }
+  for (var row in results) {
+    Product p = Product(
+        row["ProductID"],
+        row["Product_Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row["PictureURL"],
+        row["Brand"] ?? "",
+        row["SubcategoryID"],
+        row["CategoryID"], []);
+
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
+
+    list.add(o);
+  }
+  return list;
+}
 
 // Subcategory(this.subcategoryID, this.subcategoryName, this.subcategoryImage,
 //     this.subcategoryOffers);
