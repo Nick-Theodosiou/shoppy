@@ -342,7 +342,7 @@ class _ListScreenState extends State<ListScreen> {
                                                   onPressed: () {
                                                     setState(() {
                                                       updateQtyList(
-                                                          indexS, index, 1);
+                                                          indexS, index, -1);
 
                                                       _shoppingList =
                                                           localUser.itemsInCart;
