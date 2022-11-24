@@ -260,7 +260,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
                           ),
                           onPressed: () async {
-                            // localUser = null;
+                            localUser = User(-1, "name", "surname", "email", [], [], []);
                             final prefs = await SharedPreferences.getInstance();
                             final success = await prefs.remove('email');
                             Navigator.pushReplacement(
