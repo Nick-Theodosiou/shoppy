@@ -97,7 +97,7 @@ Future<User> getAccountDataDB(String email) async {
         row["ProductID"],
         row["Product_Name"],
         "https://ldiony011873.files.wordpress.com/2022/11/" + row["PictureURL"],
-        row["Brand"],
+        row["Brand"]??"",
         row["SubcategoryID"],
         row["CategoryID"], []);
     likedProducts.add(p);

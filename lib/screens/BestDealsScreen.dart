@@ -54,7 +54,7 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
                   context,
                   MaterialPageRoute(
                       builder: (_) => SubCategoryScreen(
-                            subcategory: listS[1],
+                            subcategory: listS[0],
                           )),
                 );
               },
