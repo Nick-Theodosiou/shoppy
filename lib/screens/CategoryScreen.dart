@@ -115,42 +115,41 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 1,
-              height: MediaQuery.of(context).size.height * 0.085,
+              height: MediaQuery.of(context).size.height * 0.15,
               child: ListView(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 children: CategorySubcategories.map((s) {
                   return InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => SubCategoryScreen(
-                                  subcategory:
-                                      s)), //will normaly take you to the supermarket's page
-                        );
-                      },
-                      child: Padding(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => SubCategoryScreen(
+                                subcategory:
+                                    s)), //will normaly take you to the supermarket's page
+                      );
+                    },
+                    child: Column(children: [
+                      Padding(
                         padding: const EdgeInsets.only(
-                            top: 5, bottom: 5, left: 8, right: 8),
-                        child: Column(children: [
-                          CachedNetworkImage(
-                            width: MediaQuery.of(context).size.width * 0.25,
-                            height: MediaQuery.of(context).size.height * 0.1,
-                            imageUrl: s.subcategoryImage,
-                            imageBuilder: ((context, imageProvider) =>
-                                Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image:
-                                            NetworkImage(s.subcategoryImage)),
-                                  ),
-                                )),
-                          ),
-                          Text(s.subcategoryName,
-                              style: TextStyle(color: ShoppyColors.blue)),
-                        ]),
-                      ));
+                            top: 5, bottom: 0, left: 5, right: 5),
+                        child: CachedNetworkImage(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.height * 0.1,
+                          imageUrl: s.subcategoryImage,
+                          imageBuilder: ((context, imageProvider) => Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(s.subcategoryImage)),
+                                ),
+                              )),
+                        ),
+                      ),
+                      Text(s.subcategoryName,
+                          style: TextStyle(color: ShoppyColors.blue)),
+                    ]),
+                  );
                 }).toList(),
               ),
             ),
