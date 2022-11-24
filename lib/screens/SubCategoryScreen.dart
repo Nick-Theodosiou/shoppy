@@ -8,6 +8,7 @@ import 'package:shoppy/screens/BestDealsScreen.dart';
 import 'package:shoppy/screens/CategoriesScreen.dart';
 
 import '../NavigationBarScreen.dart';
+import '../models/User.dart';
 import '../styles/colors.dart';
 
 class SubCategoryScreen extends StatefulWidget {
@@ -51,7 +52,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
 
    List<Color> iconColors = <Color>[];
   //getLists(ProductImage, ProductName, subname);
-  //// User user = localUser;
+  User user = localUser;
   //bool _notificationsEnabled = true;
 
   // void _updateNotifications(bool notifications) {
@@ -61,9 +62,9 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     //getLists(ProductImage, ProductName, subname);
-    if (iconColors.isEmpty) {
-      createIconColorList();
-    }
+    // if (iconColors.isEmpty) {
+    //   createIconColorList();
+    // }
     // this will be fixed after adding from the database the liked products
     // Rember to check it 
     return Scaffold(
@@ -133,7 +134,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 8, 8),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -146,28 +147,32 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                 child: IconButton(
                                   icon: Icon(
                                     Icons.favorite,
-                                    color: iconColors[index],
+                                 //  color: (user.likedProduct          (subcategoryOffers[index].product.)) ? ShoppyColors.red: ShoppyColors.blue ,
                                     //color: Color(0xFFE86969),
                                     size: 20,
                                   ),
                                   onPressed: () {
                                     setState(() {
-                                      if (iconColors[index] == ShoppyColors.blue)
-                                        iconColors[index] = ShoppyColors.red;
-                                      else
-                                        iconColors[index] = ShoppyColors.blue;
+                                    
+                                      // if (iconColors[index] == ShoppyColors.blue)
+                                      //   iconColors[index] = ShoppyColors.red;
+                                      // else
+                                      //   iconColors[index] = ShoppyColors.blue;
                                     });
                                     // Favorite Supermarket /Unfavorite Supermarket
                                   },
                                 ),
                               ),
                             ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                subcategoryOffers[index].product.productImage,
-                                width: MediaQuery.of(context).size.width * 0.16,
-                                fit: BoxFit.fitWidth,
+                            Padding(
+                              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01,),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.network(
+                                  subcategoryOffers[index].product.productImage,
+                                  width: MediaQuery.of(context).size.width * 0.16,
+                                  fit: BoxFit.fitWidth,
+                                ),
                               ),
                             ),
                             Expanded(
@@ -177,7 +182,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                 child: Padding(
                                   padding: EdgeInsets.only(
                                     top:
-                                        MediaQuery.of(context).size.height * 0.01,
+                                        MediaQuery.of(context).size.height * 0.0250,
                                     left:
                                         MediaQuery.of(context).size.height * 0.01,
                                   ),
@@ -222,7 +227,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                 child: Padding(
                                   padding: EdgeInsets.only(
                                     top: MediaQuery.of(context).size.height *
-                                        0.001,
+                                        0.0150,
                                     //left: MediaQuery.of(context).size.height * 0.01,
                                   ),
                                   child: Column(
