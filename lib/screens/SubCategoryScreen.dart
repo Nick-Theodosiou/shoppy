@@ -98,163 +98,168 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
         onRefresh: _onRefresh,
         onLoading: _onLoading,
         child: SingleChildScrollView(
-          child: ListView.builder(
-              padding: EdgeInsets.zero,
-              primary: false,
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              itemCount: subcategoryOffers.length,
-              //itemCount: cartItems.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.01,
-                    left: MediaQuery.of(context).size.width * 0.03,
-                    right: MediaQuery.of(context).size.width * 0.03,
-                    //bottom:MediaQuery.of(context).size.height * 0.05
-                  ),
-                  child: Container(
-                    width: double.infinity,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      // ignore: prefer_const_literals_to_create_immutables
-                      boxShadow: [
-                        const BoxShadow(
-                          blurRadius: 4,
-                          color: Color(0x320E151B),
-                          offset: Offset(0, 1),
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01,
+             bottom:MediaQuery.of(context).size.height * 0.003,
+            ),
+            child: ListView.builder(
+                padding: EdgeInsets.zero,
+                primary: false,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemCount: subcategoryOffers.length,
+                //itemCount: cartItems.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                     // top: MediaQuery.of(context).size.height * 0.00,
+                      left: MediaQuery.of(context).size.width * 0.03,
+                      right: MediaQuery.of(context).size.width * 0.03,
+                      bottom:MediaQuery.of(context).size.height * 0.01
                     ),
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 8, 8),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            height: 100,
-                            width: 30,
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.favorite,
-                                  color: iconColors[index],
-                                  //color: Color(0xFFE86969),
-                                  size: 20,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    if (iconColors[index] == ShoppyColors.blue)
-                                      iconColors[index] = ShoppyColors.red;
-                                    else
-                                      iconColors[index] = ShoppyColors.blue;
-                                  });
-                                  // Favorite Supermarket /Unfavorite Supermarket
-                                },
-                              ),
-                            ),
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.network(
-                              subcategoryOffers[index].product.productImage,
-                              width: MediaQuery.of(context).size.width * 0.15,
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  top:
-                                      MediaQuery.of(context).size.height * 0.01,
-                                  left:
-                                      MediaQuery.of(context).size.height * 0.01,
-                                ),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        // NamesofSM[index]
-                                        //textAlign:TextAlign.left,
-                                        subcategoryOffers[index]
-                                            .product
-                                            .productName,
-                                        style: TextStyle(
-                                            color: ShoppyColors.blue,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold
-                                            //fontWeight: FontWeight.w400
-                                            ),
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.004,
-                                      ),
-                                      Text(
-                                        //textAlign:TextAlign.left,
-                                        subcategoryOffers[index].storeName,
-                                        style: TextStyle(
-                                            color: ShoppyColors.blue,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w300),
-                                      ),
-                                    ]),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            //flex: 1,
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  top: MediaQuery.of(context).size.height *
-                                      0.001,
-                                  //left: MediaQuery.of(context).size.height * 0.01,
-                                ),
-                                child: Column(
-                                  children: [
-                                    Image.network(
-                                      subcategoryOffers[index].storePictureURL,
-                                      width: 80,
-                                      height: 50,
-                                      fit: BoxFit.fitWidth,
-                                    ),
-                                    // SizedBox(
-                                    //   height:
-                                    //       MediaQuery.of(context).size.height *
-                                    //           0.000,
-                                    // ),
-                                    Text(
-                                      "€${subcategoryOffers[index].price.toStringAsFixed(2)}",
-                                      style: TextStyle(
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.05,
-                                          fontWeight: FontWeight.w500,
-                                          color: ShoppyColors.blue),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                    child: Container(
+                      width: double.infinity,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        boxShadow: [
+                          const BoxShadow(
+                            blurRadius: 4,
+                            color: Color(0x320E151B),
+                            offset: Offset(0, 1),
+                          )
                         ],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 8, 8),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 100,
+                              width: 30,
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.favorite,
+                                    color: iconColors[index],
+                                    //color: Color(0xFFE86969),
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      if (iconColors[index] == ShoppyColors.blue)
+                                        iconColors[index] = ShoppyColors.red;
+                                      else
+                                        iconColors[index] = ShoppyColors.blue;
+                                    });
+                                    // Favorite Supermarket /Unfavorite Supermarket
+                                  },
+                                ),
+                              ),
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.network(
+                                subcategoryOffers[index].product.productImage,
+                                width: MediaQuery.of(context).size.width * 0.16,
+                                fit: BoxFit.fitWidth,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top:
+                                        MediaQuery.of(context).size.height * 0.01,
+                                    left:
+                                        MediaQuery.of(context).size.height * 0.01,
+                                  ),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          // NamesofSM[index]
+                                          //textAlign:TextAlign.left,
+                                          subcategoryOffers[index]
+                                              .product
+                                              .productName,
+                                          style: TextStyle(
+                                              color: ShoppyColors.blue,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold
+                                              //fontWeight: FontWeight.w400
+                                              ),
+                                        ),
+                                        SizedBox(
+                                          height:
+                                              MediaQuery.of(context).size.height *
+                                                  0.004,
+                                        ),
+                                        Text(
+                                          //textAlign:TextAlign.left,
+                                          subcategoryOffers[index].storeName,
+                                          style: TextStyle(
+                                              color: ShoppyColors.blue,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                      ]),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              //flex: 1,
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height *
+                                        0.001,
+                                    //left: MediaQuery.of(context).size.height * 0.01,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Image.network(
+                                        subcategoryOffers[index].storePictureURL,
+                                        width: 80,
+                                        height: 50,
+                                        fit: BoxFit.fitWidth,
+                                      ),
+                                      // SizedBox(
+                                      //   height:
+                                      //       MediaQuery.of(context).size.height *
+                                      //           0.000,
+                                      // ),
+                                      Text(
+                                        "€${subcategoryOffers[index].price.toStringAsFixed(2)}",
+                                        style: TextStyle(
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05,
+                                            fontWeight: FontWeight.w500,
+                                            color: ShoppyColors.blue),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
+          ),
         ),
       ),
     );
