@@ -7,6 +7,7 @@ import 'package:shoppy/styles/colors.dart';
 
 import '../DataController.dart';
 import '../NavigationBarScreen.dart';
+import 'CategoryScreen.dart';
 import 'HomeScreen.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -187,11 +188,15 @@ class CategoriesScreenState extends State<CategoriesScreenDemo> {
                     return Column(
                       children: [
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            List<Category> listC = await getCategories();
+                            // ignore: use_build_context_synchronously
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => const CategoriesScreen()),
+                                  builder: (_) => CategoryScreen(
+                                        category: listC[index],
+                                      )),
                             );
                           }, // Image tapped, takes you to category screen
                           child: Image.network(
