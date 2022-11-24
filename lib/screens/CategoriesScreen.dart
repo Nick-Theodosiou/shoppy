@@ -24,10 +24,10 @@ class CategoriesScreen extends StatelessWidget {
 class CategoriesScreenDemo extends StatefulWidget {
   const CategoriesScreenDemo({super.key});
   @override
-  _CategoriesScreenState createState() => _CategoriesScreenState();
+  CategoriesScreenState createState() => CategoriesScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreenDemo> {
+class CategoriesScreenState extends State<CategoriesScreenDemo> {
   @override
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
@@ -58,123 +58,157 @@ class _CategoriesScreenState extends State<CategoriesScreenDemo> {
       createIconColorList();
     }
     return Scaffold(
-        backgroundColor: ShoppyColors.gray,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              // Navigator.pop(context, true);
-              //SaveChanges(iconColors);
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
-              );
-            },
+      backgroundColor: ShoppyColors.gray,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            // Navigator.pop(context, true);
+            //SaveChanges(iconColors);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
+            );
+          },
+        ),
+        title: Text(
+          "Categories",
+          style: TextStyle(
+            color: ShoppyColors.gray,
+            fontSize: 25,
           ),
-          title: Text(
-            "Categories",
-            style: TextStyle(
-              color: ShoppyColors.gray,
-              fontSize: 25,
+        ),
+        centerTitle: true,
+        backgroundColor: ShoppyColors.blue,
+      ),
+      body: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        header: const WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.02,
+                left: 10,
+                right: 10,
+                bottom: 10),
+            child: Column(
+              children: [
+                TextFormField(
+                  style: TextStyle(color: ShoppyColors.blue),
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.search),
+                    prefixIconColor: ShoppyColors.blue,
+                    contentPadding:
+                        const EdgeInsets.only(top: 15, bottom: 15, left: 15),
+                    fillColor: const Color.fromARGB(108, 225, 225, 225),
+                    filled: true,
+                    hintStyle:
+                        TextStyle(color: ShoppyColors.blue, fontSize: 20),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(35),
+                        borderSide: BorderSide(color: ShoppyColors.blue)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(35),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(108, 225, 225, 225))),
+                    hintText: "Search...",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(35)),
+                  ),
+                ),
+                Row(children: [
+                  Align(
+                    alignment: const Alignment(-0.95, -0.9),
+                    child: RichText(
+                      softWrap: true,
+                      text: TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Icon(
+                              Icons.sort_rounded,
+                              size: 22,
+                              color: ShoppyColors.blue,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "Sort",
+                            style: TextStyle(
+                                fontSize: 20, color: ShoppyColors.blue),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Align(
+                    alignment: const Alignment(0.95, -0.95),
+                    child: RichText(
+                      softWrap: true,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Filter",
+                            style: TextStyle(
+                                fontSize: 20, color: ShoppyColors.blue),
+                          ),
+                          WidgetSpan(
+                            child: Icon(
+                              Icons.filter_alt,
+                              size: 22,
+                              color: ShoppyColors.blue,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ]),
+                GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 10.0,
+                    mainAxisSpacing: 20.0,
+                    childAspectRatio: (500 / 650),
+                  ),
+                  itemCount: Categories.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const CategoriesScreen()),
+                            );
+                          }, // Image tapped, takes you to category screen
+                          child: Image.network(
+                            Categories.elementAt(index).categoryImage,
+                          ),
+                        ),
+                        Text(
+                          Categories.elementAt(index).categoryName,
+                          style: const TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
             ),
           ),
-          centerTitle: true,
-          backgroundColor: ShoppyColors.blue,
         ),
-        body: SmartRefresher(
-            enablePullDown: true,
-            enablePullUp: true,
-            header: const WaterDropHeader(),
-            controller: _refreshController,
-            onRefresh: _onRefresh,
-            onLoading: _onLoading,
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.02,
-                    left: 10,
-                    right: 10,
-                    bottom: 10),
-                child: SingleChildScrollView(
-                  child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      primary: false,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: Categories.length,
-                      //itemCount: cartItems.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.01,
-                            left: MediaQuery.of(context).size.width * 0.01,
-                            right: MediaQuery.of(context).size.width * 0.01,
-                            //bottom:MediaQuery.of(context).size.height * 0.05
-                          ),
-                          child: Container(
-                            width: double.infinity,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              // ignore: prefer_const_literals_to_create_immutables
-                              boxShadow: [
-                                const BoxShadow(
-                                  blurRadius: 4,
-                                  color: Color(0x320E151B),
-                                  offset: Offset(0, 1),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 8, 8, 8),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Image.network(
-                                    Categories[index].categoryImage,
-                                    //cartItems[index].image,
-                                    width: 80,
-                                    height: 80,
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                  Text(
-                                    Categories[index].categoryName,
-                                    style: TextStyle(
-                                        color: ShoppyColors.blue,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.favorite,
-                                      color: iconColors[index],
-                                      //color: Color(0xFFE86969),
-                                      size: 20,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (iconColors[index] ==
-                                            ShoppyColors.blue)
-                                          iconColors[index] = ShoppyColors.red;
-                                        else
-                                          iconColors[index] = ShoppyColors.blue;
-                                      });
-                                      // Favorite Supermarket /Unfavorite Supermarket
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                ),
-              ),
-            )));
+      ),
+    );
   }
 
   void createIconColorList() {
