@@ -121,49 +121,55 @@ class CategoriesScreenState extends State<CategoriesScreenDemo> {
                   ),
                 ),
                 Row(children: [
-                  Align(
-                    alignment: const Alignment(-0.95, -0.9),
-                    child: RichText(
-                      softWrap: true,
-                      text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: Icon(
-                              Icons.sort_rounded,
-                              size: 22,
-                              color: ShoppyColors.blue,
-                            ),
-                          ),
-                          TextSpan(
-                            text: "Sort",
-                            style: TextStyle(
-                                fontSize: 20, color: ShoppyColors.blue),
-                          ),
-                        ],
-                      ),
+                  TextButton.icon(
+                    // <-- TextButton
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.sort,
+                      size: 24.0,
+                      color: ShoppyColors.blue,
+                    ),
+                    label: const Text('Sort'),
+                    style: TextButton.styleFrom(
+                      foregroundColor: ShoppyColors.blue, // Text Color
                     ),
                   ),
                   const Spacer(),
-                  Align(
-                    alignment: const Alignment(0.95, -0.95),
-                    child: RichText(
-                      softWrap: true,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Filter",
-                            style: TextStyle(
-                                fontSize: 20, color: ShoppyColors.blue),
+                  /*               ElevatedButton(
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Download',
+                          style: TextStyle(
+                            color: ShoppyColors.blue, // Text Color
                           ),
-                          WidgetSpan(
-                            child: Icon(
-                              Icons.filter_alt,
-                              size: 22,
-                              color: ShoppyColors.blue,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ), // <-- Text
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Icon(
+                          // <-- Icon
+                          Icons.download,
+                          size: 24.0,
+                          color: ShoppyColors.blue,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),*/
+                  TextButton.icon(
+                    // <-- TextButton
+                    onPressed: () {},
+                    label: const Text('Filter'),
+                    icon: Icon(
+                      Icons.filter_alt_rounded,
+                      size: 24.0,
+                      color: ShoppyColors.blue,
+                    ),
+                    style: TextButton.styleFrom(
+                      foregroundColor: ShoppyColors.blue, // Text Color
                     ),
                   ),
                 ]),
