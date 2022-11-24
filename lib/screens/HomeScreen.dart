@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shoppy/styles/colors.dart';
 import 'CategoriesScreen.dart';
+import 'CategoryScreen.dart';
 import 'StoresScreen.dart';
 
 void main() {
@@ -454,7 +455,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => const CategoriesScreen()),
+                                    builder: (_) => CategoryScreen(
+                                        category: _categories[index])),
                               );
                             }, // Image tapped, takes you to category screen
                             child: Image.network(

@@ -37,16 +37,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   void _onRefresh() async {
     var subs = await getSubcategoriesByCategory(category);
+    List<Offer> offers = await getCategoryOffers(subs);
     setState(() {
       CategorySubcategories = subs;
+      category.categoryOffers = offers;
     });
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
     var subs = await getSubcategoriesByCategory(category);
+    List<Offer> offers = await getCategoryOffers(subs);
     setState(() {
       CategorySubcategories = subs;
+      category.categoryOffers = offers;
     });
     _refreshController.loadComplete();
   }
@@ -125,9 +129,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => SubCategoryScreen(
-                                subcategory:
-                                    s)), //will normaly take you to the supermarket's page
+                            builder: (_) => SubCategoryScreen(subcategory: s)),
                       );
                     },
                     child: Column(children: [
@@ -326,41 +328,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
       iconColors.add(ShoppyColors.blue);
     }
   }
-  // TextFormField textFormField(String textH, TextEditingController eController) {
-  //   bool hide = false;
-  //   if (textH == 'Password') {
-  //     hide = true;
-  //   }
-  //   return TextFormField(
-  //     controller: eController,
-  //     obscureText: hide,
-  //     style: TextStyle(color: ShoppyColors.blue),
-  //     decoration: InputDecoration(
-  //       contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
-  //       fillColor: const Color.fromARGB(240, 225, 225, 225),
-  //       filled: true,
-  //       hintStyle: TextStyle(color: ShoppyColors.blue),
-  //       focusedBorder: OutlineInputBorder(
-  //           borderRadius: BorderRadius.circular(35),
-  //           borderSide: BorderSide(color: ShoppyColors.red)),
-  //       hintText: textH,
-  //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
-  //     ),
-  //   );
-  // }
-}
 
-// void getLists(List<String> image, List<String> Name, String Subname) {
-//   if (Subname == 'Nicolas') {
-//     for (int i = 0; i < 3; i++) {
-//       image.add('https://nicolastheodosiou.pages.dev/images/prof.png');
-//       Name.add('Nicolas');
-//     }
-//   } else if (Subname == 'Banana') {
-//     for (int i = 0; i < 3; i++) {
-//       image.add(
-//           'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/800px-Banana-Single.jpg');
-//       Name.add('Banana');
-//     }
-//   }
-// }
+  Future<List<Offer>> getCategoryOffers(List<Subcategory> subs) async {
+    List<Offer> offers = [];
+    for (Subcategory element in subs) {
+      element.subcategoryOffers = await getOffersBySubcategory(element);
+      for (Offer el in element.subcategoryOffers) {
+        offers.add(el);
+      }
+    }
+    return offers;
+  }
+}

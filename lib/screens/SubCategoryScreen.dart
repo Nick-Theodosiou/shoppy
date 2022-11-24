@@ -50,7 +50,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
     _refreshController.loadComplete();
   }
 
-   List<Color> iconColors = <Color>[];
+  List<Color> iconColors = <Color>[];
   //getLists(ProductImage, ProductName, subname);
   User user = localUser;
   //bool _notificationsEnabled = true;
@@ -66,7 +66,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
     //   createIconColorList();
     // }
     // this will be fixed after adding from the database the liked products
-    // Rember to check it 
+    // Rember to check it
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
@@ -100,8 +100,9 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
         onLoading: _onLoading,
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01,
-             bottom:MediaQuery.of(context).size.height * 0.003,
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.01,
+              bottom: MediaQuery.of(context).size.height * 0.003,
             ),
             child: ListView.builder(
                 padding: EdgeInsets.zero,
@@ -113,11 +114,10 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.only(
-                     // top: MediaQuery.of(context).size.height * 0.00,
-                      left: MediaQuery.of(context).size.width * 0.03,
-                      right: MediaQuery.of(context).size.width * 0.03,
-                      bottom:MediaQuery.of(context).size.height * 0.01
-                    ),
+                        // top: MediaQuery.of(context).size.height * 0.00,
+                        left: MediaQuery.of(context).size.width * 0.03,
+                        right: MediaQuery.of(context).size.width * 0.03,
+                        bottom: MediaQuery.of(context).size.height * 0.01),
                     child: Container(
                       width: double.infinity,
                       height: 100,
@@ -134,7 +134,8 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -147,13 +148,18 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                 child: IconButton(
                                   icon: Icon(
                                     Icons.favorite,
-                                   color: (user.likedProduct.any(((element) => element.productId== subcategoryOffers[index].product.productId)) ? ShoppyColors.red: ShoppyColors.blue ) ,
+                                    color: (user.likedProduct.any(((element) =>
+                                            element.productId ==
+                                            subcategoryOffers[index]
+                                                .product
+                                                .productId))
+                                        ? ShoppyColors.red
+                                        : ShoppyColors.blue),
                                     //color: Color(0xFFE86969),
                                     size: 20,
                                   ),
                                   onPressed: () {
                                     setState(() {
-                                    
                                       // if (iconColors[index] == ShoppyColors.blue)
                                       //   iconColors[index] = ShoppyColors.red;
                                       // else
@@ -165,12 +171,15 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01,),
+                              padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.01,
+                              ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: Image.network(
                                   subcategoryOffers[index].product.productImage,
-                                  width: MediaQuery.of(context).size.width * 0.16,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.16,
                                   fit: BoxFit.fitWidth,
                                 ),
                               ),
@@ -181,10 +190,10 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                   padding: EdgeInsets.only(
-                                    top:
-                                        MediaQuery.of(context).size.height * 0.0250,
-                                    left:
-                                        MediaQuery.of(context).size.height * 0.01,
+                                    top: MediaQuery.of(context).size.height *
+                                        0.0250,
+                                    left: MediaQuery.of(context).size.height *
+                                        0.01,
                                   ),
                                   child: Column(
                                       crossAxisAlignment:
@@ -204,9 +213,10 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                               ),
                                         ),
                                         SizedBox(
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.004,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.004,
                                         ),
                                         Text(
                                           //textAlign:TextAlign.left,
@@ -233,7 +243,8 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                   child: Column(
                                     children: [
                                       Image.network(
-                                        subcategoryOffers[index].storePictureURL,
+                                        subcategoryOffers[index]
+                                            .storePictureURL,
                                         width: 80,
                                         height: 50,
                                         fit: BoxFit.fitWidth,
@@ -272,11 +283,11 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
 
   void createIconColorList() {
     int length = subcategoryOffers.length;
-    print("Offers     :"+subcategoryOffers.length.toString());
+    print("Offers     :" + subcategoryOffers.length.toString());
     for (var i = 0; i < length; i++) {
       iconColors.add(ShoppyColors.blue);
     }
-    print("Colors      :"+ iconColors.length.toString());
+    print("Colors      :" + iconColors.length.toString());
   }
   // TextFormField textFormField(String textH, TextEditingController eController) {
   //   bool hide = false;
