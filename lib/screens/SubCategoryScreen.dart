@@ -49,7 +49,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
     _refreshController.loadComplete();
   }
 
-  static List<Color> iconColors = <Color>[];
+   List<Color> iconColors = <Color>[];
   //getLists(ProductImage, ProductName, subname);
   //// User user = localUser;
   //bool _notificationsEnabled = true;
@@ -64,6 +64,8 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
     if (iconColors.isEmpty) {
       createIconColorList();
     }
+    // this will be fixed after adding from the database the liked products
+    // Rember to check it 
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
@@ -260,9 +262,11 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
 
   void createIconColorList() {
     int length = subcategoryOffers.length;
+    print("Offers     :"+subcategoryOffers.length.toString());
     for (var i = 0; i < length; i++) {
       iconColors.add(ShoppyColors.blue);
     }
+    print("Colors      :"+ iconColors.length.toString());
   }
   // TextFormField textFormField(String textH, TextEditingController eController) {
   //   bool hide = false;
