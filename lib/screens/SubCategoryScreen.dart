@@ -147,7 +147,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                 child: IconButton(
                                   icon: Icon(
                                     Icons.favorite,
-                                 //  color: (user.likedProduct          (subcategoryOffers[index].product.)) ? ShoppyColors.red: ShoppyColors.blue ,
+                                   color: (user.likedProduct.any(((element) => element.productId== subcategoryOffers[index].product.productId)) ? ShoppyColors.red: ShoppyColors.blue ) ,
                                     //color: Color(0xFFE86969),
                                     size: 20,
                                   ),
