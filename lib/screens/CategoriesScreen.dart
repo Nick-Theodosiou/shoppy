@@ -98,82 +98,8 @@ class CategoriesScreenState extends State<CategoriesScreenDemo> {
                 bottom: 10),
             child: Column(
               children: [
-                TextFormField(
-                  style: TextStyle(color: ShoppyColors.blue),
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.search),
-                    prefixIconColor: ShoppyColors.blue,
-                    contentPadding:
-                        const EdgeInsets.only(top: 15, bottom: 15, left: 15),
-                    fillColor: const Color.fromARGB(108, 225, 225, 225),
-                    filled: true,
-                    hintStyle:
-                        TextStyle(color: ShoppyColors.blue, fontSize: 20),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(35),
-                        borderSide: BorderSide(color: ShoppyColors.blue)),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(35),
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(108, 225, 225, 225))),
-                    hintText: "Search...",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(35)),
-                  ),
-                ),
-                Row(children: [
-                  TextButton.icon(
-                    // <-- TextButton
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.sort,
-                      size: 24.0,
-                      color: ShoppyColors.blue,
-                    ),
-                    label: const Text('Sort'),
-                    style: TextButton.styleFrom(
-                      foregroundColor: ShoppyColors.blue, // Text Color
-                    ),
-                  ),
-                  const Spacer(),
-                  /*               ElevatedButton(
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Download',
-                          style: TextStyle(
-                            color: ShoppyColors.blue, // Text Color
-                          ),
-                        ), // <-- Text
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Icon(
-                          // <-- Icon
-                          Icons.download,
-                          size: 24.0,
-                          color: ShoppyColors.blue,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),*/
-                  TextButton.icon(
-                    // <-- TextButton
-                    onPressed: () {},
-                    label: const Text('Filter'),
-                    icon: Icon(
-                      Icons.filter_alt_rounded,
-                      size: 24.0,
-                      color: ShoppyColors.blue,
-                    ),
-                    style: TextButton.styleFrom(
-                      foregroundColor: ShoppyColors.blue, // Text Color
-                    ),
-                  ),
-                ]),
+                searchBar(),
+                sortAndFilter(),
                 GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -242,5 +168,82 @@ class CategoriesScreenState extends State<CategoriesScreenDemo> {
 // }
 }
 
-
 // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
+Row sortAndFilter() {
+  return Row(children: [
+    TextButton.icon(
+      // <-- TextButton
+      onPressed: () {},
+      icon: Icon(
+        Icons.sort,
+        size: 24.0,
+        color: ShoppyColors.blue,
+      ),
+      label: const Text('Sort'),
+      style: TextButton.styleFrom(
+        foregroundColor: ShoppyColors.blue, // Text Color
+      ),
+    ),
+    const Spacer(),
+    /*               ElevatedButton(
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Download',
+                          style: TextStyle(
+                            color: ShoppyColors.blue, // Text Color
+                          ),
+                        ), // <-- Text
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Icon(
+                          // <-- Icon
+                          Icons.download,
+                          size: 24.0,
+                          color: ShoppyColors.blue,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),*/
+    TextButton.icon(
+      // <-- TextButton
+      onPressed: () {},
+      label: const Text('Filter'),
+      icon: Icon(
+        Icons.filter_alt_rounded,
+        size: 24.0,
+        color: ShoppyColors.blue,
+      ),
+      style: TextButton.styleFrom(
+        foregroundColor: ShoppyColors.blue, // Text Color
+      ),
+    ),
+  ]);
+}
+
+TextFormField searchBar() {
+  return TextFormField(
+    style: TextStyle(color: ShoppyColors.blue),
+    decoration: InputDecoration(
+      prefixIcon: const Icon(Icons.search),
+      prefixIconColor: ShoppyColors.blue,
+      contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
+      fillColor: const Color.fromARGB(108, 225, 225, 225),
+      filled: true,
+      hintStyle: TextStyle(color: ShoppyColors.blue, fontSize: 20),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(35),
+          borderSide: BorderSide(color: ShoppyColors.blue)),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(35),
+          borderSide:
+              const BorderSide(color: Color.fromARGB(108, 225, 225, 225))),
+      hintText: "Search...",
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
+    ),
+  );
+}
