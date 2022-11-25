@@ -10,6 +10,7 @@ import 'package:shoppy/screens/CategoriesScreen.dart';
 import '../NavigationBarScreen.dart';
 import '../models/User.dart';
 import '../styles/colors.dart';
+import 'ProductScreen.dart';
 
 class SubCategoryScreen extends StatefulWidget {
   final Subcategory subcategory;
@@ -112,164 +113,174 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                 itemCount: subcategoryOffers.length,
                 //itemCount: cartItems.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        // top: MediaQuery.of(context).size.height * 0.00,
-                        left: MediaQuery.of(context).size.width * 0.03,
-                        right: MediaQuery.of(context).size.width * 0.03,
-                        bottom: MediaQuery.of(context).size.height * 0.01),
-                    child: Container(
-                      width: double.infinity,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        // ignore: prefer_const_literals_to_create_immutables
-                        boxShadow: [
-                          const BoxShadow(
-                            blurRadius: 4,
-                            color: Color(0x320E151B),
-                            offset: Offset(0, 1),
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              height: 100,
-                              width: 30,
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.favorite,
-                                    color: (user.likedProduct.any(((element) =>
-                                            element.productId ==
+                  return GestureDetector(
+                    onTap: () {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  ProductScreen(product:  subcategoryOffers[index])),
+                                        );
+                                      },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          // top: MediaQuery.of(context).size.height * 0.00,
+                          left: MediaQuery.of(context).size.width * 0.03,
+                          right: MediaQuery.of(context).size.width * 0.03,
+                          bottom: MediaQuery.of(context).size.height * 0.01),
+                      child: Container(
+                        width: double.infinity,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          // ignore: prefer_const_literals_to_create_immutables
+                          boxShadow: [
+                            const BoxShadow(
+                              blurRadius: 4,
+                              color: Color(0x320E151B),
+                              offset: Offset(0, 1),
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: 100,
+                                width: 30,
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.favorite,
+                                      color: (user.likedProduct.any(((element) =>
+                                              element.productId ==
+                                              subcategoryOffers[index]
+                                                  .product
+                                                  .productId))
+                                          ? ShoppyColors.red
+                                          : ShoppyColors.blue),
+                                      //color: Color(0xFFE86969),
+                                      size: 20,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        // if (iconColors[index] == ShoppyColors.blue)
+                                        //   iconColors[index] = ShoppyColors.red;
+                                        // else
+                                        //   iconColors[index] = ShoppyColors.blue;
+                                      });
+                                      // Favorite Supermarket /Unfavorite Supermarket
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height * 0.01,
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    subcategoryOffers[index].product.productImage,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.16,
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height *
+                                          0.0250,
+                                      left: MediaQuery.of(context).size.height *
+                                          0.01,
+                                    ),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            // NamesofSM[index]
+                                            //textAlign:TextAlign.left,
                                             subcategoryOffers[index]
                                                 .product
-                                                .productId))
-                                        ? ShoppyColors.red
-                                        : ShoppyColors.blue),
-                                    //color: Color(0xFFE86969),
-                                    size: 20,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      // if (iconColors[index] == ShoppyColors.blue)
-                                      //   iconColors[index] = ShoppyColors.red;
-                                      // else
-                                      //   iconColors[index] = ShoppyColors.blue;
-                                    });
-                                    // Favorite Supermarket /Unfavorite Supermarket
-                                  },
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.height * 0.01,
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.network(
-                                  subcategoryOffers[index].product.productImage,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.16,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height *
-                                        0.0250,
-                                    left: MediaQuery.of(context).size.height *
-                                        0.01,
-                                  ),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          // NamesofSM[index]
-                                          //textAlign:TextAlign.left,
-                                          subcategoryOffers[index]
-                                              .product
-                                              .productName,
-                                          style: TextStyle(
-                                              color: ShoppyColors.blue,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold
-                                              //fontWeight: FontWeight.w400
-                                              ),
-                                        ),
-                                        SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.004,
-                                        ),
-                                        Text(
-                                          //textAlign:TextAlign.left,
-                                          subcategoryOffers[index].storeName,
-                                          style: TextStyle(
-                                              color: ShoppyColors.blue,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                      ]),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              //flex: 1,
-                              child: Align(
-                                alignment: Alignment.topRight,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height *
-                                        0.0150,
-                                    //left: MediaQuery.of(context).size.height * 0.01,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Image.network(
-                                        subcategoryOffers[index]
-                                            .storePictureURL,
-                                        width: 80,
-                                        height: 50,
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                      // SizedBox(
-                                      //   height:
-                                      //       MediaQuery.of(context).size.height *
-                                      //           0.000,
-                                      // ),
-                                      Text(
-                                        "€${subcategoryOffers[index].price.toStringAsFixed(2)}",
-                                        style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
+                                                .productName,
+                                            style: TextStyle(
+                                                color: ShoppyColors.blue,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold
+                                                //fontWeight: FontWeight.w400
+                                                ),
+                                          ),
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
                                                     .size
-                                                    .width *
-                                                0.05,
-                                            fontWeight: FontWeight.w500,
-                                            color: ShoppyColors.blue),
-                                      )
-                                    ],
+                                                    .height *
+                                                0.004,
+                                          ),
+                                          Text(
+                                            //textAlign:TextAlign.left,
+                                            subcategoryOffers[index].storeName,
+                                            style: TextStyle(
+                                                color: ShoppyColors.blue,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w300),
+                                          ),
+                                        ]),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                              Expanded(
+                                //flex: 1,
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height *
+                                          0.0150,
+                                      //left: MediaQuery.of(context).size.height * 0.01,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Image.network(
+                                          subcategoryOffers[index]
+                                              .storePictureURL,
+                                          width: 80,
+                                          height: 50,
+                                          fit: BoxFit.fitWidth,
+                                        ),
+                                        // SizedBox(
+                                        //   height:
+                                        //       MediaQuery.of(context).size.height *
+                                        //           0.000,
+                                        // ),
+                                        Text(
+                                          "€${subcategoryOffers[index].price.toStringAsFixed(2)}",
+                                          style: TextStyle(
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.05,
+                                              fontWeight: FontWeight.w500,
+                                              color: ShoppyColors.blue),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

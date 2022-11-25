@@ -11,6 +11,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shoppy/styles/colors.dart';
 import 'CategoriesScreen.dart';
 import 'CategoryScreen.dart';
+import 'ProductScreen.dart';
 import 'StoresScreen.dart';
 
 void main() {
@@ -171,120 +172,135 @@ class _HomeScreenState extends State<HomeScreen> {
                                   (item) => Padding(
                                     padding: const EdgeInsets.only(
                                         left: 8, right: 8),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Flexible(
-                                                  flex: 6,
-                                                  child: Text(
-                                                    item.product.productName,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        fontSize: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.045),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  ProductScreen(product: item)),
+                                        );
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Flexible(
+                                                    flex: 6,
+                                                    child: Text(
+                                                      item.product.productName,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          fontSize: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.045),
+                                                    ),
                                                   ),
-                                                ),
-                                                CachedNetworkImage(
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.04,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.18,
-                                                  imageUrl:
-                                                      item.storePictureURL,
-                                                  placeholder: (context, url) =>
-                                                      CircularProgressIndicator(),
-                                                  errorWidget:
-                                                      ((context, url, error) =>
-                                                          Icon(Icons.error)),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  flex: 6,
-                                                  child: CachedNetworkImage(
-                                                    alignment: Alignment.center,
-                                                    imageUrl: item
-                                                        .product.productImage,
+                                                  CachedNetworkImage(
+                                                    alignment:
+                                                        Alignment.centerRight,
                                                     height:
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .height *
-                                                            0.10,
+                                                            0.04,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.18,
+                                                    imageUrl:
+                                                        item.storePictureURL,
+                                                    placeholder: (context,
+                                                            url) =>
+                                                        const CircularProgressIndicator(),
+                                                    errorWidget: ((context, url,
+                                                            error) =>
+                                                        Icon(Icons.error)),
                                                   ),
-                                                ),
-                                                Expanded(
-                                                  flex: 4,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.bottomRight,
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: MediaQuery.of(
-                                                                      context)
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 6,
+                                                    child: CachedNetworkImage(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      imageUrl: item
+                                                          .product.productImage,
+                                                      height:
+                                                          MediaQuery.of(context)
                                                                   .size
                                                                   .height *
-                                                              0.04),
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Text(
-                                                            "€${item.oldprice.toStringAsFixed(2)}",
-                                                            style: TextStyle(
-                                                                decoration:
-                                                                    TextDecoration
-                                                                        .lineThrough,
-                                                                fontSize: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.04),
-                                                          ),
-                                                          Text(
-                                                            "€${item.price.toStringAsFixed(2)}",
-                                                            style: TextStyle(
-                                                                fontSize: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.06,
-                                                                color:
-                                                                    ShoppyColors
-                                                                        .red),
-                                                          )
-                                                        ],
-                                                      ),
+                                                              0.10,
                                                     ),
                                                   ),
-                                                )
-                                              ],
-                                            )
-                                          ],
+                                                  Expanded(
+                                                    flex: 4,
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.bottomRight,
+                                                      child: Padding(
+                                                        padding: EdgeInsets.only(
+                                                            top: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height *
+                                                                0.04),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            Text(
+                                                              "€${item.oldprice.toStringAsFixed(2)}",
+                                                              style: TextStyle(
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .lineThrough,
+                                                                  fontSize: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.04),
+                                                            ),
+                                                            Text(
+                                                              "€${item.price.toStringAsFixed(2)}",
+                                                              style: TextStyle(
+                                                                  fontSize: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.06,
+                                                                  color:
+                                                                      ShoppyColors
+                                                                          .red),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),

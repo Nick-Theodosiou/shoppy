@@ -38,8 +38,9 @@ class _ListScreenState extends State<ListScreen> {
     var total = 0.0;
     for (var i = 0; i < _shoppingList.length; i++)
       for (var j = 0; j < _shoppingList[i].itemOffers.length; j++)
-        if (_shoppingList[i].itemOffers[j].isChecked)
-          total += _shoppingList[i].itemOffers[j].offer.price;
+        if (!_shoppingList[i].itemOffers[j].isChecked)
+          total += _shoppingList[i].itemOffers[j].offer.price *
+              _shoppingList[i].itemOffers[j].quantity;
     return total * 1.0;
   }
 
@@ -48,7 +49,7 @@ class _ListScreenState extends State<ListScreen> {
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 18.0, right: 10, left: 10),
+        padding: const EdgeInsets.only(bottom: 0.0, right: 8, left: 8),
         child: Stack(
           children: <Widget>[
             SmartRefresher(
@@ -69,14 +70,18 @@ class _ListScreenState extends State<ListScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Image.network(
-                              _shoppingList[indexS].store.storeImage,
-                              height: MediaQuery.of(context).size.width * 0.12,
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4.0),
+                              child: Image.network(
+                                _shoppingList[indexS].store.storeImage,
+                                height:
+                                    MediaQuery.of(context).size.width * 0.12,
+                              ),
                             ),
                             //  image: AssetImage(products[index].image.toString()),
 
                             Padding(
-                              padding: const EdgeInsets.only(right: 30),
+                              padding: const EdgeInsets.only(right: 20),
                               child: Row(
                                 children: [
                                   Checkbox(
@@ -110,13 +115,14 @@ class _ListScreenState extends State<ListScreen> {
                         ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           padding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 0.0),
+                              vertical: 2.0, horizontal: 0.0),
                           shrinkWrap: true,
                           itemCount: _shoppingList[indexS].itemOffers.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
-                              padding: const EdgeInsets.only(bottom: 2.0),
+                              padding: const EdgeInsets.only(bottom: 1.0),
                               child: Container(
+                                width: double.infinity,
                                 decoration: BoxDecoration(
                                   boxShadow: [
                                     const BoxShadow(
@@ -133,7 +139,7 @@ class _ListScreenState extends State<ListScreen> {
                                   color: Colors.white,
                                   elevation: 5.0,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
+                                    padding: const EdgeInsets.only(bottom: 7),
                                     child: Column(
                                       children: [
                                         Row(
@@ -171,6 +177,7 @@ class _ListScreenState extends State<ListScreen> {
                                                       const EdgeInsets.only(
                                                           top: 18.0),
                                                   child: RichText(
+                                                    maxLines: 10,
                                                     text: TextSpan(
                                                       text:
                                                           '${_shoppingList[indexS].itemOffers[index].offer.product.productName}\n',
@@ -181,31 +188,33 @@ class _ListScreenState extends State<ListScreen> {
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  elevation: 0),
-                                              onPressed: () {
-                                                setState(() {
-                                                  deleteOfferFromList(
-                                                      indexS, index);
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 12.0),
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    deleteOfferFromList(
+                                                        indexS, index);
 
-                                                  _shoppingList =
-                                                      localUser.itemsInCart;
-                                                });
-                                              },
-                                              child: Icon(
-                                                Icons.delete,
-                                                color: ShoppyColors.blue,
-                                                size: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.08,
+                                                    _shoppingList =
+                                                        localUser.itemsInCart;
+                                                  });
+                                                },
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color: ShoppyColors.blue,
+                                                  size: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.08,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -227,6 +236,7 @@ class _ListScreenState extends State<ListScreen> {
                                                         .size
                                                         .width *
                                                     0.23,
+                                                fit: BoxFit.fitWidth,
                                               ),
                                             ),
                                             Align(
@@ -286,6 +296,8 @@ class _ListScreenState extends State<ListScreen> {
                                                                 fontSize: 18.0),
                                                           )
                                                         ]),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                       ),
                                                     ),
                                                   ],
@@ -388,33 +400,38 @@ class _ListScreenState extends State<ListScreen> {
                 },
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                decoration: BoxDecoration(
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5.0),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  width: MediaQuery.of(context).size.width * 0.92,
+                  decoration: BoxDecoration(
+                    color: ShoppyColors.blue,
                     boxShadow: const [
                       BoxShadow(
                         blurRadius: 4,
                         color: Color(0x320E151B),
-                        offset: Offset(0, 1),
+                        offset: Offset(5, 5),
                       )
                     ],
-                    color: ShoppyColors.blue,
-                    border: Border.all(color: ShoppyColors.blue, width: 1),
-                    borderRadius: BorderRadius.circular(15)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Total',
-                        style: TextStyle(fontSize: 25, color: Colors.white),
-                      ),
-                      Text('€' + getTotal().toString(),
-                          style: const TextStyle(
-                              fontSize: 25, color: Colors.white))
-                    ],
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Total',
+                          style: TextStyle(fontSize: 25, color: Colors.white),
+                        ),
+                        Text('€' + getTotal().toString(),
+                            style: const TextStyle(
+                                fontSize: 25, color: Colors.white))
+                      ],
+                    ),
                   ),
                 ),
               ),
