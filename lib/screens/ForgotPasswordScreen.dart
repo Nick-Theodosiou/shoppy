@@ -165,7 +165,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => const SignUp()));
+                                          builder: (_) => const SignUpScreen()));
                                 },
                                 child: Text(
                                   'Sign Up',

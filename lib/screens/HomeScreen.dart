@@ -14,10 +14,6 @@ import 'CategoryScreen.dart';
 import 'ProductScreen.dart';
 import 'StoresScreen.dart';
 
-void main() {
-  runApp(const HomeScreen());
-}
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -174,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         left: 8, right: 8),
                                     child: GestureDetector(
                                       onTap: () {
-                                        Navigator.pushReplacement(
+                                        Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (_) =>
@@ -354,7 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (_) => const StoresScreen()),
@@ -372,7 +368,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: _supermarkets.map((s) {
                         return InkWell(
                           onTap: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (_) =>
@@ -443,7 +439,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (_) => const CategoriesScreen()),
@@ -468,7 +464,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => CategoryScreen(

@@ -53,11 +53,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       child: IconButton(
                         padding: EdgeInsets.zero,
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const HomeScreen()),
-                          );
+                          Navigator.pop(context);
                         },
                         icon: const Icon(Icons.arrow_back_ios),
                         iconSize: 40,

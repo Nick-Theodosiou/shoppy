@@ -10,25 +10,13 @@ import '../NavigationBarScreen.dart';
 import 'CategoryScreen.dart';
 import 'HomeScreen.dart';
 
-class CategoriesScreen extends StatelessWidget {
+class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: CategoriesScreenDemo(),
-    );
-  }
-}
-
-class CategoriesScreenDemo extends StatefulWidget {
-  const CategoriesScreenDemo({super.key});
   @override
   CategoriesScreenState createState() => CategoriesScreenState();
 }
 
-class CategoriesScreenState extends State<CategoriesScreenDemo> {
+class CategoriesScreenState extends State<CategoriesScreen> {
   @override
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
@@ -61,17 +49,6 @@ class CategoriesScreenState extends State<CategoriesScreenDemo> {
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            // Navigator.pop(context, true);
-            //SaveChanges(iconColors);
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
-            );
-          },
-        ),
         title: Text(
           "Categories",
           style: TextStyle(
@@ -117,7 +94,7 @@ class CategoriesScreenState extends State<CategoriesScreenDemo> {
                           onTap: () async {
                             List<Category> listC = await getCategories();
                             // ignore: use_build_context_synchronously
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => CategoryScreen(

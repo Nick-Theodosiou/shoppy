@@ -9,25 +9,14 @@ import 'package:shoppy/styles/colors.dart';
 import '../NavigationBarScreen.dart';
 import 'HomeScreen.dart';
 
-class StoresScreen extends StatelessWidget {
+
+class StoresScreen extends StatefulWidget {
   const StoresScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: StoresScreenDemo(),
-    );
-  }
-}
-
-class StoresScreenDemo extends StatefulWidget {
-  const StoresScreenDemo({super.key});
   @override
   _StoresScreenState createState() => _StoresScreenState();
 }
 
-class _StoresScreenState extends State<StoresScreenDemo> {
+class _StoresScreenState extends State<StoresScreen> {
   @override
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
@@ -60,17 +49,6 @@ class _StoresScreenState extends State<StoresScreenDemo> {
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            // Navigator.pop(context, true);
-            //SaveChanges(iconColors);
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const NavigationBarScreen()),
-            );
-          },
-        ),
         title: Text(
           "Supermarkets",
           style: TextStyle(
