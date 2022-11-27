@@ -149,7 +149,9 @@ class _ProductScreenState extends State<ProductScreen> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    if (_amount > 1) _amount--;
+                                    if (_amount > 1 ||
+                                        (existsInCart && _amount > 0))
+                                      _amount--;
                                   });
                                 },
                                 child: Icon(
@@ -237,7 +239,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         ),
                       ),
                       child: Text(
-                        existsInCart ? 'Update Cart' : 'Add to Cart',
+                        existsInCart ? 'Update List' : 'Add to List',
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                     ),
