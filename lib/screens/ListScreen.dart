@@ -44,12 +44,18 @@ class _ListScreenState extends State<ListScreen> {
     return total * 1.0;
   }
 
+  double getPaddingCheckbox(int1, int2) {
+    if (_shoppingList[int1].itemOffers[int2].offer.product.brand != '')
+      return 12;
+    return 12;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 0.0, right: 8, left: 8),
+        padding: const EdgeInsets.only(bottom: 0.0, right: 6, left: 6),
         child: Stack(
           children: <Widget>[
             SmartRefresher(
@@ -60,6 +66,7 @@ class _ListScreenState extends State<ListScreen> {
               onRefresh: _onRefresh,
               onLoading: _onLoading,
               child: ListView.builder(
+                shrinkWrap: true,
                 itemCount: _shoppingList.length,
                 itemBuilder: (BuildContext context, int indexS) {
                   return Card(
@@ -87,7 +94,7 @@ class _ListScreenState extends State<ListScreen> {
                                   Checkbox(
                                     shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(5.0))),
+                                            Radius.circular(20.0))),
                                     value: _shoppingList[indexS].isChecked,
                                     onChanged: (v) {
                                       setState(() {
@@ -122,6 +129,8 @@ class _ListScreenState extends State<ListScreen> {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 1.0),
                               child: Container(
+                                // height:
+                                //     MediaQuery.of(context).size.height * 0.12,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   boxShadow: [
@@ -138,256 +147,485 @@ class _ListScreenState extends State<ListScreen> {
                                       borderRadius: BorderRadius.circular(30)),
                                   color: Colors.white,
                                   elevation: 5.0,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 7),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Checkbox(
-                                                  shape:
-                                                      const RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          5.0))),
-                                                  value: _shoppingList[indexS]
-                                                      .itemOffers[index]
-                                                      .isChecked,
-                                                  onChanged: (v) {
-                                                    setState(() {
-                                                      print(indexS);
-                                                      _shoppingList[indexS]
-                                                          .itemOffers[index]
-                                                          .isChecked = v!;
-                                                      if (v! == false) {
-                                                        _shoppingList[indexS]
-                                                            .isChecked = false;
-                                                      }
-                                                    });
-                                                  },
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 18.0),
-                                                  child: RichText(
-                                                    maxLines: 10,
-                                                    text: TextSpan(
-                                                      text:
-                                                          '${_shoppingList[indexS].itemOffers[index].offer.product.productName}\n',
-                                                      style: TextStyle(
-                                                          color: Colors.blueGrey
-                                                              .shade800,
-                                                          fontSize: 16.0,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 12.0),
-                                              child: IconButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    deleteOfferFromList(
-                                                        indexS, index);
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.04,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.04,
+                                            // child: Checkbox(
+                                            //   shape:
+                                            //       const RoundedRectangleBorder(
+                                            //           borderRadius:
+                                            //               BorderRadius.all(
+                                            //                   Radius.circular(
+                                            //                       20.0))),
+                                            //   value: _shoppingList[indexS]
+                                            //       .itemOffers[index]
+                                            //       .isChecked,
+                                            //   onChanged: (v) {
+                                            //     setState(() {
+                                            //       //print(indexS);
+                                            //       _shoppingList[indexS]
+                                            //           .itemOffers[index]
+                                            //           .isChecked = v!;
+                                            //       if (v! == false) {
+                                            //         _shoppingList[indexS]
+                                            //             .isChecked = false;
+                                            //       }
+                                            //     });
+                                            //   },
+                                            // ),
+                                          ),
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Image.network(
+                                              _shoppingList[indexS]
+                                                  .itemOffers[index]
+                                                  .offer
+                                                  .product
+                                                  .productImage,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.16,
 
-                                                    _shoppingList =
-                                                        localUser.itemsInCart;
-                                                  });
-                                                },
-                                                icon: Icon(
-                                                  Icons.delete,
-                                                  color: ShoppyColors.blue,
-                                                  size: MediaQuery.of(context)
+                                              // fit: BoxFit.fitWidth,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(0.0),
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      0.08,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 15.0),
-                                              child: Image.network(
-                                                _shoppingList[indexS]
-                                                    .itemOffers[index]
-                                                    .offer
-                                                    .product
-                                                    .productImage,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.23,
-                                                fit: BoxFit.fitWidth,
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: Alignment.center,
-                                              child: SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.35,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const SizedBox(
-                                                      height: 5.0,
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: RichText(
-                                                        maxLines: 10,
-                                                        text:
-                                                            TextSpan(children: [
-                                                          (_shoppingList[indexS]
-                                                                      .itemOffers[
-                                                                          index]
-                                                                      .offer
-                                                                      .product
-                                                                      .brand !=
-                                                                  '')
-                                                              ? TextSpan(
+                                                      0.30,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      RichText(
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                        maxLines: 1,
+                                                        //richtext maxlines 1
+                                                        text: TextSpan(
+                                                          text:
+                                                              '${_shoppingList[indexS].itemOffers[index].offer.product.productName}',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .blueGrey
+                                                                  .shade800,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .height *
+                                                                  0.02,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                      (_shoppingList[indexS]
+                                                                  .itemOffers[
+                                                                      index]
+                                                                  .offer
+                                                                  .product
+                                                                  .brand !=
+                                                              '')
+                                                          ? RichText(
+                                                              maxLines: 1,
+                                                              text: TextSpan(
                                                                   text:
-                                                                      '${_shoppingList[indexS].itemOffers[index].offer.product.brand}\n',
+                                                                      '${_shoppingList[indexS].itemOffers[index].offer.product.brand}',
                                                                   style: TextStyle(
                                                                       color: Colors
                                                                           .blueGrey
                                                                           .shade800,
-                                                                      fontSize:
-                                                                          18.0))
-                                                              : const TextSpan(),
-                                                          TextSpan(
-                                                            text:
-                                                                'Qty: ${_shoppingList[indexS].itemOffers[index].quantity}\n',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .blueGrey
-                                                                    .shade800,
-                                                                fontSize: 18.0),
-                                                          ),
-                                                          TextSpan(
-                                                            text:
-                                                                '€${_shoppingList[indexS].itemOffers[index].offer.price}',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .blueGrey
-                                                                    .shade800,
-                                                                fontSize: 18.0),
-                                                          )
-                                                        ]),
+                                                                      fontSize: MediaQuery.of(context)
+                                                                              .size
+                                                                              .height *
+                                                                          0.02)),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                            )
+                                                          : Container(),
+                                                      RichText(
+                                                        maxLines: 1,
+                                                        text: TextSpan(
+                                                          text:
+                                                              'Qty: ${_shoppingList[indexS].itemOffers[index].quantity}',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .blueGrey
+                                                                  .shade800,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .height *
+                                                                  0.02),
+                                                        ),
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            Column(
-                                              children: [
-                                                ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    elevation: 0,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                  ),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      updateQtyList(
-                                                          indexS, index, 1);
-
-                                                      _shoppingList =
-                                                          localUser.itemsInCart;
-                                                    });
-                                                  },
-                                                  child: Stack(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.circle,
-                                                        color: ShoppyColors.red,
-                                                        size: 40,
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 5.0,
-                                                                top: 5.0),
-                                                        child: Icon(
-                                                          Icons.add,
-                                                          color: Colors.white,
-                                                          size: 30,
+                                                      RichText(
+                                                        text: TextSpan(
+                                                          text:
+                                                              '€${_shoppingList[indexS].itemOffers[index].offer.price}',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .blueGrey
+                                                                  .shade800,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .height *
+                                                                  0.02),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    elevation: 0,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                  ),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      updateQtyList(
-                                                          indexS, index, -1);
-
-                                                      _shoppingList =
-                                                          localUser.itemsInCart;
-                                                    });
-                                                  },
-                                                  child: Stack(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.circle,
-                                                        color: ShoppyColors.red,
-                                                        size: 40,
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 5.0,
-                                                                top: 5.0),
-                                                        child: Icon(
-                                                          Icons.remove,
-                                                          color: Colors.white,
-                                                          size: 30,
-                                                        ),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                       ),
                                                     ],
                                                   ),
                                                 ),
                                               ],
-                                            )
-                                          ],
+                                            ),
+                                          ),
+                                          // Column(
+                                          //   children: [
+                                          // RichText(
+                                          //   maxLines: 10,
+                                          // text: TextSpan(
+                                          //   text:
+                                          //       '${_shoppingList[indexS].itemOffers[index].offer.product.productName}\n',
+                                          //   style: TextStyle(
+                                          //       color: Colors.blueGrey
+                                          //           .shade800,
+                                          //       fontSize: 16.0,
+                                          //       fontWeight:
+                                          //           FontWeight.bold),
+                                          // ),
+                                          //   overflow:
+                                          //       TextOverflow.ellipsis,
+                                          // ),
+                                          //   ],
+                                          // ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 8.0, left: 0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.00,
+                                                  child: IconButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        deleteOfferFromList(
+                                                            indexS, index);
+
+                                                        _shoppingList =
+                                                            localUser
+                                                                .itemsInCart;
+                                                      });
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.delete,
+                                                      color: ShoppyColors.blue,
+                                                      size:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.06,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.2,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Container(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            color: ShoppyColors
+                                                                .red),
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              updateQtyList(
+                                                                  indexS,
+                                                                  index,
+                                                                  -1);
+
+                                                              _shoppingList =
+                                                                  localUser
+                                                                      .itemsInCart;
+                                                            });
+                                                          },
+                                                          child: Icon(
+                                                            Icons.remove,
+                                                            color: Colors.white,
+                                                            size: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.06,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 1.0,
+                                                                right: 1),
+                                                        child: RichText(
+                                                          maxLines: 1,
+                                                          text: TextSpan(
+                                                            text:
+                                                                '${_shoppingList[indexS].itemOffers[index].quantity}',
+                                                            style: TextStyle(
+                                                              color: Colors
+                                                                  .blueGrey
+                                                                  .shade800,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.06,
+                                                            ),
+                                                          ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            color: ShoppyColors
+                                                                .red),
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              updateQtyList(
+                                                                  indexS,
+                                                                  index,
+                                                                  1);
+
+                                                              _shoppingList =
+                                                                  localUser
+                                                                      .itemsInCart;
+                                                            });
+                                                          },
+                                                          child: Icon(
+                                                            Icons.add,
+                                                            color: Colors.white,
+                                                            size: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.06,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                // IconButton(
+                                                //   onPressed: () {
+                                                //   setState(() {
+                                                //     deleteOfferFromList(
+                                                //         indexS, index);
+
+                                                //     _shoppingList =
+                                                //         localUser.itemsInCart;
+                                                //   });
+                                                // },
+                                                //   icon: Icon(
+                                                //     Icons.delete,
+                                                //     color: ShoppyColors.blue,
+                                                //     size: MediaQuery.of(context)
+                                                //             .size
+                                                //             .width *
+                                                //         0.08,
+                                                //   ),
+                                                // ),
+                                                // ElevatedButton(
+                                                //   style: ElevatedButton.styleFrom(
+                                                //     elevation: 0,
+                                                //     backgroundColor:
+                                                //         Colors.transparent,
+                                                //   ),
+                                                //   onPressed: () {
+                                                // setState(() {
+                                                //   updateQtyList(indexS, index, 1);
+
+                                                //   _shoppingList =
+                                                //       localUser.itemsInCart;
+                                                // });
+                                                //   },
+                                                //   child: Stack(
+                                                //     children: [
+                                                //       Icon(
+                                                //         Icons.circle,
+                                                //         color: ShoppyColors.red,
+                                                //         size: 40,
+                                                //       ),
+                                                //       Padding(
+                                                //         padding:
+                                                //             const EdgeInsets.only(
+                                                //                 left: 5.0, top: 5.0),
+                                                //         child: Icon(
+                                                //           Icons.add,
+                                                //           color: Colors.white,
+                                                //           size: 30,
+                                                //         ),
+                                                //       ),
+                                                //     ],
+                                                //   ),
+                                                // ),
+                                                // ElevatedButton(
+                                                //   style: ElevatedButton.styleFrom(
+                                                //     elevation: 0,
+                                                //     backgroundColor:
+                                                //         Colors.transparent,
+                                                //   ),
+                                                //   onPressed: () {
+                                                //     setState(() {
+                                                //       updateQtyList(
+                                                //           indexS, index, -1);
+
+                                                //       _shoppingList =
+                                                //           localUser.itemsInCart;
+                                                //     });
+                                                //   },
+                                                //   child: Stack(
+                                                //     children: [
+                                                //       Icon(
+                                                //         Icons.circle,
+                                                //         color: ShoppyColors.red,
+                                                //         size: 40,
+                                                //       ),
+                                                //       Padding(
+                                                //         padding:
+                                                //             const EdgeInsets.only(
+                                                //                 left: 5.0, top: 5.0),
+                                                //         child: Icon(
+                                                //           Icons.remove,
+                                                //           color: Colors.white,
+                                                //           size: 30,
+                                                //         ),
+                                                //       ),
+                                                //     ],
+                                                //   ),
+                                                // ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      new Positioned.fill(
+                                        child: (_shoppingList[indexS]
+                                                    .itemOffers[index]
+                                                    .isChecked ||
+                                                _shoppingList[indexS].isChecked)
+                                            ? Material(
+                                                elevation: 0,
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                color: Colors.transparent,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    // backgroundBlendMode:
+                                                    //     BlendMode.color,
+
+                                                    color: Color.fromARGB(
+                                                            255, 187, 187, 187)
+                                                        .withOpacity(0.5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                  ),
+                                                  // height: MediaQuery.of(context)
+                                                  //         .size
+                                                  //         .height *
+                                                  //     0.1075,
+                                                  // width: MediaQuery.of(context)
+                                                  //         .size
+                                                  //         .width *
+                                                  //     0.93,
+                                                  // child: SizedBox(width: ,),
+                                                ),
+                                              )
+                                            : Container(),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: getPaddingCheckbox(
+                                                indexS, index),
+                                            left: 11),
+                                        child: SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.08,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.08,
+                                          child: Checkbox(
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20.0))),
+                                            value: _shoppingList[indexS]
+                                                .itemOffers[index]
+                                                .isChecked,
+                                            onChanged: (v) {
+                                              setState(() {
+                                                //print(indexS);
+                                                _shoppingList[indexS]
+                                                    .itemOffers[index]
+                                                    .isChecked = v!;
+                                                if (v == false) {
+                                                  _shoppingList[indexS]
+                                                      .isChecked = false;
+                                                }
+                                              });
+                                            },
+                                          ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -406,7 +644,7 @@ class _ListScreenState extends State<ListScreen> {
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.05,
-                  width: MediaQuery.of(context).size.width * 0.92,
+                  width: MediaQuery.of(context).size.width * 0.93,
                   decoration: BoxDecoration(
                     color: ShoppyColors.blue,
                     boxShadow: const [
@@ -427,7 +665,7 @@ class _ListScreenState extends State<ListScreen> {
                           'Total',
                           style: TextStyle(fontSize: 25, color: Colors.white),
                         ),
-                        Text('€' + getTotal().toString(),
+                        Text('€' + getTotal().toStringAsFixed(2),
                             style: const TextStyle(
                                 fontSize: 25, color: Colors.white))
                       ],

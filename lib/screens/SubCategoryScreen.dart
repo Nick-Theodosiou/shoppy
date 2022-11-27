@@ -71,15 +71,6 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            // Navigator.pop(context, true);
-            //SaveChanges(iconColors);
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (_) => const NavigationBarScreen()));
-          },
-        ),
         title: Text(
           this.subcategory.subcategoryName,
           style: TextStyle(
@@ -115,13 +106,13 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) =>
-                                                  ProductScreen(product:  subcategoryOffers[index])),
-                                        );
-                                      },
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ProductScreen(
+                                product: subcategoryOffers[index])),
+                      );
+                    },
                     child: Padding(
                       padding: EdgeInsets.only(
                           // top: MediaQuery.of(context).size.height * 0.00,
@@ -158,11 +149,12 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                   child: IconButton(
                                     icon: Icon(
                                       Icons.favorite,
-                                      color: (user.likedProduct.any(((element) =>
-                                              element.productId ==
-                                              subcategoryOffers[index]
-                                                  .product
-                                                  .productId))
+                                      color: (user.likedProduct.any(
+                                              ((element) =>
+                                                  element.productId ==
+                                                  subcategoryOffers[index]
+                                                      .product
+                                                      .productId))
                                           ? ShoppyColors.red
                                           : ShoppyColors.blue),
                                       //color: Color(0xFFE86969),
@@ -182,14 +174,17 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                  top: MediaQuery.of(context).size.height * 0.01,
+                                  top:
+                                      MediaQuery.of(context).size.height * 0.01,
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
                                   child: Image.network(
-                                    subcategoryOffers[index].product.productImage,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.16,
+                                    subcategoryOffers[index]
+                                        .product
+                                        .productImage,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.16,
                                     fit: BoxFit.fitWidth,
                                   ),
                                 ),
