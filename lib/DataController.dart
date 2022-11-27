@@ -431,3 +431,54 @@ void removeFromLikedStores(Store s) async {
     conn.query('CALL deleteFavoriteStore(?,?);', [localUser.userID, s.storeID]);
   }
 }
+
+Future<bool> signUp(
+    String email, String name, String surname, String password) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  await conn.query('CALL signup(?,?,?,?);', [email, name, surname, password]);
+
+  return await checkCredentials(email, password);
+}
+
+void updateUserDetails(String name, String surname) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  await conn.query(
+      'CALL updateUserDetails(?,?,?);', [localUser.userID, name, surname]);
+}
+
+Future<List<Offer>> getSimilarProducts(Offer offer) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn
+      .query('CALL getSimilarProductTags(?);', [offer.product.productId]);
+
+  await conn.close();
+  List<Offer> list = [];
+
+  for (var row in results) {
+    Product p = Product(
+        row["ProductID"],
+        row["Product_Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row["PictureURL"],
+        row["Brand"] ?? "",
+        row["SubcategoryID"],
+        row["CategoryID"], []);
+
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
+
+    if (o.offerID != offer.offerID) {
+      list.add(o);
+    }
+  }
+  return list;
+}

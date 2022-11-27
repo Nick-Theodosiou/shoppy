@@ -38,6 +38,7 @@ class _ProductScreenState extends State<ProductScreen> {
   _ProductScreenState(this.product);
   int _amount = 1;
   bool existsInCart = false;
+  List<Offer> similarOffers = [];
 
   @override
   void initState() {
@@ -51,8 +52,15 @@ class _ProductScreenState extends State<ProductScreen> {
             .firstWhere((element) => element.offer.offerID == product.offerID)
             .quantity;
       }
+      getSimOffers();
     });
     super.initState();
+  }
+
+  Future<void> getSimOffers() async {
+    setState(() async {
+      similarOffers = await getSimilarProducts(product);
+    });
   }
 
   @override
@@ -229,6 +237,25 @@ class _ProductScreenState extends State<ProductScreen> {
                       onPressed: () {
                         setState(() {
                           addOfferToList(product, _amount);
+                          if (existsInCart && _amount > 0) {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "Quantity of ${product.product.productName} was updated.")));
+                          } else if (_amount > 0) {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "${product.product.productName} was added to your list.")));
+                            existsInCart = true;
+                          } else if (existsInCart) {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "${product.product.productName} was removed from your list.")));
+                            existsInCart = false;
+                            _amount = 1;
+                          }
                         });
                       },
                       style: ElevatedButton.styleFrom(
@@ -285,17 +312,32 @@ class _ProductScreenState extends State<ProductScreen> {
                         mainAxisSpacing: 10.0,
                         childAspectRatio: (500 / 650),
                       ),
-                      itemCount: placeholder.length,
+                      itemCount: similarOffers.length,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
                             GestureDetector(
                               onTap:
                                   () {}, // Image tapped, takes you to similar product screen
-                              child: Image.asset('asset/images/shoppyIcon.png'),
+                              child: Stack(
+                                alignment: AlignmentDirectional.bottomEnd,
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.network(similarOffers[index]
+                                        .product
+                                        .productImage),
+                                  ),
+                                  Image.network(
+                                    similarOffers[index].storePictureURL,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.15,
+                                  ),
+                                ],
+                              ),
                             ),
                             Text(
-                              placeholder.elementAt(index).name,
+                              similarOffers[index].product.productName,
                               style: const TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 fontSize: 16,
