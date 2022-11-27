@@ -4,8 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppy/LoginScreen.dart';
 import 'package:shoppy/NavigationBarScreen.dart';
 import 'package:shoppy/screens/HomeScreen.dart';
-
-import 'LoadingScreen.dart';
+import 'package:shoppy/screens/LoadingScreen.dart';
 
 void main() {
   runApp(const MyApp());
