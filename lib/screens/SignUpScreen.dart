@@ -5,30 +5,15 @@ import '../NavigationBarScreen.dart';
 import '../styles/colors.dart';
 import 'ForgotPasswordScreen.dart';
 
-// void main() {
-//   runApp(const SignUp());
-// }
 
-class SignUp extends StatelessWidget {
-  const SignUp({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SignUpDemo(),
-    );
-  }
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class SignUpDemo extends StatefulWidget {
-  const SignUpDemo({super.key});
-
-  @override
-  _SignUpDemoState createState() => _SignUpDemoState();
-}
-
-class _SignUpDemoState extends State<SignUpDemo> {
+class _SignUpScreenState extends State<SignUpScreen> {
   var username = "user";
   var password = "password";
   Widget build(BuildContext context) {
