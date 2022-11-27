@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shoppy/DataController.dart';
 import 'package:shoppy/models/Offer.dart';
+import 'package:shoppy/models/ItemOffer.dart';
+import 'package:shoppy/models/ItemStore.dart';
 
+import '../models/User.dart';
 import '../styles/colors.dart';
 import 'HomeScreen.dart';
 
@@ -33,6 +37,23 @@ class _ProductScreenState extends State<ProductScreen> {
   Offer product;
   _ProductScreenState(this.product);
   int _amount = 1;
+  bool existsInCart = false;
+
+  @override
+  void initState() {
+    setState(() {
+      existsInCart = localUser.itemsInCart.any((element) => element.itemOffers
+          .any((element1) => element1.offer.offerID == product.offerID));
+      if (existsInCart) {
+        _amount = localUser.itemsInCart
+            .firstWhere((element) => element.store.storeID == product.storeID)
+            .itemOffers
+            .firstWhere((element) => element.offer.offerID == product.offerID)
+            .quantity;
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +224,11 @@ class _ProductScreenState extends State<ProductScreen> {
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          addOfferToList(product, _amount);
+                        });
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ShoppyColors.red,
                         minimumSize: const Size.fromHeight(47),
@@ -211,8 +236,8 @@ class _ProductScreenState extends State<ProductScreen> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: const Text(
-                        'Add to Cart',
+                      child: Text(
+                        existsInCart ? 'Update Cart' : 'Add to Cart',
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                     ),
