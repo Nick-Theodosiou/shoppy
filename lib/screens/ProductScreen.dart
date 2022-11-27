@@ -58,8 +58,9 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   Future<void> getSimOffers() async {
+    List<Offer> la = await getSimilarProducts(offer);
     setState(() async {
-      similarOffers = await getSimilarProducts(offer);
+      similarOffers = la;
     });
   }
 
