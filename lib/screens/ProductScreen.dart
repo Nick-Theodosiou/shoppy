@@ -328,11 +328,14 @@ class _ProductScreenState extends State<ProductScreen> {
                               child: Stack(
                                 alignment: AlignmentDirectional.bottomEnd,
                                 children: <Widget>[
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.network(similarOffers[index]
-                                        .product
-                                        .productImage),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.network(similarOffers[index]
+                                          .product
+                                          .productImage),
+                                    ),
                                   ),
                                   Image.network(
                                     similarOffers[index].storePictureURL,
