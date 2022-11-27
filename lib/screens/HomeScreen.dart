@@ -174,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (_) =>
-                                                  ProductScreen(product: item)),
+                                                  ProductScreen(offer: item)),
                                         );
                                       },
                                       child: Container(

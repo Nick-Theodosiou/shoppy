@@ -229,7 +229,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (_) =>
-                        ProductScreen(product: category.categoryOffers[index])),
+                        ProductScreen(offer: category.categoryOffers[index])),
               );
             },
             child: Padding(
