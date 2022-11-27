@@ -52,14 +52,14 @@ class _ProductScreenState extends State<ProductScreen> {
             .firstWhere((element) => element.offer.offerID == offer.offerID)
             .quantity;
       }
-      getSimOffers();
     });
+    getSimOffers();
     super.initState();
   }
 
-  Future<void> getSimOffers() async {
+  void getSimOffers() async {
     List<Offer> la = await getSimilarProducts(offer);
-    setState(() async {
+    setState(() {
       similarOffers = la;
     });
   }
