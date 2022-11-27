@@ -47,7 +47,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 alignment: Alignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 20, top: 15),
+                    padding: const EdgeInsets.only(left: 20, top: 30),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: IconButton(
@@ -62,11 +62,21 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 40, top: 40),
+                    padding: const EdgeInsets.only(bottom: 55, top: 55),
                     child: Align(
                       alignment: Alignment.center,
                       child: Image(
                         image: NetworkImage(product.product.productImage),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Image(
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        image: NetworkImage(product.storePictureURL),
                       ),
                     ),
                   ),
