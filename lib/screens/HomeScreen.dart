@@ -450,6 +450,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   GridView.builder(
                     physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.only(top: 10),
                     shrinkWrap: true,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
