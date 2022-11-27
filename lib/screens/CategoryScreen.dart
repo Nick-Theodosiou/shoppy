@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -303,8 +305,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    // NamesofSM[index]
-                                    //textAlign:TextAlign.left,
                                     category.categoryOffers[index].product
                                         .productName,
                                     style: TextStyle(
@@ -392,32 +392,53 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     builder: (_) => SubCategoryScreen(subcategory: s)),
               );
             },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(500),
-              child: Container(
-                color: ShoppyColors.yellow,
-                child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  CachedNetworkImage(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    imageUrl: s.subcategoryImage,
-                    imageBuilder: ((context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(s.subcategoryImage)),
-                          ),
-                        )),
-                  ),
-                  Text(
-                    s.subcategoryName,
-                    style: const TextStyle(
-                      overflow: TextOverflow.ellipsis,
-                      fontSize: 16,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(500),
+                    child: Container(
+                      color: Color.fromARGB(56, 89, 89, 241),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CachedNetworkImage(
+                              width: MediaQuery.of(context).size.width * 0.15,
+                              height: MediaQuery.of(context).size.height * 0.1,
+                              imageUrl: s.subcategoryImage,
+                              imageBuilder: ((context, imageProvider) =>
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image:
+                                              NetworkImage(s.subcategoryImage)),
+                                    ),
+                                  )),
+                            ),
+                            SizedBox(
+                              width: 60,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  s.subcategoryName,
+                                  style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 14,
+                                      color: ShoppyColors.blue),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10.0,
+                            )
+                          ]),
                     ),
                   ),
+                  const SizedBox(
+                    width: 5,
+                  )
                 ]),
-              ),
-            ),
           );
         }).toList(),
       ),
