@@ -3,8 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/NavigationBarScreen.dart';
 
-import 'LoginScreen.dart';
-import 'models/User.dart';
+import '../LoginScreen.dart';
+import '../models/User.dart';
 
 class LoadingScreen extends StatefulWidget {
   final String email;

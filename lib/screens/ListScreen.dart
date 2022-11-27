@@ -616,7 +616,7 @@ class _ListScreenState extends State<ListScreen> {
                                                 _shoppingList[indexS]
                                                     .itemOffers[index]
                                                     .isChecked = v!;
-                                                if (v! == false) {
+                                                if (v == false) {
                                                   _shoppingList[indexS]
                                                       .isChecked = false;
                                                 }

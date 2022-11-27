@@ -69,13 +69,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (_) => const NavigationBarScreen()));
-          },
-        ),
         title: Text(
           this.category.categoryName,
           style: TextStyle(
@@ -230,7 +223,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (_) =>
@@ -393,7 +386,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         children: CategorySubcategories.map((s) {
           return InkWell(
             onTap: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (_) => SubCategoryScreen(subcategory: s)),
@@ -441,7 +434,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         children: CategorySubcategories.map((s) {
           return InkWell(
             onTap: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (_) => SubCategoryScreen(subcategory: s)),
