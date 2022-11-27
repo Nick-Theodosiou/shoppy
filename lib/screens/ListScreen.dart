@@ -336,7 +336,7 @@ class _ListScreenState extends State<ListScreen> {
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      0.00,
+                                                      0.06,
                                                   child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
@@ -562,7 +562,7 @@ class _ListScreenState extends State<ListScreen> {
                                             ? Material(
                                                 elevation: 0,
                                                 borderRadius:
-                                                    BorderRadius.circular(20),
+                                                    BorderRadius.circular(12),
                                                 color: Colors.transparent,
                                                 child: Container(
                                                   decoration: BoxDecoration(
@@ -570,11 +570,11 @@ class _ListScreenState extends State<ListScreen> {
                                                     //     BlendMode.color,
 
                                                     color: Color.fromARGB(
-                                                            255, 187, 187, 187)
+                                                            166, 187, 187, 187)
                                                         .withOpacity(0.5),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            30),
+                                                            12),
                                                   ),
                                                   // height: MediaQuery.of(context)
                                                   //         .size
