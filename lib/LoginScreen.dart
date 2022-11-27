@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shoppy/LoadingScreen.dart';
+import 'package:shoppy/screens/LoadingScreen.dart';
 import 'package:shoppy/screens/SignUpScreen.dart';
 import 'NavigationBarScreen.dart';
 import 'styles/colors.dart';
