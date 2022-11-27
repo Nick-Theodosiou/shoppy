@@ -332,9 +332,14 @@ class _ProductScreenState extends State<ProductScreen> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.network(similarOffers[index]
-                                          .product
-                                          .productImage),
+                                      child: Container(
+                                        color: Colors.white,
+                                        child: Image.network(
+                                            similarOffers[index]
+                                                .product
+                                                .productImage,
+                                            fit: BoxFit.cover),
+                                      ),
                                     ),
                                   ),
                                   Image.network(
