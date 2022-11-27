@@ -180,17 +180,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                             child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  // deleteOfferFromList(
-                                                  //     index, index);
-
-                                                  // _likedList =
-                                                  //     localUser
-                                                  //         .itemsInCart;
+                                                  removeFromLikedProducts(
+                                                      _likedList[index]);
                                                 });
                                               },
                                               icon: Icon(
-                                                Icons.heart_broken_rounded,
-                                                color: ShoppyColors.blue,
+                                                Icons.favorite,
+                                                color: ShoppyColors.red,
                                                 size: MediaQuery.of(context)
                                                         .size
                                                         .width *
