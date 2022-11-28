@@ -99,20 +99,23 @@ class _CategoryScreenState extends State<CategoryScreen> {
           ),
           child: Column(children: [
             searchBar(),
-            Align(
-              alignment: const Alignment(-0.95, -1),
-              child: RichText(
-                softWrap: true,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Subcategories",
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: ShoppyColors.blue,
-                          fontWeight: FontWeight.w400),
-                    )
-                  ],
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              child: Align(
+                alignment: const Alignment(-0.87, -1),
+                child: RichText(
+                  softWrap: true,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Subcategories",
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: ShoppyColors.blue,
+                            fontWeight: FontWeight.w400),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -136,60 +139,38 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return offers;
   }
 
-  Row sortAndFilter() {
-    return Row(children: [
-      TextButton.icon(
-        // <-- TextButton
-        onPressed: () {},
-        icon: Icon(
-          Icons.sort,
-          size: 24.0,
-          color: ShoppyColors.blue,
-        ),
-        label: const Text('Sort'),
-        style: TextButton.styleFrom(
-          foregroundColor: ShoppyColors.blue, // Text Color
-        ),
-      ),
-      const Spacer(),
-      /*               ElevatedButton(
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Download',
-                          style: TextStyle(
-                            color: ShoppyColors.blue, // Text Color
-                          ),
-                        ), // <-- Text
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Icon(
-                          // <-- Icon
-                          Icons.download,
-                          size: 24.0,
-                          color: ShoppyColors.blue,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),*/
-      TextButton.icon(
-        // <-- TextButton
-        onPressed: () {},
-        label: const Text('Filter'),
-        icon: Icon(
-          Icons.filter_alt_rounded,
-          size: 24.0,
-          color: ShoppyColors.blue,
-        ),
-        style: TextButton.styleFrom(
-          foregroundColor: ShoppyColors.blue, // Text Color
-        ),
-      ),
-    ]);
+  Padding sortAndFilter() {
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(7, 5, 5, 5),
+        child: Row(children: [
+          TextButton.icon(
+            // <-- TextButton
+            onPressed: () {},
+            icon: Icon(
+              Icons.sort,
+              size: 24.0,
+              color: ShoppyColors.blue,
+            ),
+            label: const Text('Sort'),
+            style: TextButton.styleFrom(
+              foregroundColor: ShoppyColors.blue, // Text Color
+            ),
+          ),
+          const Spacer(),
+          TextButton.icon(
+            // <-- TextButton
+            onPressed: () {},
+            label: const Text('Filter'),
+            icon: Icon(
+              Icons.filter_alt_rounded,
+              size: 24.0,
+              color: ShoppyColors.blue,
+            ),
+            style: TextButton.styleFrom(
+              foregroundColor: ShoppyColors.blue, // Text Color
+            ),
+          ),
+        ]));
   }
 
   TextFormField searchBar() {
@@ -390,7 +371,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
               setState(() {
                 navigateToSubcategory(s);
               });
-             
             },
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -417,7 +397,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   )),
                             ),
                             SizedBox(
-                              width: 60,
+                              width: 50,
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
@@ -447,10 +427,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   void navigateToSubcategory(Subcategory s) async {
     await Navigator.push(
-    context,
-    MaterialPageRoute(
-        builder: (_) => SubCategoryScreen(subcategory: s)),
-                  );
+      context,
+      MaterialPageRoute(builder: (_) => SubCategoryScreen(subcategory: s)),
+    );
     setState(() {
       user = localUser;
     });
