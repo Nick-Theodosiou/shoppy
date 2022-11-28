@@ -26,33 +26,42 @@ class p {
 }
 
 class ProductScreen extends StatefulWidget {
-  final Offer product;
-  const ProductScreen({super.key, required this.product});
+  final Offer offer;
+  const ProductScreen({super.key, required this.offer});
 
   @override
-  State<ProductScreen> createState() => _ProductScreenState(product);
+  State<ProductScreen> createState() => _ProductScreenState(offer);
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  Offer product;
-  _ProductScreenState(this.product);
+  Offer offer;
+  _ProductScreenState(this.offer);
   int _amount = 1;
   bool existsInCart = false;
+  List<Offer> similarOffers = [];
 
   @override
   void initState() {
     setState(() {
       existsInCart = localUser.itemsInCart.any((element) => element.itemOffers
-          .any((element1) => element1.offer.offerID == product.offerID));
+          .any((element1) => element1.offer.offerID == offer.offerID));
       if (existsInCart) {
         _amount = localUser.itemsInCart
-            .firstWhere((element) => element.store.storeID == product.storeID)
+            .firstWhere((element) => element.store.storeID == offer.storeID)
             .itemOffers
-            .firstWhere((element) => element.offer.offerID == product.offerID)
+            .firstWhere((element) => element.offer.offerID == offer.offerID)
             .quantity;
       }
     });
+    getSimOffers();
     super.initState();
+  }
+
+  void getSimOffers() async {
+    List<Offer> la = await getSimilarProducts(offer);
+    setState(() {
+      similarOffers = la;
+    });
   }
 
   @override
@@ -87,7 +96,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     child: Align(
                       alignment: Alignment.center,
                       child: Image(
-                        image: NetworkImage(product.product.productImage),
+                        image: NetworkImage(offer.product.productImage),
                       ),
                     ),
                   ),
@@ -97,7 +106,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       alignment: Alignment.bottomRight,
                       child: Image(
                         height: MediaQuery.of(context).size.height * 0.05,
-                        image: NetworkImage(product.storePictureURL),
+                        image: NetworkImage(offer.storePictureURL),
                       ),
                     ),
                   ),
@@ -129,7 +138,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 child: Column(
                   children: [
                     Text(
-                      product.product.productName,
+                      offer.product.productName,
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * 0.085,
                         fontWeight: FontWeight.w500,
@@ -149,7 +158,9 @@ class _ProductScreenState extends State<ProductScreen> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    if (_amount > 1) _amount--;
+                                    if (_amount > 1 ||
+                                        (existsInCart && _amount > 0))
+                                      _amount--;
                                   });
                                 },
                                 child: Icon(
@@ -200,7 +211,7 @@ class _ProductScreenState extends State<ProductScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "€${product.oldprice.toStringAsFixed(2)}",
+                                "€${offer.oldprice.toStringAsFixed(2)}",
                                 style: TextStyle(
                                     decoration: TextDecoration.lineThrough,
                                     fontSize:
@@ -209,7 +220,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                     color: Colors.grey[500]),
                               ),
                               Text(
-                                "€${product.price.toStringAsFixed(2)}",
+                                "€${offer.price.toStringAsFixed(2)}",
                                 style: TextStyle(
                                   fontSize:
                                       MediaQuery.of(context).size.width * 0.09,
@@ -226,7 +237,26 @@ class _ProductScreenState extends State<ProductScreen> {
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          addOfferToList(product, _amount);
+                          addOfferToList(offer, _amount);
+                          if (existsInCart && _amount > 0) {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "Quantity of ${offer.product.productName} was updated.")));
+                          } else if (_amount > 0) {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "${offer.product.productName} was added to your list.")));
+                            existsInCart = true;
+                          } else if (existsInCart) {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "${offer.product.productName} was removed from your list.")));
+                            existsInCart = false;
+                            _amount = 1;
+                          }
                         });
                       },
                       style: ElevatedButton.styleFrom(
@@ -237,7 +267,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         ),
                       ),
                       child: Text(
-                        existsInCart ? 'Update Cart' : 'Add to Cart',
+                        existsInCart ? 'Update List' : 'Add to List',
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                     ),
@@ -258,13 +288,13 @@ class _ProductScreenState extends State<ProductScreen> {
                                     color: ShoppyColors.blue,
                                     fontWeight: FontWeight.w500),
                               ),
-                              WidgetSpan(
-                                child: Icon(
-                                  Icons.arrow_right_alt,
-                                  size: 25,
-                                  color: ShoppyColors.blue,
-                                ),
-                              ),
+                              // WidgetSpan(
+                              //   child: Icon(
+                              //     Icons.arrow_right_alt,
+                              //     size: 25,
+                              //     color: ShoppyColors.blue,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -283,17 +313,45 @@ class _ProductScreenState extends State<ProductScreen> {
                         mainAxisSpacing: 10.0,
                         childAspectRatio: (500 / 650),
                       ),
-                      itemCount: placeholder.length,
+                      itemCount: similarOffers.length,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
                             GestureDetector(
-                              onTap:
-                                  () {}, // Image tapped, takes you to similar product screen
-                              child: Image.asset('asset/images/shoppyIcon.png'),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => ProductScreen(
+                                            offer: similarOffers[index])));
+                              }, // Image tapped, takes you to similar product screen
+                              child: Stack(
+                                alignment: AlignmentDirectional.bottomEnd,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Container(
+                                        color: Colors.white,
+                                        child: Image.network(
+                                            similarOffers[index]
+                                                .product
+                                                .productImage,
+                                            fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                  ),
+                                  Image.network(
+                                    similarOffers[index].storePictureURL,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.15,
+                                  ),
+                                ],
+                              ),
                             ),
                             Text(
-                              placeholder.elementAt(index).name,
+                              similarOffers[index].product.productName,
                               style: const TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 fontSize: 16,

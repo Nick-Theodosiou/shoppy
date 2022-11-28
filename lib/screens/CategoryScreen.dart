@@ -63,6 +63,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   List<Color> iconColors = <Color>[];
   User user = localUser;
+
   @override
   Widget build(BuildContext context) {
     //getLists(ProductImage, ProductName, subname);
@@ -72,7 +73,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
         title: Text(
-          this.category.categoryName,
+          category.categoryName,
           style: TextStyle(
             color: ShoppyColors.gray,
             fontSize: 25,
@@ -229,7 +230,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (_) =>
-                        ProductScreen(product: category.categoryOffers[index])),
+                        ProductScreen(offer: category.categoryOffers[index])),
               );
             },
             child: Padding(
@@ -386,11 +387,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
         children: CategorySubcategories.map((s) {
           return InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => SubCategoryScreen(subcategory: s)),
-              );
+              setState(() {
+                navigateToSubcategory(s);
+              });
+             
             },
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -443,6 +443,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
         }).toList(),
       ),
     );
+  }
+
+  void navigateToSubcategory(Subcategory s) async {
+    await Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (_) => SubCategoryScreen(subcategory: s)),
+                  );
+    setState(() {
+      user = localUser;
+    });
   }
 
   SizedBox showSubcategories2() {
