@@ -143,7 +143,7 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (_) => ProductScreen(product: bestOffers[index])),
+                    builder: (_) => ProductScreen(offer: bestOffers[index])),
               );
             },
             child: Padding(
