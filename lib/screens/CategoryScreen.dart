@@ -387,11 +387,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
         children: CategorySubcategories.map((s) {
           return InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => SubCategoryScreen(subcategory: s)),
-              );
+              setState(() {
+                navigateToSubcategory(s);
+              });
+             
             },
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -444,6 +443,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
         }).toList(),
       ),
     );
+  }
+
+  void navigateToSubcategory(Subcategory s) async {
+    await Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (_) => SubCategoryScreen(subcategory: s)),
+                  );
+    setState(() {
+      user = localUser;
+    });
   }
 
   SizedBox showSubcategories2() {
