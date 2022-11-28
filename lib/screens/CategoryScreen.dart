@@ -397,7 +397,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(500),
                     child: Container(
-                      color: Color.fromARGB(56, 89, 89, 241),
+                      color: Color.fromARGB(20, 40, 40, 40),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           mainAxisSize: MainAxisSize.min,
