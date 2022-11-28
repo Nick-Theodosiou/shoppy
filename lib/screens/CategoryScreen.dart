@@ -63,6 +63,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   List<Color> iconColors = <Color>[];
   User user = localUser;
+
   @override
   Widget build(BuildContext context) {
     //getLists(ProductImage, ProductName, subname);
@@ -72,7 +73,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
         title: Text(
-          this.category.categoryName,
+          category.categoryName,
           style: TextStyle(
             color: ShoppyColors.gray,
             fontSize: 25,
