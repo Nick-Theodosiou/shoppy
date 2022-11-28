@@ -127,7 +127,7 @@ class _ListScreenState extends State<ListScreen> {
                           itemCount: _shoppingList[indexS].itemOffers.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
-                              padding: const EdgeInsets.only(bottom: 1.0),
+                              padding: const EdgeInsets.only(bottom: 0.0),
                               child: Container(
                                 // height:
                                 //     MediaQuery.of(context).size.height * 0.12,
@@ -136,15 +136,15 @@ class _ListScreenState extends State<ListScreen> {
                                   boxShadow: [
                                     const BoxShadow(
                                       blurRadius: 4,
-                                      color: Color(0x320E151B),
-                                      offset: Offset(0, 1),
+                                      color: Color.fromARGB(47, 139, 139, 139),
+                                      offset: Offset(0, 0),
                                     )
                                   ],
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Card(
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30)),
+                                      borderRadius: BorderRadius.circular(12)),
                                   color: Colors.white,
                                   elevation: 5.0,
                                   child: Stack(
@@ -336,7 +336,7 @@ class _ListScreenState extends State<ListScreen> {
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      0.00,
+                                                      0.06,
                                                   child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
@@ -562,7 +562,7 @@ class _ListScreenState extends State<ListScreen> {
                                             ? Material(
                                                 elevation: 0,
                                                 borderRadius:
-                                                    BorderRadius.circular(20),
+                                                    BorderRadius.circular(12),
                                                 color: Colors.transparent,
                                                 child: Container(
                                                   decoration: BoxDecoration(
@@ -570,11 +570,11 @@ class _ListScreenState extends State<ListScreen> {
                                                     //     BlendMode.color,
 
                                                     color: Color.fromARGB(
-                                                            255, 187, 187, 187)
+                                                            166, 187, 187, 187)
                                                         .withOpacity(0.5),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            30),
+                                                            12),
                                                   ),
                                                   // height: MediaQuery.of(context)
                                                   //         .size

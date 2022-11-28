@@ -110,7 +110,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (_) => ProductScreen(
-                                product: subcategoryOffers[index])),
+                                offer: subcategoryOffers[index])),
                       );
                     },
                     child: Padding(
