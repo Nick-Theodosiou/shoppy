@@ -7,6 +7,7 @@ import 'package:shoppy/models/Store.dart';
 import 'package:shoppy/styles/colors.dart';
 
 import '../NavigationBarScreen.dart';
+import '../models/User.dart';
 import 'HomeScreen.dart';
 
 
@@ -38,14 +39,14 @@ class _StoresScreenState extends State<StoresScreen> {
     _refreshController.loadComplete();
   }
 
-  static List<Color> iconColors = <Color>[];
+  //static List<Color> iconColors = <Color>[];
   //set to static to show when the DB ready we will request the liked Supermarkets
   //static  List<Color> LastState =<Color>[];
-
+  User user = localUser;
   Widget build(BuildContext context) {
-    if (iconColors.isEmpty) {
-      createIconColorList();
-    }
+    // if (iconColors.isEmpty) {
+    //   createIconColorList();
+    // }
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
@@ -69,7 +70,7 @@ class _StoresScreenState extends State<StoresScreen> {
         child: SingleChildScrollView(
           child: ListView.builder(
 
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 10
               ),
               primary: false,
@@ -123,16 +124,26 @@ class _StoresScreenState extends State<StoresScreen> {
                           IconButton(
                             icon: Icon(
                               Icons.favorite,
-                              color: iconColors[index],
+                              color: (user.likedStores.any(
+                                                  ((element) =>
+                                                      element.storeID ==
+                                                      Stores[index].storeID))
+                                              ? ShoppyColors.red
+                                              : ShoppyColors.blue),
                               //color: Color(0xFFE86969),
                               size: 20,
                             ),
                             onPressed: () {
                               setState(() {
-                                if (iconColors[index] == ShoppyColors.blue)
-                                  iconColors[index] = ShoppyColors.red;
-                                else
-                                  iconColors[index] = ShoppyColors.blue;
+                                
+                                if((user.likedStores.any(((element) => element.storeID==Stores[index].storeID)))){
+                                              ShoppyColors.blue;
+                                               removeFromLikedStores(Stores[index]);
+                                              }
+                                              else{
+                                                ShoppyColors.red;
+                                                addToLikedStores(Stores[index]);
+                                              }
                               });
                               // Favorite Supermarket /Unfavorite Supermarket
                             },
@@ -148,12 +159,12 @@ class _StoresScreenState extends State<StoresScreen> {
     );
   }
 
-  void createIconColorList() {
-    int length = Stores.length;
-    for (var i = 0; i < length; i++) {
-      iconColors.add(ShoppyColors.blue);
-    }
-  }
+  // void createIconColorList() {
+  //   int length = Stores.length;
+  //   for (var i = 0; i < length; i++) {
+  //     iconColors.add(ShoppyColors.blue);
+  //   }
+  // }
 //   SaveChanges(List StateC )
 // {
 // for(int i=0 ;i<StateC.length;i++) {

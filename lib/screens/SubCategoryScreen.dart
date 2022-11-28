@@ -51,7 +51,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
     _refreshController.loadComplete();
   }
 
-  List<Color> iconColors = <Color>[];
+  //List<Color> iconColors = <Color>[];
   //getLists(ProductImage, ProductName, subname);
   User user = localUser;
   //bool _notificationsEnabled = true;

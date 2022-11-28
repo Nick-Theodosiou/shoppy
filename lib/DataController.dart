@@ -423,7 +423,7 @@ void addToLikedStores(Store s) async {
 
 void removeFromLikedStores(Store s) async {
   if (localUser.likedStores.any((element) => element.storeID == s.storeID)) {
-    localUser.likedProduct.removeAt(localUser.likedStores
+    localUser.likedStores.removeAt(localUser.likedStores
         .indexWhere((element) => element.storeID == s.storeID));
 
     var conn = await MySqlConnection.connect(settings);
