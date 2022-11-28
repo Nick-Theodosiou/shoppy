@@ -74,36 +74,72 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
     );
   }
 
-  Row sortAndFilter() {
-    return Row(children: [
-      TextButton.icon(
-        // <-- TextButton
-        onPressed: () {},
-        icon: Icon(
-          Icons.sort,
-          size: 24.0,
-          color: ShoppyColors.blue,
-        ),
-        label: const Text('Sort'),
-        style: TextButton.styleFrom(
-          foregroundColor: ShoppyColors.blue, // Text Color
-        ),
-      ),
-      const Spacer(),
-      TextButton.icon(
-        // <-- TextButton
-        onPressed: () {},
-        label: const Text('Filter'),
-        icon: Icon(
-          Icons.filter_alt_rounded,
-          size: 24.0,
-          color: ShoppyColors.blue,
-        ),
-        style: TextButton.styleFrom(
-          foregroundColor: ShoppyColors.blue, // Text Color
-        ),
-      ),
-    ]);
+  Padding sortAndFilter() {
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(7, 5, 5, 5),
+        child: Row(children: [
+          TextButton.icon(
+            // <-- TextButton
+            onPressed: () {},
+            icon: Icon(
+              Icons.sort,
+              size: 24.0,
+              color: ShoppyColors.blue,
+            ),
+            label: const Text('Sort'),
+            style: TextButton.styleFrom(
+              foregroundColor: ShoppyColors.blue, // Text Color
+            ),
+          ),
+          const Spacer(),
+          TextButton.icon(
+            // <-- TextButton
+            onPressed: () {},
+            label: const Text('Filter'),
+            icon: Icon(
+              Icons.filter_alt_rounded,
+              size: 24.0,
+              color: ShoppyColors.blue,
+            ),
+            style: TextButton.styleFrom(
+              foregroundColor: ShoppyColors.blue, // Text Color
+            ),
+          ),
+        ]));
+  }
+
+  Padding sortAndFilter2() {
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(7, 5, 5, 5),
+        child: Row(children: [
+          TextButton.icon(
+            // <-- TextButton
+            onPressed: () {},
+            icon: Icon(
+              Icons.sort,
+              size: 24.0,
+              color: ShoppyColors.blue,
+            ),
+            label: const Text('Sort'),
+            style: TextButton.styleFrom(
+              foregroundColor: ShoppyColors.blue, // Text Color
+            ),
+          ),
+          const Spacer(),
+          TextButton.icon(
+            // <-- TextButton
+            onPressed: () {},
+            label: const Text('Filter'),
+            icon: Icon(
+              Icons.filter_alt_rounded,
+              size: 24.0,
+              color: ShoppyColors.blue,
+            ),
+            style: TextButton.styleFrom(
+              foregroundColor: ShoppyColors.blue, // Text Color
+            ),
+          ),
+        ]));
   }
 
   TextFormField searchBar() {
@@ -188,7 +224,24 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
                                   : ShoppyColors.blue),
                               size: 20,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if ((user.likedProduct.any(((element) =>
+                                    element.productId ==
+                                    bestOffers[index].product.productId)))) {
+                                  ShoppyColors.blue;
+                                  removeFromLikedProducts(
+                                      bestOffers[index].product);
+                                } else {
+                                  ShoppyColors.red;
+                                  addToLikedProducts(bestOffers[index].product);
+                                }
+                                // if (iconColors[index] == ShoppyColors.blue)
+                                //   iconColors[index] = ShoppyColors.red;
+                                // else
+                                //   iconColors[index] = ShoppyColors.blue;
+                              });
+                            },
                           ),
                         ),
                       ),

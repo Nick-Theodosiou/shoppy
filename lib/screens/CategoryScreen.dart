@@ -257,7 +257,26 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   : ShoppyColors.blue),
                               size: 20,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if ((user.likedProduct.any(((element) =>
+                                    element.productId ==
+                                    category.categoryOffers[index].product
+                                        .productId)))) {
+                                  ShoppyColors.blue;
+                                  removeFromLikedProducts(
+                                      category.categoryOffers[index].product);
+                                } else {
+                                  ShoppyColors.red;
+                                  addToLikedProducts(
+                                      category.categoryOffers[index].product);
+                                }
+                                // if (iconColors[index] == ShoppyColors.blue)
+                                //   iconColors[index] = ShoppyColors.red;
+                                // else
+                                //   iconColors[index] = ShoppyColors.blue;
+                              });
+                            },
                           ),
                         ),
                       ),
