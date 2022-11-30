@@ -36,13 +36,14 @@ class _ListScreenState extends State<ListScreen> {
 
   getTotal() {
     var total = 0.0;
-    for (var i = 0; i < _shoppingList.length; i++)
+    for (var i = 0; i < _shoppingList.length; i++) {
       for (var j = 0; j < _shoppingList[i].itemOffers.length; j++) {
         if (!_shoppingList[i].itemOffers[j].isChecked) {
           total += _shoppingList[i].itemOffers[j].offer.price *
               _shoppingList[i].itemOffers[j].quantity;
         }
       }
+    }
     return total * 1.0;
   }
 
@@ -226,8 +227,12 @@ class _ListScreenState extends State<ListScreen> {
                                                         maxLines: 1,
                                                         //richtext maxlines 1
                                                         text: TextSpan(
-                                                          text:
-                                                              _shoppingList[indexS].itemOffers[index].offer.product.productName,
+                                                          text: _shoppingList[
+                                                                  indexS]
+                                                              .itemOffers[index]
+                                                              .offer
+                                                              .product
+                                                              .productName,
                                                           style: TextStyle(
                                                               color: Colors
                                                                   .blueGrey
@@ -254,8 +259,13 @@ class _ListScreenState extends State<ListScreen> {
                                                           ? RichText(
                                                               maxLines: 1,
                                                               text: TextSpan(
-                                                                  text:
-                                                                      _shoppingList[indexS].itemOffers[index].offer.product.brand,
+                                                                  text: _shoppingList[
+                                                                          indexS]
+                                                                      .itemOffers[
+                                                                          index]
+                                                                      .offer
+                                                                      .product
+                                                                      .brand,
                                                                   style: TextStyle(
                                                                       color: Colors
                                                                           .blueGrey
