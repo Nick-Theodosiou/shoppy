@@ -173,7 +173,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         return Padding(
                           padding: const EdgeInsets.only(top: 2.0, bottom: 2),
                           child: Container(
-                            height: MediaQuery.of(context).size.height * 0.10,
+                            height: MediaQuery.of(context).size.height * 0.1,
                             child: Card(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12)),
@@ -261,7 +261,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                                                             .shade800,
                                                                         fontSize:
                                                                             MediaQuery.of(context).size.height *
-                                                                                0.02)),
+                                                                                0.018)),
                                                                 overflow:
                                                                     TextOverflow
                                                                         .ellipsis,
