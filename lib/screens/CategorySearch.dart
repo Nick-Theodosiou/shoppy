@@ -1,19 +1,10 @@
-import 'dart:math';
-
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/models/Category.dart';
 import 'package:shoppy/models/Offer.dart';
-import 'package:shoppy/models/Category.dart';
-import 'package:shoppy/models/Subcategory.dart';
-import 'package:shoppy/screens/BestDealsScreen.dart';
-import 'package:shoppy/screens/CategoriesScreen.dart';
 
 import '../models/User.dart';
-import '../NavigationBarScreen.dart';
 import '../styles/colors.dart';
 import 'ProductScreen.dart';
 

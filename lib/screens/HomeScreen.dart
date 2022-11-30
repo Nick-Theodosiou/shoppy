@@ -1,4 +1,3 @@
-//import 'dart:js_util';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -8,7 +7,6 @@ import 'package:shoppy/models/Store.dart';
 import 'package:shoppy/models/Category.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:shoppy/screens/BestDealsScreen.dart';
 import 'package:shoppy/styles/colors.dart';
 import '../NavigationBarScreen.dart';
 import 'CategoriesScreen.dart';

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppy/LoginScreen.dart';
-import 'package:shoppy/NavigationBarScreen.dart';
-import 'package:shoppy/screens/HomeScreen.dart';
 import 'package:shoppy/screens/LoadingScreen.dart';
 
 void main() {

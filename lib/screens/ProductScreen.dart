@@ -1,29 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/models/Offer.dart';
-import 'package:shoppy/models/ItemOffer.dart';
-import 'package:shoppy/models/ItemStore.dart';
-
-import '../models/User.dart';
 import '../styles/colors.dart';
-import 'HomeScreen.dart';
-
-List<p> placeholder = [
-  p("Cookies"),
-  p("Milk"),
-  p("Oranges"),
-  p("Chips"),
-  p("Pasta"),
-  p("Crandberry Juice"),
-  p("Toilet Paper"),
-  p("Chocolate"),
-  p("Chicken"),
-];
-
-class p {
-  String name;
-  p(this.name);
-}
 
 class ProductScreen extends StatefulWidget {
   final Offer offer;
