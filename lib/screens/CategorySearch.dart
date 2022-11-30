@@ -179,12 +179,15 @@ class _CategorySearchState extends State<CategorySearch> {
         //itemCount: cartItems.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-            onTap: () {
-              Navigator.push(
+            onTap: () async {
+              await Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (_) => ProductScreen(offer: offers[index])),
               );
+              setState(() {
+                user = localUser;
+              });
             },
             child: Padding(
               padding: EdgeInsets.only(
