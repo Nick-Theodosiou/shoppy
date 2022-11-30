@@ -146,7 +146,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             onPressed: () {
                               setState(() {
-                                
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const NavigationBarScreen(
+                                                index: 1)));
                               });
                             },
                           ),
