@@ -36,17 +36,21 @@ class _ListScreenState extends State<ListScreen> {
 
   getTotal() {
     var total = 0.0;
-    for (var i = 0; i < _shoppingList.length; i++)
-      for (var j = 0; j < _shoppingList[i].itemOffers.length; j++)
-        if (!_shoppingList[i].itemOffers[j].isChecked)
+    for (var i = 0; i < _shoppingList.length; i++) {
+      for (var j = 0; j < _shoppingList[i].itemOffers.length; j++) {
+        if (!_shoppingList[i].itemOffers[j].isChecked) {
           total += _shoppingList[i].itemOffers[j].offer.price *
               _shoppingList[i].itemOffers[j].quantity;
+        }
+      }
+    }
     return total * 1.0;
   }
 
   double getPaddingCheckbox(int1, int2) {
-    if (_shoppingList[int1].itemOffers[int2].offer.product.brand != '')
+    if (_shoppingList[int1].itemOffers[int2].offer.product.brand != '') {
       return 12;
+    }
     return 12;
   }
 
@@ -133,8 +137,8 @@ class _ListScreenState extends State<ListScreen> {
                                 //     MediaQuery.of(context).size.height * 0.12,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  boxShadow: [
-                                    const BoxShadow(
+                                  boxShadow: const [
+                                    BoxShadow(
                                       blurRadius: 4,
                                       color: Color.fromARGB(47, 139, 139, 139),
                                       offset: Offset(0, 0),
@@ -223,8 +227,12 @@ class _ListScreenState extends State<ListScreen> {
                                                         maxLines: 1,
                                                         //richtext maxlines 1
                                                         text: TextSpan(
-                                                          text:
-                                                              '${_shoppingList[indexS].itemOffers[index].offer.product.productName}',
+                                                          text: _shoppingList[
+                                                                  indexS]
+                                                              .itemOffers[index]
+                                                              .offer
+                                                              .product
+                                                              .productName,
                                                           style: TextStyle(
                                                               color: Colors
                                                                   .blueGrey
@@ -251,8 +259,13 @@ class _ListScreenState extends State<ListScreen> {
                                                           ? RichText(
                                                               maxLines: 1,
                                                               text: TextSpan(
-                                                                  text:
-                                                                      '${_shoppingList[indexS].itemOffers[index].offer.product.brand}',
+                                                                  text: _shoppingList[
+                                                                          indexS]
+                                                                      .itemOffers[
+                                                                          index]
+                                                                      .offer
+                                                                      .product
+                                                                      .brand,
                                                                   style: TextStyle(
                                                                       color: Colors
                                                                           .blueGrey
@@ -554,7 +567,7 @@ class _ListScreenState extends State<ListScreen> {
                                           ),
                                         ],
                                       ),
-                                      new Positioned.fill(
+                                      Positioned.fill(
                                         child: (_shoppingList[indexS]
                                                     .itemOffers[index]
                                                     .isChecked ||
@@ -569,7 +582,7 @@ class _ListScreenState extends State<ListScreen> {
                                                     // backgroundBlendMode:
                                                     //     BlendMode.color,
 
-                                                    color: Color.fromARGB(
+                                                    color: const Color.fromARGB(
                                                             166, 187, 187, 187)
                                                         .withOpacity(0.5),
                                                     borderRadius:
