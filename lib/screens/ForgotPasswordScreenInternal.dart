@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:shoppy/screens/AccountScreen.dart';
 
+import '../DataController.dart';
 import '../LoginScreen.dart';
 import '../styles/colors.dart';
+import 'LoadingScreen.dart';
 import 'SignUpScreen.dart';
 
 class ForgotPasswordScreenInternal extends StatefulWidget {
@@ -119,9 +122,11 @@ class _ForgotPasswordScreenInternalState
                             onPressed: () {
                               //connect to database and send email for Change Password
                               Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const LoginScreen()));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        LoadingScreen(localUser.email)),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size.fromHeight(47),
@@ -139,34 +144,6 @@ class _ForgotPasswordScreenInternalState
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.04,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Don't have an account?",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) =>
-                                              const SignUpScreen()));
-                                },
-                                child: Text(
-                                  'Sign Up',
-                                  style: TextStyle(
-                                    color: ShoppyColors.red,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ],
                           ),
                           Padding(
                             padding: EdgeInsets.only(
