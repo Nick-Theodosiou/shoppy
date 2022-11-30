@@ -28,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final userController = TextEditingController();
   final passController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -87,116 +88,178 @@ class _LoginScreenState extends State<LoginScreen> {
                               : MediaQuery.of(context).size.height * 0.15,
                           left: MediaQuery.of(context).size.width * 0.1,
                           right: MediaQuery.of(context).size.width * 0.1),
-                      child: Column(
-                        children: [
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Log In',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Log In',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02,
-                          ),
-                          textFormField('E-mail', userController),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02,
-                          ),
-                          textFormField('Password', passController),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) =>
-                                            ForgotPasswordScreen()));
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your email';
+                                } else if (!value.toString().contains('@')) {
+                                  return 'This is not a valid email address';
+                                }
+                                return null;
                               },
-                              child: const Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: Colors.white,
-                                  decorationThickness: 1.8,
-                                  color: Colors.white,
-                                ),
+                              controller: userController,
+                              obscureText: false,
+                              style: TextStyle(color: ShoppyColors.blue),
+                              decoration: InputDecoration(
+                                errorStyle:
+                                    const TextStyle(color: Colors.white),
+                                contentPadding: const EdgeInsets.only(
+                                    top: 15, bottom: 15, left: 15),
+                                fillColor:
+                                    const Color.fromARGB(240, 225, 225, 225),
+                                filled: true,
+                                hintStyle: TextStyle(color: ShoppyColors.blue),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(35),
+                                    borderSide:
+                                        BorderSide(color: ShoppyColors.red)),
+                                hintText: "Email",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(35)),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02,
-                          ),
-                          visibilityIncorrect
-                              ? const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Incorrect Username and Password',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                          ElevatedButton(
-                            onPressed: () {
-                              login();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size.fromHeight(47),
-                              backgroundColor: ShoppyColors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your password';
+                                }
+                                return null;
+                              },
+                              controller: passController,
+                              obscureText: true,
+                              style: TextStyle(color: ShoppyColors.blue),
+                              decoration: InputDecoration(
+                                errorStyle:
+                                    const TextStyle(color: Colors.white),
+                                contentPadding: const EdgeInsets.only(
+                                    top: 15, bottom: 15, left: 15),
+                                fillColor:
+                                    const Color.fromARGB(240, 225, 225, 225),
+                                filled: true,
+                                hintStyle: TextStyle(color: ShoppyColors.blue),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(35),
+                                    borderSide:
+                                        BorderSide(color: ShoppyColors.red)),
+                                hintText: "Password",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(35)),
                               ),
                             ),
-                            child: const Text(
-                              'Log In',
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.03,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Don't have an account?",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              TextButton(
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: TextButton(
                                 onPressed: () {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => const SignUpScreen()));
+                                          builder: (_) =>
+                                              ForgotPasswordScreen()));
                                 },
-                                child: Text(
-                                  'Sign Up',
+                                child: const Text(
+                                  'Forgot Password?',
                                   style: TextStyle(
-                                    color: ShoppyColors.red,
-                                    fontSize: 15,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Colors.white,
+                                    decorationThickness: 1.8,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).viewInsets.bottom),
-                          ),
-                        ],
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            // visibilityIncorrect
+                            //     ? const Align(
+                            //         alignment: Alignment.center,
+                            //         child: Text(
+                            //           'Incorrect Username and Password',
+                            //           style: TextStyle(
+                            //             color: Colors.white,
+                            //             fontSize: 12,
+                            //           ),
+                            //         ),
+                            //       )
+                            //     : Container(),
+                            ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  login();
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size.fromHeight(47),
+                                backgroundColor: ShoppyColors.red,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              child: const Text(
+                                'Log In',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.03,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Don't have an account?",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const SignUpScreen()));
+                                  },
+                                  child: Text(
+                                    'Sign Up',
+                                    style: TextStyle(
+                                      color: ShoppyColors.red,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                            ),
+                          ],
+                        ),
                       )),
                 ),
               ),
@@ -207,38 +270,27 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  TextFormField textFormField(String textH, TextEditingController eController) {
-    bool hide = false;
-    if (textH == 'Password') {
-      hide = true;
-    }
-    return TextFormField(
-      controller: eController,
-      obscureText: hide,
-      style: TextStyle(color: ShoppyColors.blue),
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
-        fillColor: const Color.fromARGB(240, 225, 225, 225),
-        filled: true,
-        hintStyle: TextStyle(color: ShoppyColors.blue),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(35),
-            borderSide: BorderSide(color: ShoppyColors.red)),
-        hintText: textH,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
-      ),
-    );
-  }
-
   Future<void> login() async {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Processing Data')),
+    );
     if (await checkCredentials(userController.text, passController.text)) {
-      final GlobalKey<State> _LoaderDialog = new GlobalKey<State>();
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Correct login details. Fetching your data...')),
+      );
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => LoadingScreen(userController.text)),
       );
     } else {
-      _changed(true, "incorrect");
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content:
+                Text('Incorrect Email and/or Password. Please try again.')),
+      );
     }
   }
 }

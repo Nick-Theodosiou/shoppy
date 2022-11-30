@@ -127,26 +127,28 @@ class _ListScreenState extends State<ListScreen> {
                           itemCount: _shoppingList[indexS].itemOffers.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
-                              padding: const EdgeInsets.only(bottom: 1.0),
+                              padding: const EdgeInsets.only(bottom: 0.0),
                               child: Container(
+                                // height:
+                                //     MediaQuery.of(context).size.height * 0.12,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   boxShadow: [
                                     const BoxShadow(
                                       blurRadius: 4,
-                                      color: Color(0x320E151B),
-                                      offset: Offset(0, 1),
+                                      color: Color.fromARGB(47, 139, 139, 139),
+                                      offset: Offset(0, 0),
                                     )
                                   ],
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Card(
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30)),
+                                      borderRadius: BorderRadius.circular(12)),
                                   color: Colors.white,
                                   elevation: 5.0,
                                   child: Stack(
-                                    children: [
+                                    children: <Widget>[
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
@@ -334,7 +336,7 @@ class _ListScreenState extends State<ListScreen> {
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      0.00,
+                                                      0.06,
                                                   child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
@@ -380,7 +382,7 @@ class _ListScreenState extends State<ListScreen> {
                                                               updateQtyList(
                                                                   indexS,
                                                                   index,
-                                                                  1);
+                                                                  -1);
 
                                                               _shoppingList =
                                                                   localUser
@@ -388,7 +390,7 @@ class _ListScreenState extends State<ListScreen> {
                                                             });
                                                           },
                                                           child: Icon(
-                                                            Icons.add,
+                                                            Icons.remove,
                                                             color: Colors.white,
                                                             size: MediaQuery.of(
                                                                         context)
@@ -398,24 +400,31 @@ class _ListScreenState extends State<ListScreen> {
                                                           ),
                                                         ),
                                                       ),
-                                                      RichText(
-                                                        maxLines: 1,
-                                                        text: TextSpan(
-                                                          text:
-                                                              '${_shoppingList[indexS].itemOffers[index].quantity}',
-                                                          style: TextStyle(
-                                                            color: Colors
-                                                                .blueGrey
-                                                                .shade800,
-                                                            fontSize: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.06,
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 1.0,
+                                                                right: 1),
+                                                        child: RichText(
+                                                          maxLines: 1,
+                                                          text: TextSpan(
+                                                            text:
+                                                                '${_shoppingList[indexS].itemOffers[index].quantity}',
+                                                            style: TextStyle(
+                                                              color: Colors
+                                                                  .blueGrey
+                                                                  .shade800,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.06,
+                                                            ),
                                                           ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                         ),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
                                                       ),
                                                       Container(
                                                         decoration: BoxDecoration(
@@ -431,7 +440,7 @@ class _ListScreenState extends State<ListScreen> {
                                                               updateQtyList(
                                                                   indexS,
                                                                   index,
-                                                                  -1);
+                                                                  1);
 
                                                               _shoppingList =
                                                                   localUser
@@ -439,7 +448,7 @@ class _ListScreenState extends State<ListScreen> {
                                                             });
                                                           },
                                                           child: Icon(
-                                                            Icons.remove,
+                                                            Icons.add,
                                                             color: Colors.white,
                                                             size: MediaQuery.of(
                                                                         context)
@@ -545,38 +554,41 @@ class _ListScreenState extends State<ListScreen> {
                                           ),
                                         ],
                                       ),
-                                      (_shoppingList[indexS]
-                                                  .itemOffers[index]
-                                                  .isChecked ||
-                                              _shoppingList[indexS].isChecked)
-                                          ? Material(
-                                              elevation: 0,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: Colors.transparent,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  // backgroundBlendMode:
-                                                  //     BlendMode.color,
+                                      new Positioned.fill(
+                                        child: (_shoppingList[indexS]
+                                                    .itemOffers[index]
+                                                    .isChecked ||
+                                                _shoppingList[indexS].isChecked)
+                                            ? Material(
+                                                elevation: 0,
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                color: Colors.transparent,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    // backgroundBlendMode:
+                                                    //     BlendMode.color,
 
-                                                  color: Color.fromARGB(
-                                                          255, 187, 187, 187)
-                                                      .withOpacity(0.5),
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
+                                                    color: Color.fromARGB(
+                                                            166, 187, 187, 187)
+                                                        .withOpacity(0.5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                  ),
+                                                  // height: MediaQuery.of(context)
+                                                  //         .size
+                                                  //         .height *
+                                                  //     0.1075,
+                                                  // width: MediaQuery.of(context)
+                                                  //         .size
+                                                  //         .width *
+                                                  //     0.93,
+                                                  // child: SizedBox(width: ,),
                                                 ),
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.1075,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.93,
-                                                // child: SizedBox(width: ,),
-                                              ),
-                                            )
-                                          : Container(),
+                                              )
+                                            : Container(),
+                                      ),
                                       Padding(
                                         padding: EdgeInsets.only(
                                             top: getPaddingCheckbox(

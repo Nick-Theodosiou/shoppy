@@ -97,7 +97,7 @@ Future<User> getAccountDataDB(String email) async {
         row["ProductID"],
         row["Product_Name"],
         "https://ldiony011873.files.wordpress.com/2022/11/" + row["PictureURL"],
-        row["Brand"]??"",
+        row["Brand"] ?? "",
         row["SubcategoryID"],
         row["CategoryID"], []);
     likedProducts.add(p);
@@ -278,6 +278,59 @@ Future<List<Offer>> getOffersBySubcategory(Subcategory C) async {
 // Subcategory(this.subcategoryID, this.subcategoryName, this.subcategoryImage,
 //     this.subcategoryOffers);
 
+void addOfferToList(Offer o, int quantity) async {
+  //If both store and offer exist in cart
+  if (localUser.itemsInCart
+          .any((element) => element.store.storeID == o.storeID) &&
+      localUser.itemsInCart
+          .firstWhere((element) => element.store.storeID == o.storeID)
+          .itemOffers
+          .any((element) => element.offer.offerID == o.offerID)) {
+    int oldOfferIndexS = localUser.itemsInCart
+        .indexWhere((element) => element.store.storeID == o.storeID);
+    int oldOfferIndex = localUser.itemsInCart[oldOfferIndexS].itemOffers
+        .indexWhere((element) => element.offer.offerID == o.offerID);
+    updateQtyList(
+        oldOfferIndexS,
+        oldOfferIndex,
+        quantity -
+            localUser.itemsInCart[oldOfferIndexS].itemOffers[oldOfferIndex]
+                .quantity);
+  }
+  //If offer doesn't exist
+  else {
+    //If the store exists but the offer doesn't
+    if (localUser.itemsInCart
+        .any((element) => element.store.storeID == o.storeID)) {
+      localUser.itemsInCart
+          .firstWhere((element) => element.store.storeID == o.storeID)
+          .itemOffers
+          .add(ItemOffer(o, false, quantity));
+    }
+    //If neither exist in the list
+    else {
+      var conn = await MySqlConnection.connect(settings);
+      var results = await conn.query('CALL getStoreByID(?);', [o.offerID]);
+      localUser.itemsInCart.add(ItemStore(
+          Store(
+              results.first["SupermarketID"],
+              results.first["Name"],
+              "https://ldiony011873.files.wordpress.com/2022/11/" +
+                  results.first["PictureURL"],
+              []),
+          false,
+          [ItemOffer(o, false, quantity)]));
+      localUser.itemsInCart
+          .sort(((a, b) => a.store.storeID.compareTo(b.store.storeID)));
+    }
+
+    var conn1 = await MySqlConnection.connect(settings);
+
+    var results1 = conn1.query('CALL insertShoppingList(?,?,?);',
+        [localUser.userID, o.offerID, quantity]);
+  }
+}
+
 void deleteOfferFromList(int indexS, int index) async {
   int offerID = localUser.itemsInCart[indexS].itemOffers[index].offer.offerID;
 
@@ -330,5 +383,102 @@ Future<List<Store>> getStores() async {
     list.add(S);
   }
 
+  return list;
+}
+
+void addToLikedProducts(Product p) async {
+  if (!localUser.likedProduct
+      .any((element) => element.productId == p.productId)) {
+    localUser.likedProduct.add(p);
+
+    var conn = await MySqlConnection.connect(settings);
+
+    conn.query(
+        'CALL insertFavoriteProduct(?,?);', [localUser.userID, p.productId]);
+  }
+}
+
+void removeFromLikedProducts(Product p) async {
+  if (localUser.likedProduct
+      .any((element) => element.productId == p.productId)) {
+    localUser.likedProduct.removeAt(localUser.likedProduct
+        .indexWhere((element) => element.productId == p.productId));
+
+    var conn = await MySqlConnection.connect(settings);
+
+    conn.query(
+        'CALL deleteFavoriteProduct(?,?);', [localUser.userID, p.productId]);
+  }
+}
+
+void addToLikedStores(Store s) async {
+  if (!localUser.likedStores.any((element) => element.storeID == s.storeID)) {
+    localUser.likedStores.add(s);
+
+    var conn = await MySqlConnection.connect(settings);
+
+    conn.query('CALL insertFavoriteStore(?,?);', [localUser.userID, s.storeID]);
+  }
+}
+
+void removeFromLikedStores(Store s) async {
+  if (localUser.likedStores.any((element) => element.storeID == s.storeID)) {
+    localUser.likedStores.removeAt(localUser.likedStores
+        .indexWhere((element) => element.storeID == s.storeID));
+
+    var conn = await MySqlConnection.connect(settings);
+
+    conn.query('CALL deleteFavoriteStore(?,?);', [localUser.userID, s.storeID]);
+  }
+}
+
+Future<bool> signUp(
+    String email, String name, String surname, String password) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  await conn.query('CALL signup(?,?,?,?);', [email, name, surname, password]);
+
+  return await checkCredentials(email, password);
+}
+
+void updateUserDetails(String name, String surname) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  await conn.query(
+      'CALL updateUserDetails(?,?,?);', [localUser.userID, name, surname]);
+}
+
+Future<List<Offer>> getSimilarProducts(Offer offer) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn
+      .query('CALL getSimilarProductTags(?);', [offer.product.productId]);
+
+  await conn.close();
+  List<Offer> list = [];
+
+  for (var row in results) {
+    Product p = Product(
+        row["ProductID"],
+        row["Product_Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row["PictureURL"],
+        row["Brand"] ?? "",
+        row["SubcategoryID"],
+        row["CategoryID"], []);
+
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
+
+    if (o.offerID != offer.offerID) {
+      list.add(o);
+    }
+  }
   return list;
 }
