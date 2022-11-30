@@ -34,14 +34,8 @@ class _StoresScreenState extends State<StoresScreen> {
     _refreshController.loadComplete();
   }
 
-  //static List<Color> iconColors = <Color>[];
-  //set to static to show when the DB ready we will request the liked Supermarkets
-  //static  List<Color> LastState =<Color>[];
   User user = localUser;
   Widget build(BuildContext context) {
-    // if (iconColors.isEmpty) {
-    //   createIconColorList();
-    // }
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
@@ -148,26 +142,4 @@ class _StoresScreenState extends State<StoresScreen> {
       ),
     );
   }
-
-  // void createIconColorList() {
-  //   int length = Stores.length;
-  //   for (var i = 0; i < length; i++) {
-  //     iconColors.add(ShoppyColors.blue);
-  //   }
-  // }
-//   SaveChanges(List StateC )
-// {
-// for(int i=0 ;i<StateC.length;i++) {
-//   LastState[i]=StateC[i];
-// }
-// }
-// List GetState(List LastState){
-//   if(LastState.length>0) {
-//     return LastState;
-//   } else
-//   return new List<Color>;
-// }
 }
-
-
-// ignore: avoid_types_as_parameter_names, non_constant_identifier_names

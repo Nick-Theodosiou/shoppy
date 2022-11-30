@@ -27,8 +27,6 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   List<Offer> subcategoryOffers = <Offer>[];
-  //List<String> ProductImage = <String>[];
-  //List<String> ProductName = <String>[];
   Subcategory subcategory;
   _SubCategoryScreennState(Subcategory this.subcategory);
   void _onRefresh() async {
@@ -47,22 +45,9 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
     _refreshController.loadComplete();
   }
 
-  //List<Color> iconColors = <Color>[];
-  //getLists(ProductImage, ProductName, subname);
   User user = localUser;
-  //bool _notificationsEnabled = true;
-
-  // void _updateNotifications(bool notifications) {
-  //   _notificationsEnabled = notifications;
-  // }
-  //List<String> product = <String>[];
   @override
   Widget build(BuildContext context) {
-    //getLists(ProductImage, ProductName, subname);
-    // if (iconColors.isEmpty) {
-    //   createIconColorList();
-    // }
-    // this will be fixed after adding from the database the liked products
     // Rember to check it
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
@@ -175,10 +160,6 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                                   subcategoryOffers[index]
                                                       .product);
                                             }
-                                            // if (iconColors[index] == ShoppyColors.blue)
-                                            //   iconColors[index] = ShoppyColors.red;
-                                            // else
-                                            //   iconColors[index] = ShoppyColors.blue;
                                           });
                                           // Favorite Supermarket /Unfavorite Supermarket
                                         },
@@ -223,8 +204,6 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                // NamesofSM[index]
-                                                //textAlign:TextAlign.left,
                                                 subcategoryOffers[index]
                                                     .product
                                                     .productName,
@@ -241,16 +220,31 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                                         .height *
                                                     0.004,
                                               ),
-                                              Text(
-                                                //textAlign:TextAlign.left,
-                                                subcategoryOffers[index]
-                                                    .storeName,
-                                                style: TextStyle(
-                                                    color: ShoppyColors.blue,
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w300),
-                                              ),
+                                              if (subcategoryOffers[index]
+                                                      .product
+                                                      .brand !=
+                                                  '')
+                                                Text(
+                                                  //textAlign:TextAlign.left,
+                                                  subcategoryOffers[index]
+                                                      .product
+                                                      .brand,
+                                                  style: TextStyle(
+                                                      color: ShoppyColors.blue,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w300),
+                                                )
+                                              else
+                                                (Text(
+                                                  //textAlign:TextAlign.left,
+                                                  'Unbranded',
+                                                  style: TextStyle(
+                                                      color: ShoppyColors.blue,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w300),
+                                                ))
                                             ]),
                                       ),
                                     ),
@@ -311,51 +305,6 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
       ),
     );
   }
-
-  // void createIconColorList() {
-  //   int length = subcategoryOffers.length;
-  //   print("Offers     :" + subcategoryOffers.length.toString());
-  //   for (var i = 0; i < length; i++) {
-  //     iconColors.add(ShoppyColors.blue);
-  //   }
-  //   print("Colors      :" + iconColors.length.toString());
-  //}
-  // TextFormField textFormField(String textH, TextEditingController eController) {
-  //   bool hide = false;
-  //   if (textH == 'Password') {
-  //     hide = true;
-  //   }
-  //   return TextFormField(
-  //     controller: eController,
-  //     obscureText: hide,
-  //     style: TextStyle(color: ShoppyColors.blue),
-  //     decoration: InputDecoration(
-  //       contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
-  //       fillColor: const Color.fromARGB(240, 225, 225, 225),
-  //       filled: true,
-  //       hintStyle: TextStyle(color: ShoppyColors.blue),
-  //       focusedBorder: OutlineInputBorder(
-  //           borderRadius: BorderRadius.circular(35),
-  //           borderSide: BorderSide(color: ShoppyColors.red)),
-  //       hintText: textH,
-  //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
-  //     ),
-  //   );
-  // }
-  // void getLists(List<String> image, List<String> Name, String Subname) {
-//   if (Subname == 'Nicolas') {
-//     for (int i = 0; i < 3; i++) {
-//       image.add('https://nicolastheodosiou.pages.dev/images/prof.png');
-//       Name.add('Nicolas');
-//     }
-//   } else if (Subname == 'Banana') {
-//     for (int i = 0; i < 3; i++) {
-//       image.add(
-//           'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/800px-Banana-Single.jpg');
-//       Name.add('Banana');
-//     }
-//   }
-// }
 }
 
 TextFormField searchBar() {

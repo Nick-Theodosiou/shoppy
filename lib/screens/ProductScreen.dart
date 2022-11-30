@@ -55,7 +55,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 alignment: Alignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 20, top: 30),
+                    padding: const EdgeInsets.only(left: 15, top: 40),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: IconButton(
@@ -64,8 +64,39 @@ class _ProductScreenState extends State<ProductScreen> {
                           Navigator.pop(context);
                         },
                         icon: const Icon(Icons.arrow_back_ios),
-                        iconSize: 40,
+                        iconSize: 30,
                         color: ShoppyColors.blue,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15, top: 40),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.favorite,
+                          color: (localUser.likedProduct.any(((element) =>
+                                  element.productId == offer.product.productId))
+                              ? ShoppyColors.red
+                              : ShoppyColors.blue),
+                          //color: Color(0xFFE86969),
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if ((localUser.likedProduct.any(((element) =>
+                                element.productId ==
+                                offer.product.productId)))) {
+                              ShoppyColors.blue;
+                              removeFromLikedProducts(offer.product);
+                            } else {
+                              ShoppyColors.red;
+                              addToLikedProducts(offer.product);
+                            }
+                          });
+                          // Favorite Supermarket /Unfavorite Supermarket
+                        },
                       ),
                     ),
                   ),
@@ -83,7 +114,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: Image(
-                        height: MediaQuery.of(context).size.height * 0.05,
+                        height: MediaQuery.of(context).size.height * 0.045,
                         image: NetworkImage(offer.storePictureURL),
                       ),
                     ),

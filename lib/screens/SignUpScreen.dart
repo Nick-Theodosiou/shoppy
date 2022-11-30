@@ -84,9 +84,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         key: _formKey,
                         child: Column(
                           children: [
-                            // SizedBox(
-                            //   height: MediaQuery.of(context).size.height * 0.20,
-                            // ),
                             const Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
@@ -122,8 +119,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const Color.fromARGB(240, 225, 225, 225),
                                 filled: true,
                                 hintStyle: TextStyle(color: ShoppyColors.blue),
-                                //  labelStyle: TextStyle(color:ShoppyColors.blue ),
-                                // labelText: textH,
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(35),
                                     borderSide:
@@ -158,8 +153,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const Color.fromARGB(240, 225, 225, 225),
                                 filled: true,
                                 hintStyle: TextStyle(color: ShoppyColors.blue),
-                                //  labelStyle: TextStyle(color:ShoppyColors.blue ),
-                                // labelText: textH,
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(35),
                                     borderSide:
@@ -197,8 +190,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const Color.fromARGB(240, 225, 225, 225),
                                 filled: true,
                                 hintStyle: TextStyle(color: ShoppyColors.blue),
-                                //  labelStyle: TextStyle(color:ShoppyColors.blue ),
-                                // labelText: textH,
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(35),
                                     borderSide:
@@ -237,8 +228,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const Color.fromARGB(240, 225, 225, 225),
                                 filled: true,
                                 hintStyle: TextStyle(color: ShoppyColors.blue),
-                                //  labelStyle: TextStyle(color:ShoppyColors.blue ),
-                                // labelText: textH,
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(35),
                                     borderSide:
@@ -278,8 +267,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const Color.fromARGB(240, 225, 225, 225),
                                 filled: true,
                                 hintStyle: TextStyle(color: ShoppyColors.blue),
-                                //  labelStyle: TextStyle(color:ShoppyColors.blue ),
-                                // labelText: textH,
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(35),
                                     borderSide:
