@@ -340,7 +340,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   ),
                                   Text(
                                     //textAlign:TextAlign.left,
-                                    category.categoryOffers[index].storeName,
+                                    category
+                                        .categoryOffers[index].product.brand,
                                     style: TextStyle(
                                         color: ShoppyColors.blue,
                                         fontSize: 15,

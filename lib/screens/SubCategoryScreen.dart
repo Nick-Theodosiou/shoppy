@@ -44,6 +44,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
     });
     _refreshController.loadComplete();
   }
+
   User user = localUser;
   @override
   Widget build(BuildContext context) {
@@ -222,7 +223,8 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                               Text(
                                                 //textAlign:TextAlign.left,
                                                 subcategoryOffers[index]
-                                                    .storeName,
+                                                    .product
+                                                    .brand,
                                                 style: TextStyle(
                                                     color: ShoppyColors.blue,
                                                     fontSize: 15,
