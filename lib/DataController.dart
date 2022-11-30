@@ -431,13 +431,14 @@ void removeFromLikedStores(Store s) async {
   }
 }
 
-Future<bool> signUp(
+Future<int> signUp(
     String email, String name, String surname, String password) async {
   var conn = await MySqlConnection.connect(settings);
 
-  await conn.query('CALL signup(?,?,?,?);', [email, name, surname, password]);
+  var results = await conn
+      .query('SELECT signUp(?,?,?,?);', [email, name, surname, password]);
 
-  return await checkCredentials(email, password);
+  return results.first[0];
 }
 
 void updateUserDetails(String name, String surname) async {

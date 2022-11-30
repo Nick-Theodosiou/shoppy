@@ -348,13 +348,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void signup() async {
-    var bytes1 = utf8.encode(passController.text);         
+    var bytes1 = utf8.encode(passController.text);
     var digest1 = sha256.convert(bytes1);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Processing your data.')),
     );
-    if (await signUp(emailController.text, nameController.text,
-        surnameController.text, digest1.toString())) {
+    bool isOK = await signUp(emailController.text, nameController.text,
+            surnameController.text, digest1.toString()) >
+        0;
+    if (isOK) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
