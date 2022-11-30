@@ -218,42 +218,49 @@ class _ListScreenState extends State<ListScreen> {
                                               padding:
                                                   const EdgeInsets.all(0.0),
                                               child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   SizedBox(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.55,
                                                     child: Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          RichText(
-                                                            textAlign:
-                                                                TextAlign.start,
-                                                            maxLines: 1,
-                                                            //richtext maxlines 1
-                                                            text: TextSpan(
-                                                              text:
-                                                                  '${_shoppingList[indexS].itemOffers[index].offer.product.productName}',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .blueGrey
-                                                                      .shade800,
-                                                                  fontSize: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .height *
-                                                                      0.02,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
+                                                          SizedBox(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.50,
+                                                            child: RichText(
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .start,
+                                                              maxLines: 1,
+                                                              //richtext maxlines 1
+                                                              text: TextSpan(
+                                                                text: _shoppingList[
+                                                                        indexS]
+                                                                    .itemOffers[
+                                                                        index]
+                                                                    .offer
+                                                                    .product
+                                                                    .productName,
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .blueGrey
+                                                                        .shade800,
+                                                                    fontSize:
+                                                                        17.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                             ),
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
                                                           ),
                                                           SizedBox(
                                                             width: MediaQuery.of(
@@ -298,13 +305,9 @@ class _ListScreenState extends State<ListScreen> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.55,
+                                                            0.58,
                                                     child: SizedBox(
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.10,
+                                                      height: 55,
                                                       child: Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -326,15 +329,26 @@ class _ListScreenState extends State<ListScreen> {
                                                                           .brand !=
                                                                       '')
                                                                   ? Container(
-                                                                      child: Text(
-                                                                          textAlign: TextAlign
-                                                                              .left,
-                                                                          '${_shoppingList[indexS].itemOffers[index].offer.product.brand}',
-                                                                          style: TextStyle(
-                                                                              color: Colors.blueGrey.shade800,
-                                                                              fontSize: MediaQuery.of(context).size.height * 0.02)),
+                                                                      child:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.left,
+                                                                        _shoppingList[indexS]
+                                                                            .itemOffers[index]
+                                                                            .offer
+                                                                            .product
+                                                                            .brand,
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.blueGrey.shade800,
+                                                                            fontSize: 16.0),
+                                                                      ),
                                                                     )
-                                                                  : Container(),
+                                                                  : Container(
+                                                                      child:
+                                                                          const Text(
+                                                                              ""),
+                                                                    ),
                                                               Align(
                                                                 alignment: Alignment
                                                                     .centerLeft,
@@ -347,8 +361,7 @@ class _ListScreenState extends State<ListScreen> {
                                                                             .blueGrey
                                                                             .shade800,
                                                                         fontSize:
-                                                                            MediaQuery.of(context).size.height *
-                                                                                0.02),
+                                                                            16),
                                                                   ),
                                                                 ),
                                                               ),
@@ -370,7 +383,7 @@ class _ListScreenState extends State<ListScreen> {
                                                                               context)
                                                                           .size
                                                                           .width *
-                                                                      0.2,
+                                                                      0.25,
                                                                   child: Row(
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
@@ -414,7 +427,7 @@ class _ListScreenState extends State<ListScreen> {
                                                                           text:
                                                                               TextSpan(
                                                                             text:
-                                                                                '${_shoppingList[indexS].itemOffers[index].quantity}',
+                                                                                _shoppingList[indexS].itemOffers[index].quantity.toString(),
                                                                             style:
                                                                                 TextStyle(
                                                                               color: Colors.blueGrey.shade800,
@@ -465,7 +478,7 @@ class _ListScreenState extends State<ListScreen> {
                                             ),
                                           ],
                                         ),
-                                        new Positioned.fill(
+                                        Positioned.fill(
                                           child: (_shoppingList[indexS]
                                                       .itemOffers[index]
                                                       .isChecked ||

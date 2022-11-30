@@ -41,9 +41,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           if (snapshot.hasData) {
             return NavigationBarScreen();
           } else if (snapshot.hasError) {
-            return Container(
-              child: Text("Error"),
-            ); //Error getting data
+            return LoginScreen();
           } else {
             return Container(
               decoration: const BoxDecoration(
