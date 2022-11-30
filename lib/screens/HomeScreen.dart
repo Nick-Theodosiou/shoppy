@@ -8,7 +8,9 @@ import 'package:shoppy/models/Store.dart';
 import 'package:shoppy/models/Category.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:shoppy/screens/BestDealsScreen.dart';
 import 'package:shoppy/styles/colors.dart';
+import '../NavigationBarScreen.dart';
 import 'CategoriesScreen.dart';
 import 'CategoryScreen.dart';
 import 'ProductScreen.dart';
@@ -117,31 +119,34 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: RichText(
-                              softWrap: true,
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Best Offers ",
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        color: ShoppyColors.blue,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  WidgetSpan(
-                                    child: Icon(
-                                      Icons.arrow_right_alt,
-                                      size: 25,
-                                      color: ShoppyColors.blue,
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: TextButton(
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: RichText(
+                                softWrap: true,
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "Best Offers ",
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          color: ShoppyColors.blue,
+                                          fontWeight: FontWeight.w500),
                                     ),
-                                  ),
-                                ],
+                                    WidgetSpan(
+                                      child: Icon(
+                                        Icons.arrow_right_alt,
+                                        size: 25,
+                                        color: ShoppyColors.blue,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
+                            onPressed: () {},
                           ),
                         ),
                         Padding(
