@@ -125,7 +125,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                               Radius.circular(8.0)),
                                         ),
                                         child: Align(
-                                          alignment: const Alignment(1.4, -5.9),
+                                          alignment: const Alignment(1.5, -15),
                                           child: IconButton(
                                             onPressed: () {
                                               setState(() {
@@ -242,8 +242,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                                           maxLines: 1,
                                                           //richtext maxlines 1
                                                           text: TextSpan(
-                                                            text:
-                                                                '${_likedList[index].productName}',
+                                                            text: _likedList[
+                                                                    index]
+                                                                .productName,
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .blueGrey
@@ -266,8 +267,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                                             ? RichText(
                                                                 maxLines: 1,
                                                                 text: TextSpan(
-                                                                    text:
-                                                                        '${_likedList[index].brand}',
+                                                                    text: _likedList[
+                                                                            index]
+                                                                        .brand,
                                                                     style: TextStyle(
                                                                         color: Colors
                                                                             .blueGrey

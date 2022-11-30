@@ -281,7 +281,7 @@ class _CategorySearchState extends State<CategorySearch> {
                                   ),
                                   Text(
                                     //textAlign:TextAlign.left,
-                                    offers[index].storeName,
+                                    offers[index].product.brand,
                                     style: TextStyle(
                                         color: ShoppyColors.blue,
                                         fontSize: 15,
