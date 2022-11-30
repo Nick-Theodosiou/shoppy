@@ -144,7 +144,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            const NavigationBarScreen(
+                                                index: 1)));
+                              });
+                            },
                           ),
                         ),
                         Padding(
