@@ -3,9 +3,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/LoginScreen.dart';
 import 'package:shoppy/screens/LoadingScreen.dart';
-import '../NavigationBarScreen.dart';
 import '../styles/colors.dart';
-import 'ForgotPasswordScreen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

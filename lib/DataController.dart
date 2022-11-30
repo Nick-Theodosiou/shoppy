@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:shoppy/models/ItemOffer.dart';
 import 'package:shoppy/models/ItemStore.dart';

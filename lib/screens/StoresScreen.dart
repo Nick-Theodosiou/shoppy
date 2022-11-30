@@ -1,14 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/models/Store.dart';
 import 'package:shoppy/styles/colors.dart';
 
-import '../NavigationBarScreen.dart';
 import '../models/User.dart';
-import 'HomeScreen.dart';
 
 class StoresScreen extends StatefulWidget {
   const StoresScreen({super.key});
