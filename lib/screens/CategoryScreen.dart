@@ -94,15 +94,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
         child: SingleChildScrollView(
             child: Padding(
           padding: EdgeInsets.only(
+            // top: MediaQuery.of(context).size.height * 0.00,
             top: MediaQuery.of(context).size.height * 0.01,
-            bottom: MediaQuery.of(context).size.height * 0.003,
+            left: MediaQuery.of(context).size.width * 0.03,
+            right: MediaQuery.of(context).size.width * 0.03,
+            //bottom: MediaQuery.of(context).size.height * 0.0,
           ),
           child: Column(children: [
             searchBar(),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
               child: Align(
-                alignment: const Alignment(-0.87, -1),
+                alignment: const Alignment(-0.95, -1),
                 child: RichText(
                   softWrap: true,
                   text: TextSpan(
@@ -141,57 +144,64 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   Padding sortAndFilter() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(7, 5, 5, 5),
-        child: Row(children: [
-          TextButton.icon(
-            // <-- TextButton
-            onPressed: () {},
-            icon: Icon(
-              Icons.sort,
-              size: 24.0,
-              color: ShoppyColors.blue,
-            ),
-            label: const Text('Sort'),
-            style: TextButton.styleFrom(
-              foregroundColor: ShoppyColors.blue, // Text Color
-            ),
+      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+      child: Row(children: [
+        TextButton.icon(
+          //contentPadding:const EdgeInsets.only(bottom: 0),
+          // <-- TextButton
+          onPressed: () {},
+          icon: Icon(
+            Icons.sort,
+            size: 15.0,
+            color: ShoppyColors.blue,
           ),
-          const Spacer(),
-          TextButton.icon(
-            // <-- TextButton
-            onPressed: () {},
-            label: const Text('Filter'),
-            icon: Icon(
-              Icons.filter_alt_rounded,
-              size: 24.0,
-              color: ShoppyColors.blue,
-            ),
-            style: TextButton.styleFrom(
-              foregroundColor: ShoppyColors.blue, // Text Color
-            ),
+          label: const Text('Sort'),
+          style: TextButton.styleFrom(
+            //padding: EdgeInsets.all(0),
+            foregroundColor: ShoppyColors.blue, // Text Color
           ),
-        ]));
+        ),
+        const Spacer(),
+        TextButton.icon(
+          // <-- TextButton
+          onPressed: () {},
+          label: const Text('Filter'),
+          icon: Icon(
+            Icons.filter_alt_rounded,
+            size: 15.0,
+            color: ShoppyColors.blue,
+          ),
+          style: TextButton.styleFrom(
+            // padding: EdgeInsets.all(0),
+            foregroundColor: ShoppyColors.blue, // Text Color
+          ),
+        ),
+      ]),
+    );
   }
 
-  TextFormField searchBar() {
-    return TextFormField(
-      style: TextStyle(color: ShoppyColors.blue),
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.search),
-        prefixIconColor: ShoppyColors.blue,
-        contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
-        fillColor: const Color.fromARGB(108, 225, 225, 225),
-        filled: true,
-        hintStyle: TextStyle(color: ShoppyColors.blue, fontSize: 20),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(35),
-            borderSide: BorderSide(color: ShoppyColors.blue)),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(35),
-            borderSide:
-                const BorderSide(color: Color.fromARGB(108, 225, 225, 225))),
-        hintText: "Search...",
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
+  Padding searchBar() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+      child: TextFormField(
+        style: TextStyle(color: ShoppyColors.blue),
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.search),
+          prefixIconColor: ShoppyColors.blue,
+          contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
+          fillColor: const Color.fromARGB(108, 225, 225, 225),
+          filled: true,
+          hintStyle: TextStyle(color: ShoppyColors.blue, fontSize: 20),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35),
+              borderSide: BorderSide(color: ShoppyColors.blue)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35),
+              borderSide:
+                  const BorderSide(color: Color.fromARGB(108, 225, 225, 225))),
+          hintText: "Search...",
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
+        ),
       ),
     );
   }
@@ -216,9 +226,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
             },
             child: Padding(
               padding: EdgeInsets.only(
-                  // top: MediaQuery.of(context).size.height * 0.00,
-                  left: MediaQuery.of(context).size.width * 0.03,
-                  right: MediaQuery.of(context).size.width * 0.03,
                   bottom: MediaQuery.of(context).size.height * 0.01),
               child: Container(
                 width: double.infinity,
