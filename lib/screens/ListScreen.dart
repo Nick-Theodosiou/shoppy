@@ -94,6 +94,8 @@ class _ListScreenState extends State<ListScreen> {
                               child: Row(
                                 children: [
                                   Checkbox(
+                                    activeColor:
+                                        Color.fromARGB(255, 93, 184, 97),
                                     shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(20.0))),
@@ -380,7 +382,7 @@ class _ListScreenState extends State<ListScreen> {
                                                                 child:
                                                                     Container(
                                                                   child: Text(
-                                                                    '€${_shoppingList[indexS].itemOffers[index].offer.price}',
+                                                                    '€${_shoppingList[indexS].itemOffers[index].offer.price.toStringAsFixed(2)}',
                                                                     style: TextStyle(
                                                                         color: Colors
                                                                             .blueGrey
@@ -553,6 +555,8 @@ class _ListScreenState extends State<ListScreen> {
                                             padding: const EdgeInsets.only(
                                                 top: 0, left: 0),
                                             child: Checkbox(
+                                              activeColor: Color.fromARGB(
+                                                  255, 93, 184, 97),
                                               shape:
                                                   const RoundedRectangleBorder(
                                                       borderRadius:
@@ -602,14 +606,28 @@ class _ListScreenState extends State<ListScreen> {
                                                       localUser.itemsInCart;
                                                 });
                                               },
-                                              icon: Icon(
-                                                Icons.delete,
-                                                color: ShoppyColors.blue,
-                                                size: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.06,
-                                              ),
+                                              icon: (!_shoppingList[indexS]
+                                                      .itemOffers[index]
+                                                      .isChecked)
+                                                  ? Icon(
+                                                      Icons.delete,
+                                                      color: ShoppyColors.blue,
+                                                      size:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.06,
+                                                    )
+                                                  : Icon(
+                                                      Icons
+                                                          .highlight_remove_outlined,
+                                                      color: Colors.grey[700],
+                                                      size:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.07,
+                                                    ),
                                             ),
                                           ),
                                         ),
