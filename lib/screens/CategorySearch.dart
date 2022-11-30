@@ -11,21 +11,21 @@ import 'package:shoppy/models/Category.dart';
 import 'package:shoppy/models/Subcategory.dart';
 import 'package:shoppy/screens/BestDealsScreen.dart';
 import 'package:shoppy/screens/CategoriesScreen.dart';
-import 'package:shoppy/screens/CategorySearch.dart';
 
 import '../models/User.dart';
 import '../NavigationBarScreen.dart';
 import '../styles/colors.dart';
 import 'ProductScreen.dart';
-import 'SubCategoryScreen.dart';
 
-class CategoryScreen extends StatefulWidget {
+class CategorySearch extends StatefulWidget {
   final Category category;
+  final String string;
   // ignore: non_constant_identifier_names
-  const CategoryScreen({super.key, required this.category});
+  const CategorySearch(
+      {super.key, required this.category, required this.string});
 
   @override
-  State<CategoryScreen> createState() => _CategoryScreenState(category);
+  State<CategorySearch> createState() => _CategorySearchState(category, string);
 }
 
 class AlwaysDisabledFocusNode extends FocusNode {
@@ -33,31 +33,26 @@ class AlwaysDisabledFocusNode extends FocusNode {
   bool get hasFocus => false;
 }
 
-class _CategoryScreenState extends State<CategoryScreen> {
+class _CategorySearchState extends State<CategorySearch> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   Category category;
-  List<Subcategory> CategorySubcategories = <Subcategory>[];
-  _CategoryScreenState(
-    this.category,
-  );
+  String string;
+  List<Offer> offers = [];
+  _CategorySearchState(this.category, this.string);
 
   void _onRefresh() async {
-    var subs = await getSubcategoriesByCategory(category);
-    List<Offer> offers = await getCategoryOffers(subs);
+    List<Offer> tempoffers = await searchOffersInCategory(string, category);
     setState(() {
-      CategorySubcategories = subs;
-      category.categoryOffers = offers;
+      offers = tempoffers;
     });
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
-    var subs = await getSubcategoriesByCategory(category);
-    List<Offer> offers = await getCategoryOffers(subs);
+    List<Offer> tempoffers = await searchOffersInCategory(string, category);
     setState(() {
-      CategorySubcategories = subs;
-      category.categoryOffers = offers;
+      offers = tempoffers;
     });
     _refreshController.loadComplete();
   }
@@ -74,7 +69,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
         title: Text(
-          category.categoryName,
+          "Searched for: $string",
           style: TextStyle(
             color: ShoppyColors.gray,
             fontSize: 25,
@@ -100,44 +95,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
           ),
           child: Column(children: [
             searchBar(),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: Align(
-                alignment: const Alignment(-0.87, -1),
-                child: RichText(
-                  softWrap: true,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Subcategories",
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: ShoppyColors.blue,
-                            fontWeight: FontWeight.w400),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            showSubcategories(),
             sortAndFilter(),
             listOfOffers(),
           ]),
         )),
       ),
     );
-  }
-
-  Future<List<Offer>> getCategoryOffers(List<Subcategory> subs) async {
-    List<Offer> offers = [];
-    for (Subcategory element in subs) {
-      element.subcategoryOffers = await getOffersBySubcategory(element);
-      for (Offer el in element.subcategoryOffers) {
-        offers.add(el);
-      }
-    }
-    return offers;
   }
 
   Padding sortAndFilter() {
@@ -213,7 +176,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         primary: false,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        itemCount: category.categoryOffers.length,
+        itemCount: offers.length,
         //itemCount: cartItems.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
@@ -221,8 +184,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (_) =>
-                        ProductScreen(offer: category.categoryOffers[index])),
+                    builder: (_) => ProductScreen(offer: offers[index])),
               );
             },
             child: Padding(
@@ -262,8 +224,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               Icons.favorite,
                               color: (user.likedProduct.any(((element) =>
                                       element.productId ==
-                                      category.categoryOffers[index].product
-                                          .productId))
+                                      offers[index].product.productId))
                                   ? ShoppyColors.red
                                   : ShoppyColors.blue),
                               size: 20,
@@ -272,15 +233,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               setState(() {
                                 if ((user.likedProduct.any(((element) =>
                                     element.productId ==
-                                    category.categoryOffers[index].product
-                                        .productId)))) {
+                                    offers[index].product.productId)))) {
                                   ShoppyColors.blue;
                                   removeFromLikedProducts(
-                                      category.categoryOffers[index].product);
+                                      offers[index].product);
                                 } else {
                                   ShoppyColors.red;
-                                  addToLikedProducts(
-                                      category.categoryOffers[index].product);
+                                  addToLikedProducts(offers[index].product);
                                 }
                                 // if (iconColors[index] == ShoppyColors.blue)
                                 //   iconColors[index] = ShoppyColors.red;
@@ -298,7 +257,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Image.network(
-                            category.categoryOffers[index].product.productImage,
+                            offers[index].product.productImage,
                             width: MediaQuery.of(context).size.width * 0.16,
                             fit: BoxFit.fitWidth,
                           ),
@@ -317,8 +276,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    category.categoryOffers[index].product
-                                        .productName,
+                                    offers[index].product.productName,
                                     style: TextStyle(
                                         color: ShoppyColors.blue,
                                         fontSize: 15,
@@ -332,7 +290,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   ),
                                   Text(
                                     //textAlign:TextAlign.left,
-                                    category.categoryOffers[index].storeName,
+                                    offers[index].storeName,
                                     style: TextStyle(
                                         color: ShoppyColors.blue,
                                         fontSize: 15,
@@ -366,7 +324,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 //           0.000,
                                 // ),
                                 Text(
-                                  "€${category.categoryOffers[index].price.toStringAsFixed(2)}",
+                                  "€${offers[index].price.toStringAsFixed(2)}",
                                   style: TextStyle(
                                       fontSize:
                                           MediaQuery.of(context).size.width *
@@ -386,123 +344,5 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ),
           );
         });
-  }
-
-  SizedBox showSubcategories() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.95,
-      height: MediaQuery.of(context).size.height * 0.05,
-      child: ListView(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        children: CategorySubcategories.map((s) {
-          return InkWell(
-            onTap: () {
-              setState(() {
-                navigateToSubcategory(s);
-              });
-            },
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(500),
-                    child: Container(
-                      color: Color.fromARGB(20, 40, 40, 40),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CachedNetworkImage(
-                              width: MediaQuery.of(context).size.width * 0.15,
-                              height: MediaQuery.of(context).size.height * 0.1,
-                              imageUrl: s.subcategoryImage,
-                              imageBuilder: ((context, imageProvider) =>
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image:
-                                              NetworkImage(s.subcategoryImage)),
-                                    ),
-                                  )),
-                            ),
-                            SizedBox(
-                              width: 50,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  s.subcategoryName,
-                                  style: TextStyle(
-                                      overflow: TextOverflow.ellipsis,
-                                      fontSize: 14,
-                                      color: ShoppyColors.blue),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10.0,
-                            )
-                          ]),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  )
-                ]),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  void navigateToSubcategory(Subcategory s) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => SubCategoryScreen(subcategory: s)),
-    );
-    setState(() {
-      user = localUser;
-    });
-  }
-
-  SizedBox showSubcategories2() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 1,
-      height: MediaQuery.of(context).size.height * 0.15,
-      child: ListView(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        children: CategorySubcategories.map((s) {
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => SubCategoryScreen(subcategory: s)),
-              );
-            },
-            child: Column(children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: 5, bottom: 0, left: 5, right: 5),
-                child: CachedNetworkImage(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  imageUrl: s.subcategoryImage,
-                  imageBuilder: ((context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(s.subcategoryImage)),
-                        ),
-                      )),
-                ),
-              ),
-              Text(s.subcategoryName,
-                  style: TextStyle(color: ShoppyColors.blue)),
-            ]),
-          );
-        }).toList(),
-      ),
-    );
   }
 }

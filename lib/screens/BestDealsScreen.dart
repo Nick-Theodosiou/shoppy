@@ -32,12 +32,18 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
   List<Offer> bestOffers = DCbestOffers;
 
   void _onRefresh() async {
-    setState(() {});
+    List<Offer> temp = await getBestDeals(10);
+    setState(() {
+      bestOffers = temp;
+    });
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
-    setState(() {});
+    List<Offer> temp = await getBestDeals(10);
+    setState(() {
+      bestOffers = temp;
+    });
     _refreshController.loadComplete();
   }
 

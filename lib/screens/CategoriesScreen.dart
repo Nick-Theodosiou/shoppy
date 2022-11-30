@@ -92,13 +92,11 @@ class CategoriesScreenState extends State<CategoriesScreen> {
                       children: [
                         GestureDetector(
                           onTap: () async {
-                            List<Category> listC = await getCategories();
-                            // ignore: use_build_context_synchronously
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => CategoryScreen(
-                                        category: listC[index],
+                                        category: Categories[index],
                                       )),
                             );
                           }, // Image tapped, takes you to category screen

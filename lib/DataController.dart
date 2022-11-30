@@ -482,3 +482,201 @@ Future<List<Offer>> getSimilarProducts(Offer offer) async {
   }
   return list;
 }
+
+Future<List<Offer>> searchOffersbyProductName(String string) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results =
+      await conn.query('CALL searchOffersbyProductName(?);', [string]);
+
+  await conn.close();
+  List<Offer> list = [];
+
+  for (var row in results) {
+    Product p = Product(
+        row["ProductID"],
+        row["Product_Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row["PictureURL"],
+        row["Brand"] ?? "",
+        row["SubcategoryID"],
+        row["CategoryID"], []);
+
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
+
+    list.add(o);
+  }
+  return list;
+}
+
+Future<List<Offer>> searchOffersInCategory(String string, Category c) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn
+      .query('CALL searchOffersInCategory(?, ?);', [string, c.categoryID]);
+
+  await conn.close();
+  List<Offer> list = [];
+
+  for (var row in results) {
+    Product p = Product(
+        row["ProductID"],
+        row["Product_Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row["PictureURL"],
+        row["Brand"] ?? "",
+        row["SubcategoryID"],
+        row["CategoryID"], []);
+
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
+
+    list.add(o);
+  }
+  return list;
+}
+
+Future<List<Offer>> searchOffersInStore(String string, Store s) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results =
+      await conn.query('CALL searchOffersInStore(?, ?);', [string, s.storeID]);
+
+  await conn.close();
+  List<Offer> list = [];
+
+  for (var row in results) {
+    Product p = Product(
+        row["ProductID"],
+        row["Product_Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row["PictureURL"],
+        row["Brand"] ?? "",
+        row["SubcategoryID"],
+        row["CategoryID"], []);
+
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
+
+    list.add(o);
+  }
+  return list;
+}
+
+Future<List<Offer>> searchOffersInSubcategory(
+    String string, Subcategory s) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query(
+      'CALL searchOffersInSubcategory(?, ?);', [string, s.subcategoryID]);
+
+  await conn.close();
+  List<Offer> list = [];
+
+  for (var row in results) {
+    Product p = Product(
+        row["ProductID"],
+        row["Product_Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row["PictureURL"],
+        row["Brand"] ?? "",
+        row["SubcategoryID"],
+        row["CategoryID"], []);
+
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
+
+    list.add(o);
+  }
+  return list;
+}
+
+Future<List<Store>> searchStoresByStoreName(String string) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results = await conn.query('CALL searchStoresByStoreName(?);', [string]);
+
+  await conn.close();
+  List<Store> list = [];
+  List<String> test = [];
+
+  for (var row in results) {
+    Store S = Store(
+        row['SupermarketID'],
+        row['Name'],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
+        test);
+    list.add(S);
+  }
+
+  return list;
+}
+
+Future<List<Category>> searchCategorybyCategoryName(String string) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results =
+      await conn.query('CALL searchCategorybyCategoryName(?);', [string]);
+
+  await conn.close();
+  List<Category> list = [];
+  List<Subcategory> p = [];
+  List<Offer> p2 = [];
+
+  for (var row in results) {
+    Category C = Category(
+        row['CategoryID'],
+        row['Name'],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
+        p,
+        p2);
+    list.add(C);
+  }
+  return list;
+}
+
+Future<List<Subcategory>> searchSubcategoryBySubcategoryName(
+    String string) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results =
+      await conn.query('CALL searchSubcategoryBySubcategoryName(?);', [string]);
+
+  await conn.close();
+  List<Subcategory> list = [];
+
+  for (var row in results) {
+    Subcategory S = Subcategory(
+        row['SubcategoryID'],
+        row['Name'],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row['PictureURL'],
+        []);
+    list.add(S);
+  }
+  return list;
+}
