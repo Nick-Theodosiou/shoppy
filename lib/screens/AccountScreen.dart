@@ -228,7 +228,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Nottifications',
+                          'Notifications',
                           style:
                               TextStyle(fontSize: 20, color: ShoppyColors.blue),
                         ),
