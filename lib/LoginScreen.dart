@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppy/screens/LoadingScreen.dart';
 import 'package:shoppy/screens/SignUpScreen.dart';
@@ -269,10 +272,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> login() async {
+    var bytes1 = utf8.encode(passController.text);
+    var digest1 = sha256.convert(bytes1);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Processing Data')),
     );
-    if (await checkCredentials(userController.text, passController.text)) {
+    if (await checkCredentials(userController.text, digest1.toString())) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
