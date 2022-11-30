@@ -13,7 +13,7 @@ List<p> placeholder = [
   p("Crandberry Juice"),
   p("Toilet Paper"),
   p("Chocolate"),
-  p("CHicken"),
+  p("Chicken"),
 ];
 
 class p {
