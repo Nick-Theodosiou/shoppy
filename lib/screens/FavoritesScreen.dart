@@ -16,7 +16,7 @@ class FavoritesScreen extends StatefulWidget {
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
   final RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
+      RefreshController(initialRefresh: false);
   List<Product> _likedList = localUser.likedProduct;
   List<Store> favoriteSupermarkets = localUser.likedStores;
 
@@ -36,6 +36,28 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       _likedList = localUser.likedProduct;
     });
     _refreshController.loadComplete();
+  }
+
+  void navigateToStores() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const StoresScreen()),
+    );
+    setState(() {
+      favoriteSupermarkets = localUser.likedStores;
+      _likedList = localUser.likedProduct;
+    });
+  }
+
+  void navigateToCategories() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const CategoriesScreen()),
+    );
+    setState(() {
+      favoriteSupermarkets = localUser.likedStores;
+      _likedList = localUser.likedProduct;
+    });
   }
 
   @override
@@ -69,12 +91,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         children: favoriteSupermarkets.map((s) {
                           return InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) =>
-                                        const StoresScreen()), //will normaly take you to the supermarket's page
-                              );
+                              navigateToStores();
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15.0),
@@ -153,11 +170,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const StoresScreen()),
-                          );
+                          navigateToStores();
                         },
                       ),
                     ),
@@ -335,11 +348,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const CategoriesScreen()),
-                          );
+                          navigateToCategories();
                         },
                       ),
                     ),
@@ -360,18 +369,11 @@ TextButton supermarketsBTN() {
         text: TextSpan(
           children: [
             TextSpan(
-              text: "Favourite Supermarkets",
+              text: "Favorite Supermarkets",
               style: TextStyle(
                   fontSize: 25,
                   color: ShoppyColors.blue,
                   fontWeight: FontWeight.w500),
-            ),
-            WidgetSpan(
-              child: Icon(
-                Icons.arrow_right_alt,
-                size: 25,
-                color: ShoppyColors.blue,
-              ),
             ),
           ],
         ),
@@ -390,18 +392,11 @@ TextButton productsBTN() {
         text: TextSpan(
           children: [
             TextSpan(
-              text: "Favourite Products",
+              text: "Favorite Products",
               style: TextStyle(
                   fontSize: 25,
                   color: ShoppyColors.blue,
                   fontWeight: FontWeight.w500),
-            ),
-            WidgetSpan(
-              child: Icon(
-                Icons.arrow_right_alt,
-                size: 25,
-                color: ShoppyColors.blue,
-              ),
             ),
           ],
         ),
