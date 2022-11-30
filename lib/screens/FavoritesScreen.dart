@@ -108,7 +108,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                               Radius.circular(8.0)),
                                         ),
                                         child: Align(
-                                          alignment: const Alignment(1.5, -15),
+                                          alignment: Alignment(1.5, -5.9),
                                           child: IconButton(
                                             onPressed: () {
                                               setState(() {
