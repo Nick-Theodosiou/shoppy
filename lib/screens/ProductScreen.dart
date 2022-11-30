@@ -70,6 +70,25 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                   ),
                   Padding(
+                    padding: const EdgeInsets.only(bottom: 40, top: 40),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Image(
+                        image: NetworkImage(offer.product.productImage),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Image(
+                        height: MediaQuery.of(context).size.height * 0.045,
+                        image: NetworkImage(offer.storePictureURL),
+                      ),
+                    ),
+                  ),
+                  Padding(
                     padding: const EdgeInsets.only(right: 15, top: 40),
                     child: Align(
                       alignment: Alignment.topRight,
@@ -97,25 +116,6 @@ class _ProductScreenState extends State<ProductScreen> {
                           });
                           // Favorite Supermarket /Unfavorite Supermarket
                         },
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 40, top: 40),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Image(
-                        image: NetworkImage(offer.product.productImage),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Image(
-                        height: MediaQuery.of(context).size.height * 0.045,
-                        image: NetworkImage(offer.storePictureURL),
                       ),
                     ),
                   ),

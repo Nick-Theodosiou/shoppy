@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppy/DataController.dart';
+import 'package:shoppy/screens/CategorySearch.dart';
 import '../models/Store.dart';
 import '../styles/colors.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -210,17 +211,33 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Image.network(
-                                              _likedList[index].productImage,
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.16,
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (_) => CategorySearch(
+                                                          category:
+                                                              _likedList[index]
+                                                                  .categoryID,
+                                                          string: _likedList[
+                                                                  index]
+                                                              .productName)));
+                                              _likedList =
+                                                  localUser.likedProduct;
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.network(
+                                                _likedList[index].productImage,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.16,
 
-                                              // fit: BoxFit.fitWidth,
+                                                // fit: BoxFit.fitWidth,
+                                              ),
                                             ),
                                           ),
                                           Padding(
