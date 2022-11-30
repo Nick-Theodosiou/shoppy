@@ -8,6 +8,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shoppy/models/Product.dart';
 
 import 'CategoriesScreen.dart';
+import 'StoreScreen.dart';
 import 'StoresScreen.dart';
 
 class FavoritesScreen extends StatefulWidget {
@@ -92,7 +93,11 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         children: favoriteSupermarkets.map((s) {
                           return InkWell(
                             onTap: () {
-                              navigateToStores();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => StoreScreen(store: s)),
+                              );
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15.0),
@@ -216,8 +221,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                                           string: _likedList[
                                                                   index]
                                                               .productName)));
-                                              _likedList =
-                                                  localUser.likedProduct;
+                                              setState(() {
+                                                _likedList =
+                                                    localUser.likedProduct;
+                                              });
                                             },
                                             child: ClipRRect(
                                               borderRadius:

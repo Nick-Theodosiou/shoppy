@@ -162,7 +162,7 @@ class _CategorySearchState extends State<CategorySearch> {
               borderRadius: BorderRadius.circular(35),
               borderSide:
                   const BorderSide(color: Color.fromARGB(108, 225, 225, 225))),
-          hintText: "Search...",
+          hintText: string,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
         ),
       ),

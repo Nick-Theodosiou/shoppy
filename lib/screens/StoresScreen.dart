@@ -5,6 +5,7 @@ import 'package:shoppy/models/Store.dart';
 import 'package:shoppy/styles/colors.dart';
 
 import '../models/User.dart';
+import 'StoreScreen.dart';
 
 class StoresScreen extends StatefulWidget {
   const StoresScreen({super.key});
@@ -93,19 +94,39 @@ class _StoresScreenState extends State<StoresScreen> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Image.network(
-                            Stores[index].storeImage,
-                            //cartItems[index].image,
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.fitWidth,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        StoreScreen(store: Stores[index])),
+                              );
+                            },
+                            child: Image.network(
+                              Stores[index].storeImage,
+                              //cartItems[index].image,
+                              width: 80,
+                              height: 80,
+                              fit: BoxFit.fitWidth,
+                            ),
                           ),
-                          Text(
-                            Stores[index].storeName,
-                            style: TextStyle(
-                                color: ShoppyColors.blue,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        StoreScreen(store: Stores[index])),
+                              );
+                            },
+                            child: Text(
+                              Stores[index].storeName,
+                              style: TextStyle(
+                                  color: ShoppyColors.blue,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400),
+                            ),
                           ),
                           IconButton(
                             icon: Icon(

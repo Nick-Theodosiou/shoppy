@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/models/Offer.dart';
+import 'package:shoppy/models/Store.dart';
 import 'package:shoppy/models/Subcategory.dart';
 
 import '../models/User.dart';
 import '../styles/colors.dart';
 import 'ProductScreen.dart';
+import 'StoreSearch.dart';
 
-class SubCategoryScreen extends StatefulWidget {
-  final Subcategory subcategory;
+class StoreScreen extends StatefulWidget {
+  final Store store;
   // ignore: non_constant_identifier_names
-  const SubCategoryScreen({super.key, required this.subcategory});
+  const StoreScreen({super.key, required this.store});
 
   @override
-  State<SubCategoryScreen> createState() =>
-      _SubCategoryScreennState(subcategory);
+  State<StoreScreen> createState() => _StoreScreennState(store);
 }
 
 class AlwaysDisabledFocusNode extends FocusNode {
@@ -23,24 +24,24 @@ class AlwaysDisabledFocusNode extends FocusNode {
   bool get hasFocus => false;
 }
 
-class _SubCategoryScreennState extends State<SubCategoryScreen> {
+class _StoreScreennState extends State<StoreScreen> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
-  List<Offer> subcategoryOffers = <Offer>[];
-  Subcategory subcategory;
-  _SubCategoryScreennState(Subcategory this.subcategory);
+  List<Offer> storeOffers = <Offer>[];
+  Store store;
+  _StoreScreennState(Store this.store);
   void _onRefresh() async {
-    var offers = await getOffersBySubcategory(subcategory);
+    var offers = await getOffersByStore(store);
     setState(() {
-      subcategoryOffers = offers;
+      storeOffers = offers;
     });
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
-    var offers = await getOffersBySubcategory(subcategory);
+    var offers = await getOffersByStore(store);
     setState(() {
-      subcategoryOffers = offers;
+      storeOffers = offers;
     });
     _refreshController.loadComplete();
   }
@@ -53,7 +54,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
       backgroundColor: ShoppyColors.gray,
       appBar: AppBar(
         title: Text(
-          this.subcategory.subcategoryName,
+          this.store.storeName,
           style: TextStyle(
             color: ShoppyColors.gray,
             fontSize: 25,
@@ -77,27 +78,59 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                 const EdgeInsets.only(top: 17, left: 10, right: 10, bottom: 10),
             child: Column(
               children: [
-                searchBar(),
+                TextFormField(
+                  onFieldSubmitted: (value) async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => StoreSearch(
+                                string: value.toString(),
+                                store: store,
+                              )),
+                    );
+                    setState(() {
+                      user = localUser;
+                    });
+                  },
+                  style: TextStyle(color: ShoppyColors.blue),
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.search),
+                    prefixIconColor: ShoppyColors.blue,
+                    contentPadding:
+                        const EdgeInsets.only(top: 15, bottom: 15, left: 15),
+                    fillColor: const Color.fromARGB(108, 225, 225, 225),
+                    filled: true,
+                    hintStyle:
+                        TextStyle(color: ShoppyColors.blue, fontSize: 20),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(35),
+                        borderSide: BorderSide(color: ShoppyColors.blue)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(35),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(108, 225, 225, 225))),
+                    hintText: "Search...",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(35)),
+                  ),
+                ),
                 sortAndFilter(),
                 ListView.builder(
                     padding: EdgeInsets.zero,
                     primary: false,
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    itemCount: subcategoryOffers.length,
+                    itemCount: storeOffers.length,
                     //itemCount: cartItems.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
-                        onTap: () async {
-                          await Navigator.push(
+                        onTap: () {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => ProductScreen(
-                                    offer: subcategoryOffers[index])),
+                                builder: (_) =>
+                                    ProductScreen(offer: storeOffers[index])),
                           );
-                          setState(() {
-                            user = localUser;
-                          });
                         },
                         child: Padding(
                           padding: EdgeInsets.only(
@@ -137,7 +170,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                           color: (user.likedProduct.any(
                                                   ((element) =>
                                                       element.productId ==
-                                                      subcategoryOffers[index]
+                                                      storeOffers[index]
                                                           .product
                                                           .productId))
                                               ? ShoppyColors.red
@@ -150,18 +183,16 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                             if ((user.likedProduct.any(
                                                 ((element) =>
                                                     element.productId ==
-                                                    subcategoryOffers[index]
+                                                    storeOffers[index]
                                                         .product
                                                         .productId)))) {
                                               ShoppyColors.blue;
                                               removeFromLikedProducts(
-                                                  subcategoryOffers[index]
-                                                      .product);
+                                                  storeOffers[index].product);
                                             } else {
                                               ShoppyColors.red;
                                               addToLikedProducts(
-                                                  subcategoryOffers[index]
-                                                      .product);
+                                                  storeOffers[index].product);
                                             }
                                           });
                                           // Favorite Supermarket /Unfavorite Supermarket
@@ -177,9 +208,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(20),
                                       child: Image.network(
-                                        subcategoryOffers[index]
-                                            .product
-                                            .productImage,
+                                        storeOffers[index].product.productImage,
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.16,
@@ -207,7 +236,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                subcategoryOffers[index]
+                                                storeOffers[index]
                                                     .product
                                                     .productName,
                                                 style: TextStyle(
@@ -223,13 +252,13 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                                         .height *
                                                     0.004,
                                               ),
-                                              if (subcategoryOffers[index]
+                                              if (storeOffers[index]
                                                       .product
                                                       .brand !=
                                                   '')
                                                 Text(
                                                   //textAlign:TextAlign.left,
-                                                  subcategoryOffers[index]
+                                                  storeOffers[index]
                                                       .product
                                                       .brand,
                                                   style: TextStyle(
@@ -267,7 +296,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                         child: Column(
                                           children: [
                                             Image.network(
-                                              subcategoryOffers[index]
+                                              storeOffers[index]
                                                   .storePictureURL,
                                               width: 80,
                                               height: 50,
@@ -279,7 +308,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                             //           0.000,
                                             // ),
                                             Text(
-                                              "€${subcategoryOffers[index].price.toStringAsFixed(2)}",
+                                              "€${storeOffers[index].price.toStringAsFixed(2)}",
                                               style: TextStyle(
                                                   fontSize:
                                                       MediaQuery.of(context)
@@ -308,29 +337,6 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
       ),
     );
   }
-}
-
-TextFormField searchBar() {
-  return TextFormField(
-    style: TextStyle(color: ShoppyColors.blue),
-    decoration: InputDecoration(
-      prefixIcon: const Icon(Icons.search),
-      prefixIconColor: ShoppyColors.blue,
-      contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
-      fillColor: const Color.fromARGB(108, 225, 225, 225),
-      filled: true,
-      hintStyle: TextStyle(color: ShoppyColors.blue, fontSize: 20),
-      focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(35),
-          borderSide: BorderSide(color: ShoppyColors.blue)),
-      enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(35),
-          borderSide:
-              const BorderSide(color: Color.fromARGB(108, 225, 225, 225))),
-      hintText: "Search...",
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
-    ),
-  );
 }
 
 Padding sortAndFilter() {

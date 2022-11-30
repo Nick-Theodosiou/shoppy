@@ -228,13 +228,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
         //itemCount: cartItems.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-            onTap: () {
-              Navigator.push(
+            onTap: () async {
+              await Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (_) =>
                         ProductScreen(offer: category.categoryOffers[index])),
               );
+              setState(() {
+                user = localUser;
+              });
             },
             child: Padding(
               padding: EdgeInsets.only(

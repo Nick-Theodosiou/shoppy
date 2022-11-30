@@ -274,6 +274,40 @@ Future<List<Offer>> getOffersBySubcategory(Subcategory C) async {
   return list;
 }
 
+
+Future<List<Offer>> getOffersByStore(Store C) async {
+  var conn = await MySqlConnection.connect(settings);
+
+  var results =
+      await conn.query('CALL getSupermarketOffers(?);', [C.storeID]);
+
+  await conn.close();
+  List<Offer> list = [];
+
+  for (var row in results) {
+    Product p = Product(
+        row["ProductID"],
+        row["Product_Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" + row["PictureURL"],
+        row["Brand"] ?? "",
+        row["SubcategoryID"],
+        row["CategoryID"], []);
+
+    Offer o = Offer(
+        row["OfferID"],
+        p,
+        row["Price"],
+        row["OldPrice"],
+        row["SupermarketID"],
+        row["Name"],
+        "https://ldiony011873.files.wordpress.com/2022/11/" +
+            row["StorePictureURL"]);
+
+    list.add(o);
+  }
+  return list;
+}
+
 // Subcategory(this.subcategoryID, this.subcategoryName, this.subcategoryImage,
 //     this.subcategoryOffers);
 
