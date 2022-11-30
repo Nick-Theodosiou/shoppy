@@ -113,18 +113,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
                           ),
-                          // visibilityIncorrect
-                          //     ? const Align(
-                          //         alignment: Alignment.centerLeft,
-                          //         child: Text(
-                          //           'Incorrect Email',
-                          //           style: TextStyle(
-                          //             color: Colors.white,
-                          //             fontSize: 12,
-                          //           ),
-                          //         ),
-                          //       )
-                          //     : Container(),
                           ElevatedButton(
                             onPressed: () {
                               //connect to database and send email for Change Password
