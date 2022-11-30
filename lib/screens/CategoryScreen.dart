@@ -11,6 +11,7 @@ import 'package:shoppy/models/Category.dart';
 import 'package:shoppy/models/Subcategory.dart';
 import 'package:shoppy/screens/BestDealsScreen.dart';
 import 'package:shoppy/screens/CategoriesScreen.dart';
+import 'package:shoppy/screens/CategorySearch.dart';
 
 import '../models/User.dart';
 import '../NavigationBarScreen.dart';
@@ -192,6 +193,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 3, 0, 0),
       child: TextFormField(
+        onFieldSubmitted: (value) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => CategorySearch(
+                      string: value.toString(),
+                      category: category,
+                    )),
+          );
+        },
         style: TextStyle(color: ShoppyColors.blue),
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.search),

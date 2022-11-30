@@ -5,20 +5,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shoppy/DataController.dart';
+import 'package:shoppy/models/Category.dart';
 import 'package:shoppy/models/Offer.dart';
+import 'package:shoppy/models/Category.dart';
+import 'package:shoppy/models/Subcategory.dart';
 import 'package:shoppy/screens/BestDealsScreen.dart';
+import 'package:shoppy/screens/CategoriesScreen.dart';
 
 import '../models/User.dart';
 import '../NavigationBarScreen.dart';
 import '../styles/colors.dart';
 import 'ProductScreen.dart';
 
-class BestDealsScreen extends StatefulWidget {
+class CategorySearch extends StatefulWidget {
+  final Category category;
+  final String string;
   // ignore: non_constant_identifier_names
-  const BestDealsScreen({super.key});
+  const CategorySearch(
+      {super.key, required this.category, required this.string});
 
   @override
-  State<BestDealsScreen> createState() => _BestDealsScreenState();
+  State<CategorySearch> createState() => _CategorySearchState(category, string);
 }
 
 class AlwaysDisabledFocusNode extends FocusNode {
@@ -26,23 +33,26 @@ class AlwaysDisabledFocusNode extends FocusNode {
   bool get hasFocus => false;
 }
 
-class _BestDealsScreenState extends State<BestDealsScreen> {
+class _CategorySearchState extends State<CategorySearch> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
-  List<Offer> bestOffers = <Offer>[];
+  Category category;
+  String string;
+  List<Offer> offers = [];
+  _CategorySearchState(this.category, this.string);
 
   void _onRefresh() async {
-    List<Offer> temp = await getBestDeals(10);
+    List<Offer> tempoffers = await searchOffersInCategory(string, category);
     setState(() {
-      bestOffers = temp;
+      offers = tempoffers;
     });
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
-    List<Offer> temp = await getBestDeals(10);
+    List<Offer> tempoffers = await searchOffersInCategory(string, category);
     setState(() {
-      bestOffers = temp;
+      offers = tempoffers;
     });
     _refreshController.loadComplete();
   }
@@ -57,6 +67,19 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
     // Rember to check it
     return Scaffold(
       backgroundColor: ShoppyColors.gray,
+      appBar: AppBar(
+        title: Text(
+          "Searched for: $string",
+          style: TextStyle(
+            color: ShoppyColors.gray,
+            fontSize: 25,
+          ),
+          textAlign: TextAlign.left,
+        ),
+
+        //centerTitle: true,
+        backgroundColor: ShoppyColors.blue,
+      ),
       body: SmartRefresher(
         enablePullDown: true,
         enablePullUp: false,
@@ -67,11 +90,8 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
         child: SingleChildScrollView(
             child: Padding(
           padding: EdgeInsets.only(
-            // top: MediaQuery.of(context).size.height * 0.00,
             top: MediaQuery.of(context).size.height * 0.01,
-            left: MediaQuery.of(context).size.width * 0.03,
-            right: MediaQuery.of(context).size.width * 0.03,
-            //bottom: MediaQuery.of(context).size.height * 0.0,
+            bottom: MediaQuery.of(context).size.height * 0.003,
           ),
           child: Column(children: [
             searchBar(),
@@ -84,44 +104,6 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
   }
 
   Padding sortAndFilter() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-      child: Row(children: [
-        TextButton.icon(
-          //contentPadding:const EdgeInsets.only(bottom: 0),
-          // <-- TextButton
-          onPressed: () {},
-          icon: Icon(
-            Icons.sort,
-            size: 15.0,
-            color: ShoppyColors.blue,
-          ),
-          label: const Text('Sort'),
-          style: TextButton.styleFrom(
-            //padding: EdgeInsets.all(0),
-            foregroundColor: ShoppyColors.blue, // Text Color
-          ),
-        ),
-        const Spacer(),
-        TextButton.icon(
-          // <-- TextButton
-          onPressed: () {},
-          label: const Text('Filter'),
-          icon: Icon(
-            Icons.filter_alt_rounded,
-            size: 15.0,
-            color: ShoppyColors.blue,
-          ),
-          style: TextButton.styleFrom(
-            // padding: EdgeInsets.all(0),
-            foregroundColor: ShoppyColors.blue, // Text Color
-          ),
-        ),
-      ]),
-    );
-  }
-
-  Padding sortAndFilter2() {
     return Padding(
         padding: const EdgeInsets.fromLTRB(7, 5, 5, 5),
         child: Row(children: [
@@ -155,28 +137,35 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
         ]));
   }
 
-  Padding searchBar() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-      child: TextFormField(
-        style: TextStyle(color: ShoppyColors.blue),
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.search),
-          prefixIconColor: ShoppyColors.blue,
-          contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
-          fillColor: const Color.fromARGB(108, 225, 225, 225),
-          filled: true,
-          hintStyle: TextStyle(color: ShoppyColors.blue, fontSize: 20),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(35),
-              borderSide: BorderSide(color: ShoppyColors.blue)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(35),
-              borderSide:
-                  const BorderSide(color: Color.fromARGB(108, 225, 225, 225))),
-          hintText: "Search...",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
-        ),
+  TextFormField searchBar() {
+    return TextFormField(
+      onFieldSubmitted: (value) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => CategorySearch(
+                    string: value.toString(),
+                    category: category,
+                  )),
+        );
+      },
+      style: TextStyle(color: ShoppyColors.blue),
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.search),
+        prefixIconColor: ShoppyColors.blue,
+        contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
+        fillColor: const Color.fromARGB(108, 225, 225, 225),
+        filled: true,
+        hintStyle: TextStyle(color: ShoppyColors.blue, fontSize: 20),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(35),
+            borderSide: BorderSide(color: ShoppyColors.blue)),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(35),
+            borderSide:
+                const BorderSide(color: Color.fromARGB(108, 225, 225, 225))),
+        hintText: "Search...",
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
       ),
     );
   }
@@ -187,7 +176,7 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
         primary: false,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        itemCount: bestOffers.length,
+        itemCount: offers.length,
         //itemCount: cartItems.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
@@ -195,15 +184,18 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (_) => ProductScreen(offer: bestOffers[index])),
+                    builder: (_) => ProductScreen(offer: offers[index])),
               );
             },
             child: Padding(
               padding: EdgeInsets.only(
+                  // top: MediaQuery.of(context).size.height * 0.00,
+                  left: MediaQuery.of(context).size.width * 0.03,
+                  right: MediaQuery.of(context).size.width * 0.03,
                   bottom: MediaQuery.of(context).size.height * 0.01),
               child: Container(
                 width: double.infinity,
-                height: 110,
+                height: 100,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   // ignore: prefer_const_literals_to_create_immutables
@@ -232,7 +224,7 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
                               Icons.favorite,
                               color: (user.likedProduct.any(((element) =>
                                       element.productId ==
-                                      bestOffers[index].product.productId))
+                                      offers[index].product.productId))
                                   ? ShoppyColors.red
                                   : ShoppyColors.blue),
                               size: 20,
@@ -241,13 +233,13 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
                               setState(() {
                                 if ((user.likedProduct.any(((element) =>
                                     element.productId ==
-                                    bestOffers[index].product.productId)))) {
+                                    offers[index].product.productId)))) {
                                   ShoppyColors.blue;
                                   removeFromLikedProducts(
-                                      bestOffers[index].product);
+                                      offers[index].product);
                                 } else {
                                   ShoppyColors.red;
-                                  addToLikedProducts(bestOffers[index].product);
+                                  addToLikedProducts(offers[index].product);
                                 }
                                 // if (iconColors[index] == ShoppyColors.blue)
                                 //   iconColors[index] = ShoppyColors.red;
@@ -265,7 +257,7 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Image.network(
-                            bestOffers[index].product.productImage,
+                            offers[index].product.productImage,
                             width: MediaQuery.of(context).size.width * 0.16,
                             fit: BoxFit.fitWidth,
                           ),
@@ -284,7 +276,7 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    bestOffers[index].product.productName,
+                                    offers[index].product.productName,
                                     style: TextStyle(
                                         color: ShoppyColors.blue,
                                         fontSize: 15,
@@ -298,7 +290,7 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
                                   ),
                                   Text(
                                     //textAlign:TextAlign.left,
-                                    bestOffers[index].storeName,
+                                    offers[index].storeName,
                                     style: TextStyle(
                                         color: ShoppyColors.blue,
                                         fontSize: 15,
@@ -320,7 +312,8 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
                             child: Column(
                               children: [
                                 Image.network(
-                                  bestOffers[index].storePictureURL,
+                                  category
+                                      .categoryOffers[index].storePictureURL,
                                   width: 80,
                                   height: 50,
                                   fit: BoxFit.fitWidth,
@@ -331,21 +324,13 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
                                 //           0.000,
                                 // ),
                                 Text(
-                                  "€${bestOffers[index].oldprice.toStringAsFixed(2)}",
-                                  style: TextStyle(
-                                      decoration: TextDecoration.lineThrough,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.04),
-                                ),
-                                Text(
-                                  "€${bestOffers[index].price.toStringAsFixed(2)}",
+                                  "€${offers[index].price.toStringAsFixed(2)}",
                                   style: TextStyle(
                                       fontSize:
                                           MediaQuery.of(context).size.width *
                                               0.05,
                                       fontWeight: FontWeight.w500,
-                                      color: ShoppyColors.red),
+                                      color: ShoppyColors.blue),
                                 )
                               ],
                             ),
