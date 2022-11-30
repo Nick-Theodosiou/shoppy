@@ -280,7 +280,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                             child: SizedBox(
                                               height: MediaQuery.of(context)
                                                       .size
-                                                      .width *
+                                                      .height *
                                                   0.08,
                                               width: MediaQuery.of(context)
                                                       .size
