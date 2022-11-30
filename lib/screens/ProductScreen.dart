@@ -92,7 +92,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 55, top: 55),
+                    padding: const EdgeInsets.only(bottom: 40, top: 40),
                     child: Align(
                       alignment: Alignment.center,
                       child: Image(
@@ -338,7 +338,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                   Image.network(
                                     similarOffers[index].storePictureURL,
                                     width: MediaQuery.of(context).size.width *
-                                        0.15,
+                                        0.13,
                                   ),
                                 ],
                               ),
