@@ -168,8 +168,8 @@ class _ListScreenState extends State<ListScreen> {
                                                 0.04,
                                           ),
                                           GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
+                                            onTap: () async {
+                                              await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (_) =>
@@ -181,6 +181,10 @@ class _ListScreenState extends State<ListScreen> {
                                                                         index]
                                                                     .offer)),
                                               );
+                                              setState(() {
+                                                _shoppingList =
+                                                    localUser.itemsInCart;
+                                              });
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(top: 0),
@@ -216,8 +220,9 @@ class _ListScreenState extends State<ListScreen> {
                                                               .spaceBetween,
                                                       children: [
                                                         GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.push(
+                                                          onTap: () async {
+                                                            await Navigator
+                                                                .push(
                                                               context,
                                                               MaterialPageRoute(
                                                                   builder: (_) => ProductScreen(
@@ -227,6 +232,11 @@ class _ListScreenState extends State<ListScreen> {
                                                                               index]
                                                                           .offer)),
                                                             );
+                                                            setState(() {
+                                                              _shoppingList =
+                                                                  localUser
+                                                                      .itemsInCart;
+                                                            });
                                                           },
                                                           child: SizedBox(
                                                             width: MediaQuery.of(
@@ -315,8 +325,9 @@ class _ListScreenState extends State<ListScreen> {
                                                               .spaceBetween,
                                                       children: [
                                                         GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.push(
+                                                          onTap: () async {
+                                                            await Navigator
+                                                                .push(
                                                               context,
                                                               MaterialPageRoute(
                                                                   builder: (_) => ProductScreen(
@@ -326,6 +337,11 @@ class _ListScreenState extends State<ListScreen> {
                                                                               index]
                                                                           .offer)),
                                                             );
+                                                            setState(() {
+                                                              _shoppingList =
+                                                                  localUser
+                                                                      .itemsInCart;
+                                                            });
                                                           },
                                                           child: Column(
                                                             crossAxisAlignment:
@@ -620,7 +636,7 @@ class _ListScreenState extends State<ListScreen> {
                                                     )
                                                   : Icon(
                                                       Icons
-                                                          .highlight_remove_outlined,
+                                                          .highlight_remove_rounded,
                                                       color: Colors.grey[700],
                                                       size:
                                                           MediaQuery.of(context)
