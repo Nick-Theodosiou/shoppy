@@ -442,9 +442,11 @@ Future<bool> signUp(
 }
 
 void updateUserDetails(String name, String surname) async {
+  localUser.name = name;
+  localUser.surname = surname;
   var conn = await MySqlConnection.connect(settings);
 
-  await conn.query(
+  conn.query(
       'CALL updateUserDetails(?,?,?);', [localUser.userID, name, surname]);
 }
 

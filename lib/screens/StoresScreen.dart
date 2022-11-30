@@ -10,7 +10,6 @@ import '../NavigationBarScreen.dart';
 import '../models/User.dart';
 import 'HomeScreen.dart';
 
-
 class StoresScreen extends StatefulWidget {
   const StoresScreen({super.key});
   @override
@@ -62,17 +61,14 @@ class _StoresScreenState extends State<StoresScreen> {
       ),
       body: SmartRefresher(
         enablePullDown: true,
-        enablePullUp: true,
+        enablePullUp: false,
         header: const WaterDropHeader(),
         controller: _refreshController,
         onRefresh: _onRefresh,
         onLoading: _onLoading,
         child: SingleChildScrollView(
           child: ListView.builder(
-
-              padding: const EdgeInsets.only(
-                top: 10
-              ),
+              padding: const EdgeInsets.only(top: 10),
               primary: false,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
@@ -81,9 +77,9 @@ class _StoresScreenState extends State<StoresScreen> {
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.only(
-                   left: 10,
-                  right: 10,
-                  bottom: 10,
+                    left: 10,
+                    right: 10,
+                    bottom: 10,
                     //bottom:MediaQuery.of(context).size.height * 0.05
                   ),
                   child: Container(
@@ -124,26 +120,24 @@ class _StoresScreenState extends State<StoresScreen> {
                           IconButton(
                             icon: Icon(
                               Icons.favorite,
-                              color: (user.likedStores.any(
-                                                  ((element) =>
-                                                      element.storeID ==
-                                                      Stores[index].storeID))
-                                              ? ShoppyColors.red
-                                              : ShoppyColors.blue),
+                              color: (user.likedStores.any(((element) =>
+                                      element.storeID == Stores[index].storeID))
+                                  ? ShoppyColors.red
+                                  : ShoppyColors.blue),
                               //color: Color(0xFFE86969),
                               size: 20,
                             ),
                             onPressed: () {
                               setState(() {
-                                
-                                if((user.likedStores.any(((element) => element.storeID==Stores[index].storeID)))){
-                                              ShoppyColors.blue;
-                                               removeFromLikedStores(Stores[index]);
-                                              }
-                                              else{
-                                                ShoppyColors.red;
-                                                addToLikedStores(Stores[index]);
-                                              }
+                                if ((user.likedStores.any(((element) =>
+                                    element.storeID ==
+                                    Stores[index].storeID)))) {
+                                  ShoppyColors.blue;
+                                  removeFromLikedStores(Stores[index]);
+                                } else {
+                                  ShoppyColors.red;
+                                  addToLikedStores(Stores[index]);
+                                }
                               });
                               // Favorite Supermarket /Unfavorite Supermarket
                             },
