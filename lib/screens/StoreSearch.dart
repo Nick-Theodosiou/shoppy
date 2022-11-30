@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shoppy/DataController.dart';
@@ -34,7 +32,7 @@ class _StoreSearchnState extends State<StoreSearch> {
   String string;
   _StoreSearchnState(Store this.store, String this.string);
   void _onRefresh() async {
-    var offers = await getOffersByStore(store);
+    var offers = await searchOffersInStore(string, store);
     setState(() {
       storeOffers = offers;
     });
@@ -42,7 +40,7 @@ class _StoreSearchnState extends State<StoreSearch> {
   }
 
   void _onLoading() async {
-    var offers = await getOffersByStore(store);
+    var offers = await searchOffersInStore(string, store);
     setState(() {
       storeOffers = offers;
     });
