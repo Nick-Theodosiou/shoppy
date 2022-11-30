@@ -94,32 +94,40 @@ class _CategoryScreenState extends State<CategoryScreen> {
         onLoading: _onLoading,
         child: SingleChildScrollView(
             child: Padding(
-          padding: EdgeInsets.only(
-            // top: MediaQuery.of(context).size.height * 0.00,
-            top: MediaQuery.of(context).size.height * 0.01,
-            left: MediaQuery.of(context).size.width * 0.03,
-            right: MediaQuery.of(context).size.width * 0.03,
-            //bottom: MediaQuery.of(context).size.height * 0.0,
-          ),
+          padding:
+              const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 10),
           child: Column(children: [
             searchBar(),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+              padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
               child: Align(
                 alignment: const Alignment(-0.95, -1),
-                child: RichText(
-                  softWrap: true,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Subcategories",
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: ShoppyColors.blue,
-                            fontWeight: FontWeight.w400),
-                      )
-                    ],
+                child: TextButton(
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: RichText(
+                      softWrap: true,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Subcategories ",
+                            style: TextStyle(
+                                fontSize: 25,
+                                color: ShoppyColors.blue,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          WidgetSpan(
+                            child: Icon(
+                              Icons.arrow_right_alt,
+                              size: 25,
+                              color: ShoppyColors.blue,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
+                  onPressed: () {}, //will take you to subcategories screen
                 ),
               ),
             ),
@@ -145,7 +153,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   Padding sortAndFilter() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
       child: Row(children: [
         TextButton.icon(
           //contentPadding:const EdgeInsets.only(bottom: 0),
@@ -183,7 +191,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   Padding searchBar() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, 3, 0, 0),
       child: TextFormField(
         onFieldSubmitted: (value) {
           Navigator.push(
@@ -398,7 +406,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   SizedBox showSubcategories() {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.95,
-      height: MediaQuery.of(context).size.height * 0.05,
+      height: MediaQuery.of(context).size.height * 0.06,
       child: ListView(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
@@ -409,53 +417,68 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 navigateToSubcategory(s);
               });
             },
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(500),
-                    child: Container(
-                      color: Color.fromARGB(20, 40, 40, 40),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CachedNetworkImage(
-                              width: MediaQuery.of(context).size.width * 0.15,
-                              height: MediaQuery.of(context).size.height * 0.1,
-                              imageUrl: s.subcategoryImage,
-                              imageBuilder: ((context, imageProvider) =>
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image:
-                                              NetworkImage(s.subcategoryImage)),
-                                    ),
-                                  )),
-                            ),
-                            SizedBox(
-                              width: 50,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  s.subcategoryName,
-                                  style: TextStyle(
-                                      overflow: TextOverflow.ellipsis,
-                                      fontSize: 14,
-                                      color: ShoppyColors.blue),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 1, right: 5, bottom: 5),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  // ignore: prefer_const_literals_to_create_immutables
+                  boxShadow: [
+                    const BoxShadow(
+                      blurRadius: 2,
+                      color: Color(0x320E151B),
+                      offset: Offset(2, 2),
+                    )
+                  ],
+                  borderRadius: BorderRadius.circular(500),
+                ),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(500),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CachedNetworkImage(
+                                width: MediaQuery.of(context).size.width * 0.15,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1,
+                                imageUrl: s.subcategoryImage,
+                                imageBuilder: ((context, imageProvider) =>
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                s.subcategoryImage)),
+                                      ),
+                                    )),
+                              ),
+                              SizedBox(
+                                width: 50,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    s.subcategoryName,
+                                    style: TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                        fontSize: 14,
+                                        color: ShoppyColors.blue),
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              width: 10.0,
-                            )
-                          ]),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  )
-                ]),
+                              const SizedBox(
+                                width: 10.0,
+                              )
+                            ]),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      )
+                    ]),
+              ),
+            ),
           );
         }).toList(),
       ),

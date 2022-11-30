@@ -67,11 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
         onLoading: _onLoading,
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.02,
-                left: 10,
-                right: 10,
-                bottom: 10),
+            padding:
+                const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 10),
             child: Align(
               alignment: Alignment.topCenter,
               child: Column(
