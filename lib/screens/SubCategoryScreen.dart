@@ -44,6 +44,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
     });
     _refreshController.loadComplete();
   }
+
   User user = localUser;
   @override
   Widget build(BuildContext context) {
@@ -219,16 +220,31 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                                         .height *
                                                     0.004,
                                               ),
-                                              Text(
-                                                //textAlign:TextAlign.left,
-                                                subcategoryOffers[index]
-                                                    .storeName,
-                                                style: TextStyle(
-                                                    color: ShoppyColors.blue,
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w300),
-                                              ),
+                                              if (subcategoryOffers[index]
+                                                      .product
+                                                      .brand !=
+                                                  '')
+                                                Text(
+                                                  //textAlign:TextAlign.left,
+                                                  subcategoryOffers[index]
+                                                      .product
+                                                      .brand,
+                                                  style: TextStyle(
+                                                      color: ShoppyColors.blue,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w300),
+                                                )
+                                              else
+                                                (Text(
+                                                  //textAlign:TextAlign.left,
+                                                  'Unbranded',
+                                                  style: TextStyle(
+                                                      color: ShoppyColors.blue,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w300),
+                                                ))
                                             ]),
                                       ),
                                     ),

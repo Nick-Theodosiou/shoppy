@@ -110,40 +110,6 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
     );
   }
 
-  Padding sortAndFilter2() {
-    return Padding(
-        padding: const EdgeInsets.fromLTRB(7, 2, 5, 5),
-        child: Row(children: [
-          TextButton.icon(
-            // <-- TextButton
-            onPressed: () {},
-            icon: Icon(
-              Icons.sort,
-              size: 24.0,
-              color: ShoppyColors.blue,
-            ),
-            label: const Text('Sort'),
-            style: TextButton.styleFrom(
-              foregroundColor: ShoppyColors.blue, // Text Color
-            ),
-          ),
-          const Spacer(),
-          TextButton.icon(
-            // <-- TextButton
-            onPressed: () {},
-            label: const Text('Filter'),
-            icon: Icon(
-              Icons.filter_alt_rounded,
-              size: 24.0,
-              color: ShoppyColors.blue,
-            ),
-            style: TextButton.styleFrom(
-              foregroundColor: ShoppyColors.blue, // Text Color
-            ),
-          ),
-        ]));
-  }
-
   Padding searchBar() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),

@@ -338,14 +338,27 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     height: MediaQuery.of(context).size.height *
                                         0.004,
                                   ),
-                                  Text(
-                                    //textAlign:TextAlign.left,
-                                    category.categoryOffers[index].storeName,
-                                    style: TextStyle(
-                                        color: ShoppyColors.blue,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w300),
-                                  ),
+                                  if (category.categoryOffers[index].product
+                                          .brand !=
+                                      '')
+                                    Text(
+                                      //textAlign:TextAlign.left,
+                                      category
+                                          .categoryOffers[index].product.brand,
+                                      style: TextStyle(
+                                          color: ShoppyColors.blue,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w300),
+                                    )
+                                  else
+                                    (Text(
+                                      //textAlign:TextAlign.left,
+                                      'Unbranded',
+                                      style: TextStyle(
+                                          color: ShoppyColors.blue,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w300),
+                                    ))
                                 ]),
                           ),
                         ),
