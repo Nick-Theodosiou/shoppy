@@ -518,11 +518,11 @@ Future<List<Offer>> searchOffersbyProductName(String string) async {
   return list;
 }
 
-Future<List<Offer>> searchOffersInCategory(String string, Category c) async {
+Future<List<Offer>> searchOffersInCategory(String string, int c) async {
   var conn = await MySqlConnection.connect(settings);
 
-  var results = await conn
-      .query('CALL searchOffersInCategory(?, ?);', [string, c.categoryID]);
+  var results =
+      await conn.query('CALL searchOffersInCategory(?, ?);', [string, c]);
 
   await conn.close();
   List<Offer> list = [];

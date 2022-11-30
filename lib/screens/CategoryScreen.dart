@@ -192,7 +192,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             MaterialPageRoute(
                 builder: (_) => CategorySearch(
                       string: value.toString(),
-                      category: category,
+                      category: category.categoryID,
                     )),
           );
         },
