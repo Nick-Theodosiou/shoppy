@@ -22,8 +22,8 @@ class AlwaysDisabledFocusNode extends FocusNode {
 
 class _BestDealsScreenState extends State<BestDealsScreen> {
   final RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
-  List<Offer> bestOffers = <Offer>[];
+      RefreshController(initialRefresh: false);
+  List<Offer> bestOffers = DCbestOffers;
 
   void _onRefresh() async {
     List<Offer> temp = await getBestDeals(10);

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shoppy/DataController.dart';
+import 'package:shoppy/screens/CategorySearch.dart';
 import '../models/Store.dart';
 import '../styles/colors.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -16,7 +17,7 @@ class FavoritesScreen extends StatefulWidget {
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
   final RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
+      RefreshController(initialRefresh: false);
   List<Product> _likedList = localUser.likedProduct;
   List<Store> favoriteSupermarkets = localUser.likedStores;
 
@@ -36,6 +37,28 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       _likedList = localUser.likedProduct;
     });
     _refreshController.loadComplete();
+  }
+
+  void navigateToStores() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const StoresScreen()),
+    );
+    setState(() {
+      favoriteSupermarkets = localUser.likedStores;
+      _likedList = localUser.likedProduct;
+    });
+  }
+
+  void navigateToCategories() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const CategoriesScreen()),
+    );
+    setState(() {
+      favoriteSupermarkets = localUser.likedStores;
+      _likedList = localUser.likedProduct;
+    });
   }
 
   @override
@@ -69,12 +92,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         children: favoriteSupermarkets.map((s) {
                           return InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) =>
-                                        const StoresScreen()), //will normaly take you to the supermarket's page
-                              );
+                              navigateToStores();
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15.0),
@@ -108,7 +126,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                               Radius.circular(8.0)),
                                         ),
                                         child: Align(
-                                          alignment: const Alignment(1.4, -5.9),
+                                          alignment: Alignment(1.5, -5.9),
                                           child: IconButton(
                                             onPressed: () {
                                               setState(() {
@@ -153,11 +171,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const StoresScreen()),
-                          );
+                          navigateToStores();
                         },
                       ),
                     ),
@@ -190,17 +204,33 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Image.network(
-                                              _likedList[index].productImage,
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.16,
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (_) => CategorySearch(
+                                                          category:
+                                                              _likedList[index]
+                                                                  .categoryID,
+                                                          string: _likedList[
+                                                                  index]
+                                                              .productName)));
+                                              _likedList =
+                                                  localUser.likedProduct;
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.network(
+                                                _likedList[index].productImage,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.16,
 
-                                              // fit: BoxFit.fitWidth,
+                                                // fit: BoxFit.fitWidth,
+                                              ),
                                             ),
                                           ),
                                           Padding(
@@ -229,8 +259,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                                           maxLines: 1,
                                                           //richtext maxlines 1
                                                           text: TextSpan(
-                                                            text:
-                                                                '${_likedList[index].productName}',
+                                                            text: _likedList[
+                                                                    index]
+                                                                .productName,
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .blueGrey
@@ -253,8 +284,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                                             ? RichText(
                                                                 maxLines: 1,
                                                                 text: TextSpan(
-                                                                    text:
-                                                                        '${_likedList[index].brand}',
+                                                                    text: _likedList[
+                                                                            index]
+                                                                        .brand,
                                                                     style: TextStyle(
                                                                         color: Colors
                                                                             .blueGrey
@@ -335,11 +367,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const CategoriesScreen()),
-                          );
+                          navigateToCategories();
                         },
                       ),
                     ),
@@ -360,18 +388,11 @@ TextButton supermarketsBTN() {
         text: TextSpan(
           children: [
             TextSpan(
-              text: "Favourite Supermarkets",
+              text: "Favorite Supermarkets",
               style: TextStyle(
                   fontSize: 25,
                   color: ShoppyColors.blue,
                   fontWeight: FontWeight.w500),
-            ),
-            WidgetSpan(
-              child: Icon(
-                Icons.arrow_right_alt,
-                size: 25,
-                color: ShoppyColors.blue,
-              ),
             ),
           ],
         ),
@@ -390,18 +411,11 @@ TextButton productsBTN() {
         text: TextSpan(
           children: [
             TextSpan(
-              text: "Favourite Products",
+              text: "Favorite Products",
               style: TextStyle(
                   fontSize: 25,
                   color: ShoppyColors.blue,
                   fontWeight: FontWeight.w500),
-            ),
-            WidgetSpan(
-              child: Icon(
-                Icons.arrow_right_alt,
-                size: 25,
-                color: ShoppyColors.blue,
-              ),
             ),
           ],
         ),

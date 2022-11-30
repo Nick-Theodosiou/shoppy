@@ -9,7 +9,7 @@ import '../styles/colors.dart';
 import 'ProductScreen.dart';
 
 class CategorySearch extends StatefulWidget {
-  final Category category;
+  final int category;
   final String string;
   // ignore: non_constant_identifier_names
   const CategorySearch(
@@ -27,7 +27,7 @@ class AlwaysDisabledFocusNode extends FocusNode {
 class _CategorySearchState extends State<CategorySearch> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
-  Category category;
+  int category;
   String string;
   List<Offer> offers = [];
   _CategorySearchState(this.category, this.string);
@@ -80,10 +80,8 @@ class _CategorySearchState extends State<CategorySearch> {
         onLoading: _onLoading,
         child: SingleChildScrollView(
             child: Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.01,
-            bottom: MediaQuery.of(context).size.height * 0.003,
-          ),
+          padding:
+              const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 10),
           child: Column(children: [
             searchBar(),
             sortAndFilter(),
@@ -96,67 +94,77 @@ class _CategorySearchState extends State<CategorySearch> {
 
   Padding sortAndFilter() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(7, 5, 5, 5),
-        child: Row(children: [
-          TextButton.icon(
-            // <-- TextButton
-            onPressed: () {},
-            icon: Icon(
-              Icons.sort,
-              size: 24.0,
-              color: ShoppyColors.blue,
-            ),
-            label: const Text('Sort'),
-            style: TextButton.styleFrom(
-              foregroundColor: ShoppyColors.blue, // Text Color
-            ),
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+      child: Row(children: [
+        TextButton.icon(
+          //contentPadding:const EdgeInsets.only(bottom: 0),
+          // <-- TextButton
+          onPressed: () {},
+          icon: Icon(
+            Icons.sort,
+            size: 15.0,
+            color: ShoppyColors.blue,
           ),
-          const Spacer(),
-          TextButton.icon(
-            // <-- TextButton
-            onPressed: () {},
-            label: const Text('Filter'),
-            icon: Icon(
-              Icons.filter_alt_rounded,
-              size: 24.0,
-              color: ShoppyColors.blue,
-            ),
-            style: TextButton.styleFrom(
-              foregroundColor: ShoppyColors.blue, // Text Color
-            ),
+          label: const Text('Sort'),
+          style: TextButton.styleFrom(
+            //padding: EdgeInsets.all(0),
+            foregroundColor: ShoppyColors.blue, // Text Color
           ),
-        ]));
+        ),
+        const Spacer(),
+        TextButton.icon(
+          // <-- TextButton
+          onPressed: () {},
+          label: const Text('Filter'),
+          icon: Icon(
+            Icons.filter_alt_rounded,
+            size: 15.0,
+            color: ShoppyColors.blue,
+          ),
+          style: TextButton.styleFrom(
+            // padding: EdgeInsets.all(0),
+            foregroundColor: ShoppyColors.blue, // Text Color
+          ),
+        ),
+      ]),
+    );
   }
 
-  TextFormField searchBar() {
-    return TextFormField(
-      onFieldSubmitted: (value) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => CategorySearch(
-                    string: value.toString(),
-                    category: category,
-                  )),
-        );
-      },
-      style: TextStyle(color: ShoppyColors.blue),
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.search),
-        prefixIconColor: ShoppyColors.blue,
-        contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
-        fillColor: const Color.fromARGB(108, 225, 225, 225),
-        filled: true,
-        hintStyle: TextStyle(color: ShoppyColors.blue, fontSize: 20),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(35),
-            borderSide: BorderSide(color: ShoppyColors.blue)),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(35),
-            borderSide:
-                const BorderSide(color: Color.fromARGB(108, 225, 225, 225))),
-        hintText: "Search...",
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
+  Padding searchBar() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 3, 0, 0),
+      child: TextFormField(
+        onFieldSubmitted: (value) async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => CategorySearch(
+                      string: value.toString(),
+                      category: category,
+                    )),
+          );
+          setState(() {
+            user = localUser;
+          });
+        },
+        style: TextStyle(color: ShoppyColors.blue),
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.search),
+          prefixIconColor: ShoppyColors.blue,
+          contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
+          fillColor: const Color.fromARGB(108, 225, 225, 225),
+          filled: true,
+          hintStyle: TextStyle(color: ShoppyColors.blue, fontSize: 20),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35),
+              borderSide: BorderSide(color: ShoppyColors.blue)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35),
+              borderSide:
+                  const BorderSide(color: Color.fromARGB(108, 225, 225, 225))),
+          hintText: "Search...",
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
+        ),
       ),
     );
   }
@@ -180,9 +188,6 @@ class _CategorySearchState extends State<CategorySearch> {
             },
             child: Padding(
               padding: EdgeInsets.only(
-                  // top: MediaQuery.of(context).size.height * 0.00,
-                  left: MediaQuery.of(context).size.width * 0.03,
-                  right: MediaQuery.of(context).size.width * 0.03,
                   bottom: MediaQuery.of(context).size.height * 0.01),
               child: Container(
                 width: double.infinity,
@@ -279,14 +284,24 @@ class _CategorySearchState extends State<CategorySearch> {
                                     height: MediaQuery.of(context).size.height *
                                         0.004,
                                   ),
-                                  Text(
-                                    //textAlign:TextAlign.left,
-                                    offers[index].storeName,
-                                    style: TextStyle(
-                                        color: ShoppyColors.blue,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w300),
-                                  ),
+                                  if (offers[index].product.brand != '')
+                                    Text(
+                                      //textAlign:TextAlign.left,
+                                      offers[index].product.brand,
+                                      style: TextStyle(
+                                          color: ShoppyColors.blue,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w300),
+                                    )
+                                  else
+                                    (Text(
+                                      //textAlign:TextAlign.left,
+                                      'Unbranded',
+                                      style: TextStyle(
+                                          color: ShoppyColors.blue,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w300),
+                                    ))
                                 ]),
                           ),
                         ),
@@ -303,8 +318,7 @@ class _CategorySearchState extends State<CategorySearch> {
                             child: Column(
                               children: [
                                 Image.network(
-                                  category
-                                      .categoryOffers[index].storePictureURL,
+                                  offers[index].storePictureURL,
                                   width: 80,
                                   height: 50,
                                   fit: BoxFit.fitWidth,
