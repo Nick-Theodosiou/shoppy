@@ -28,6 +28,9 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController name = TextEditingController();
+    final TextEditingController surname = TextEditingController();
+
     return Scaffold(
       body: Align(
         alignment: Alignment.topCenter,
@@ -80,6 +83,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     Stack(
                       children: [
                         TextFormField(
+                            controller: name,
                             style: const TextStyle(
                               fontSize: 20,
                             ),
@@ -113,6 +117,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     Stack(
                       children: [
                         TextFormField(
+                            controller: surname,
                             style: const TextStyle(
                               fontSize: 20,
                             ),
@@ -134,18 +139,6 @@ class _AccountScreenState extends State<AccountScreen> {
                         ),
                       ],
                     ),
-                    // ElevatedButton(
-                    //   onPressed: () {
-                    //     AlwaysDisabledFocusNode.flag =
-                    //         !(AlwaysDisabledFocusNode.flag);
-                    //   },
-                    //   child: const Text(
-                    //     'Log In',
-                    //     style: TextStyle(
-                    //       fontSize: 20,
-                    //     ),
-                    //   ),
-                    // ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -182,7 +175,33 @@ class _AccountScreenState extends State<AccountScreen> {
                       height: 30,
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (name.text != '' && surname.text != '') {
+                          updateUserDetails(name.text, surname.text);
+                          ScaffoldMessenger.of(context).clearSnackBars();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('User details successfuly changed.')),
+                          );
+                        } else if (name.text != '') {
+                          updateUserDetails(name.text, localUser.surname);
+                          ScaffoldMessenger.of(context).clearSnackBars();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('User name successfuly changed.')),
+                          );
+                        } else if (surname.text != '') {
+                          updateUserDetails(localUser.name, surname.text);
+                          ScaffoldMessenger.of(context).clearSnackBars();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('User surname successfuly changed.')),
+                          );
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(47),
                         backgroundColor: ShoppyColors.blue,
@@ -221,15 +240,6 @@ class _AccountScreenState extends State<AccountScreen> {
                         ),
                       ],
                     ),
-                    // TextButton(
-                    //   child: const Text("Refresh"),
-                    //   onPressed: () {
-                    //     // getAccountDataDB(user.email);
-                    //     // setState(() {
-                    //     //   user = localUser;
-                    //     // });
-                    //   },
-                    // ),
                     const SizedBox(
                       height: 40,
                     ),
@@ -260,7 +270,8 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
                           ),
                           onPressed: () async {
-                            localUser = User(-1, "name", "surname", "email", [], [], []);
+                            localUser = User(
+                                -1, "name", "surname", "email", [], [], []);
                             final prefs = await SharedPreferences.getInstance();
                             final success = await prefs.remove('email');
                             Navigator.pushReplacement(

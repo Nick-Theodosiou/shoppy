@@ -61,7 +61,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
       ),
       body: SmartRefresher(
         enablePullDown: true,
-        enablePullUp: true,
+        enablePullUp: false,
         header: const WaterDropHeader(),
         controller: _refreshController,
         onRefresh: _onRefresh,

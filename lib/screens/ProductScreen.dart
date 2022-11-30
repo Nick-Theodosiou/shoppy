@@ -17,7 +17,7 @@ List<p> placeholder = [
   p("Crandberry Juice"),
   p("Toilet Paper"),
   p("Chocolate"),
-  p("CHicken"),
+  p("Chicken"),
 ];
 
 class p {
@@ -288,13 +288,6 @@ class _ProductScreenState extends State<ProductScreen> {
                                     color: ShoppyColors.blue,
                                     fontWeight: FontWeight.w500),
                               ),
-                              // WidgetSpan(
-                              //   child: Icon(
-                              //     Icons.arrow_right_alt,
-                              //     size: 25,
-                              //     color: ShoppyColors.blue,
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),
