@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/LoginScreen.dart';
 import 'package:shoppy/screens/LoadingScreen.dart';
 import '../styles/colors.dart';
+import 'package:crypto/crypto.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -358,11 +361,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void signup() async {
+    var bytes1 = utf8.encode(passController.text);         
+    var digest1 = sha256.convert(bytes1);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Processing your data.')),
     );
     if (await signUp(emailController.text, nameController.text,
-        surnameController.text, passController.text)) {
+        surnameController.text, digest1.toString())) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
