@@ -29,7 +29,7 @@ class AlwaysDisabledFocusNode extends FocusNode {
 class _BestDealsScreenState extends State<BestDealsScreen> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
-  List<Offer> bestOffers = DCbestOffers;
+  List<Offer> bestOffers = <Offer>[];
 
   void _onRefresh() async {
     List<Offer> temp = await getBestDeals(10);
@@ -67,8 +67,11 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
         child: SingleChildScrollView(
             child: Padding(
           padding: EdgeInsets.only(
+            // top: MediaQuery.of(context).size.height * 0.00,
             top: MediaQuery.of(context).size.height * 0.01,
-            bottom: MediaQuery.of(context).size.height * 0.003,
+            left: MediaQuery.of(context).size.width * 0.03,
+            right: MediaQuery.of(context).size.width * 0.03,
+            //bottom: MediaQuery.of(context).size.height * 0.0,
           ),
           child: Column(children: [
             searchBar(),
@@ -82,36 +85,40 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
 
   Padding sortAndFilter() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(7, 5, 5, 5),
-        child: Row(children: [
-          TextButton.icon(
-            // <-- TextButton
-            onPressed: () {},
-            icon: Icon(
-              Icons.sort,
-              size: 24.0,
-              color: ShoppyColors.blue,
-            ),
-            label: const Text('Sort'),
-            style: TextButton.styleFrom(
-              foregroundColor: ShoppyColors.blue, // Text Color
-            ),
+      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+      child: Row(children: [
+        TextButton.icon(
+          //contentPadding:const EdgeInsets.only(bottom: 0),
+          // <-- TextButton
+          onPressed: () {},
+          icon: Icon(
+            Icons.sort,
+            size: 15.0,
+            color: ShoppyColors.blue,
           ),
-          const Spacer(),
-          TextButton.icon(
-            // <-- TextButton
-            onPressed: () {},
-            label: const Text('Filter'),
-            icon: Icon(
-              Icons.filter_alt_rounded,
-              size: 24.0,
-              color: ShoppyColors.blue,
-            ),
-            style: TextButton.styleFrom(
-              foregroundColor: ShoppyColors.blue, // Text Color
-            ),
+          label: const Text('Sort'),
+          style: TextButton.styleFrom(
+            //padding: EdgeInsets.all(0),
+            foregroundColor: ShoppyColors.blue, // Text Color
           ),
-        ]));
+        ),
+        const Spacer(),
+        TextButton.icon(
+          // <-- TextButton
+          onPressed: () {},
+          label: const Text('Filter'),
+          icon: Icon(
+            Icons.filter_alt_rounded,
+            size: 15.0,
+            color: ShoppyColors.blue,
+          ),
+          style: TextButton.styleFrom(
+            // padding: EdgeInsets.all(0),
+            foregroundColor: ShoppyColors.blue, // Text Color
+          ),
+        ),
+      ]),
+    );
   }
 
   Padding sortAndFilter2() {
@@ -148,25 +155,28 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
         ]));
   }
 
-  TextFormField searchBar() {
-    return TextFormField(
-      style: TextStyle(color: ShoppyColors.blue),
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.search),
-        prefixIconColor: ShoppyColors.blue,
-        contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
-        fillColor: const Color.fromARGB(108, 225, 225, 225),
-        filled: true,
-        hintStyle: TextStyle(color: ShoppyColors.blue, fontSize: 20),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(35),
-            borderSide: BorderSide(color: ShoppyColors.blue)),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(35),
-            borderSide:
-                const BorderSide(color: Color.fromARGB(108, 225, 225, 225))),
-        hintText: "Search...",
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
+  Padding searchBar() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+      child: TextFormField(
+        style: TextStyle(color: ShoppyColors.blue),
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.search),
+          prefixIconColor: ShoppyColors.blue,
+          contentPadding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
+          fillColor: const Color.fromARGB(108, 225, 225, 225),
+          filled: true,
+          hintStyle: TextStyle(color: ShoppyColors.blue, fontSize: 20),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35),
+              borderSide: BorderSide(color: ShoppyColors.blue)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(35),
+              borderSide:
+                  const BorderSide(color: Color.fromARGB(108, 225, 225, 225))),
+          hintText: "Search...",
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(35)),
+        ),
       ),
     );
   }
@@ -190,9 +200,6 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
             },
             child: Padding(
               padding: EdgeInsets.only(
-                  // top: MediaQuery.of(context).size.height * 0.00,
-                  left: MediaQuery.of(context).size.width * 0.03,
-                  right: MediaQuery.of(context).size.width * 0.03,
                   bottom: MediaQuery.of(context).size.height * 0.01),
               child: Container(
                 width: double.infinity,
