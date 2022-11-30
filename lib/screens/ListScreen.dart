@@ -84,7 +84,7 @@ class _ListScreenState extends State<ListScreen> {
                               child: Image.network(
                                 _shoppingList[indexS].store.storeImage,
                                 height:
-                                    MediaQuery.of(context).size.width * 0.12,
+                                    MediaQuery.of(context).size.width * 0.11,
                               ),
                             ),
                             //  image: AssetImage(products[index].image.toString()),
@@ -340,27 +340,40 @@ class _ListScreenState extends State<ListScreen> {
                                                                           .product
                                                                           .brand !=
                                                                       '')
-                                                                  ? Container(
+                                                                  ? SizedBox(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.3,
                                                                       child:
-                                                                          Text(
+                                                                          RichText(
                                                                         textAlign:
                                                                             TextAlign.left,
-                                                                        _shoppingList[indexS]
-                                                                            .itemOffers[index]
-                                                                            .offer
-                                                                            .product
-                                                                            .brand,
+                                                                        text:
+                                                                            TextSpan(
+                                                                          text: _shoppingList[indexS]
+                                                                              .itemOffers[index]
+                                                                              .offer
+                                                                              .product
+                                                                              .brand,
+                                                                          style: TextStyle(
+                                                                              color: Colors.blueGrey.shade800,
+                                                                              fontSize: 16.0),
+                                                                        ),
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    )
+                                                                  : Container(
+                                                                      child:
+                                                                          Text(
+                                                                        "Unbranded",
                                                                         style: TextStyle(
                                                                             color:
                                                                                 Colors.blueGrey.shade800,
                                                                             fontSize: 16.0),
                                                                       ),
-                                                                    )
-                                                                  : Container(
-                                                                      // child:
-                                                                      //     const Text(
-                                                                      //         ""),
-                                                                      ),
+                                                                    ),
                                                               Align(
                                                                 alignment: Alignment
                                                                     .centerLeft,
@@ -611,17 +624,19 @@ class _ListScreenState extends State<ListScreen> {
                         Align(
                           alignment: Alignment.topRight,
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 10.0),
+                            padding: const EdgeInsets.only(
+                                right: 10.0, bottom: 10, top: 4),
                             child: RichText(
                               textAlign: TextAlign.right,
                               text: TextSpan(
-                                  text: 'Total: €' +
-                                      getTotalS(indexS).toStringAsFixed(2),
-                                  style: TextStyle(
-                                      color: ShoppyColors.blue,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                      decoration: TextDecoration.underline)),
+                                text: 'Total: €' +
+                                    getTotalS(indexS).toStringAsFixed(2),
+                                style: TextStyle(
+                                  color: ShoppyColors.blue,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 19,
+                                ),
+                              ),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
