@@ -1,15 +1,9 @@
-import 'dart:math';
-
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/models/Offer.dart';
-import 'package:shoppy/screens/BestDealsScreen.dart';
 
 import '../models/User.dart';
-import '../NavigationBarScreen.dart';
 import '../styles/colors.dart';
 import 'ProductScreen.dart';
 
@@ -66,13 +60,8 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
         onLoading: _onLoading,
         child: SingleChildScrollView(
             child: Padding(
-          padding: EdgeInsets.only(
-            // top: MediaQuery.of(context).size.height * 0.00,
-            top: MediaQuery.of(context).size.height * 0.01,
-            left: MediaQuery.of(context).size.width * 0.03,
-            right: MediaQuery.of(context).size.width * 0.03,
-            //bottom: MediaQuery.of(context).size.height * 0.0,
-          ),
+          padding:
+              const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 10),
           child: Column(children: [
             searchBar(),
             sortAndFilter(),
@@ -123,7 +112,7 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
 
   Padding sortAndFilter2() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(7, 5, 5, 5),
+        padding: const EdgeInsets.fromLTRB(7, 2, 5, 5),
         child: Row(children: [
           TextButton.icon(
             // <-- TextButton
@@ -157,7 +146,7 @@ class _BestDealsScreenState extends State<BestDealsScreen> {
 
   Padding searchBar() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
       child: TextFormField(
         style: TextStyle(color: ShoppyColors.blue),
         decoration: InputDecoration(

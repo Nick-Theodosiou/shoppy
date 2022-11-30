@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/models/ItemStore.dart';
-import 'package:shoppy/models/User.dart';
 import 'package:shoppy/styles/colors.dart';
-import 'dart:ffi';
 
 import 'ProductScreen.dart';
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shoppy/LoginScreen.dart';
 import 'screens/FavoritesScreen.dart';
 import 'screens/AccountScreen.dart';
 import 'screens/BestDealsScreen.dart';
@@ -7,14 +6,16 @@ import 'screens/HomeScreen.dart';
 import 'screens/ListScreen.dart';
 
 class NavigationBarScreen extends StatefulWidget {
-  const NavigationBarScreen({super.key});
+  final int index;
+  const NavigationBarScreen({super.key, required this.index});
 
   @override
-  _NavigationBarScreenState createState() => _NavigationBarScreenState();
+  _NavigationBarScreenState createState() => _NavigationBarScreenState(index);
 }
 
 class _NavigationBarScreenState extends State<NavigationBarScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex;
+  _NavigationBarScreenState(this._selectedIndex);
 
   final List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),

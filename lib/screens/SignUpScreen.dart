@@ -3,9 +3,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/LoginScreen.dart';
 import 'package:shoppy/screens/LoadingScreen.dart';
-import '../NavigationBarScreen.dart';
 import '../styles/colors.dart';
-import 'ForgotPasswordScreen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -83,9 +81,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         key: _formKey,
                         child: Column(
                           children: [
-                            // SizedBox(
-                            //   height: MediaQuery.of(context).size.height * 0.20,
-                            // ),
                             const Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
@@ -121,8 +116,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const Color.fromARGB(240, 225, 225, 225),
                                 filled: true,
                                 hintStyle: TextStyle(color: ShoppyColors.blue),
-                                //  labelStyle: TextStyle(color:ShoppyColors.blue ),
-                                // labelText: textH,
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(35),
                                     borderSide:
@@ -157,8 +150,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const Color.fromARGB(240, 225, 225, 225),
                                 filled: true,
                                 hintStyle: TextStyle(color: ShoppyColors.blue),
-                                //  labelStyle: TextStyle(color:ShoppyColors.blue ),
-                                // labelText: textH,
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(35),
                                     borderSide:
@@ -196,8 +187,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const Color.fromARGB(240, 225, 225, 225),
                                 filled: true,
                                 hintStyle: TextStyle(color: ShoppyColors.blue),
-                                //  labelStyle: TextStyle(color:ShoppyColors.blue ),
-                                // labelText: textH,
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(35),
                                     borderSide:
@@ -236,8 +225,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const Color.fromARGB(240, 225, 225, 225),
                                 filled: true,
                                 hintStyle: TextStyle(color: ShoppyColors.blue),
-                                //  labelStyle: TextStyle(color:ShoppyColors.blue ),
-                                // labelText: textH,
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(35),
                                     borderSide:
@@ -277,8 +264,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const Color.fromARGB(240, 225, 225, 225),
                                 filled: true,
                                 hintStyle: TextStyle(color: ShoppyColors.blue),
-                                //  labelStyle: TextStyle(color:ShoppyColors.blue ),
-                                // labelText: textH,
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(35),
                                     borderSide:

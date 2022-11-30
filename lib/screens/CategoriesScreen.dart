@@ -1,14 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shoppy/models/Category.dart';
 import 'package:shoppy/styles/colors.dart';
 
 import '../DataController.dart';
-import '../NavigationBarScreen.dart';
 import 'CategoryScreen.dart';
-import 'HomeScreen.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
