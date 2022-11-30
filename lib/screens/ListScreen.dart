@@ -46,12 +46,6 @@ class _ListScreenState extends State<ListScreen> {
     return total * 1.0;
   }
 
-  double getPaddingCheckbox(int1, int2) {
-    if (_shoppingList[int1].itemOffers[int2].offer.product.brand != '')
-      return 5;
-    return 6;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -410,9 +404,9 @@ class _ListScreenState extends State<ListScreen> {
                                                                       Padding(
                                                                         padding: const EdgeInsets.only(
                                                                             left:
-                                                                                1.0,
+                                                                                3.0,
                                                                             right:
-                                                                                1),
+                                                                                3),
                                                                         child:
                                                                             RichText(
                                                                           maxLines:
@@ -424,7 +418,7 @@ class _ListScreenState extends State<ListScreen> {
                                                                             style:
                                                                                 TextStyle(
                                                                               color: Colors.blueGrey.shade800,
-                                                                              fontSize: MediaQuery.of(context).size.width * 0.06,
+                                                                              fontSize: MediaQuery.of(context).size.width * 0.055,
                                                                             ),
                                                                           ),
                                                                           overflow:
