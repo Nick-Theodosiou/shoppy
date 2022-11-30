@@ -39,9 +39,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
         future: getData(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return NavigationBarScreen();
+            return const NavigationBarScreen(index: 0);
           } else if (snapshot.hasError) {
-            return LoginScreen();
+            return const LoginScreen();
           } else {
             return Container(
               decoration: const BoxDecoration(

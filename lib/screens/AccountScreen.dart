@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppy/DataController.dart';
 import 'package:shoppy/LoginScreen.dart';
+import 'package:shoppy/screens/ForgotPasswordScreenInternal.dart';
 import 'package:shoppy/styles/colors.dart';
 import '../models/User.dart';
 
@@ -156,10 +157,9 @@ class _AccountScreenState extends State<AccountScreen> {
                         enableInteractiveSelection: false,
                         focusNode: AlwaysDisabledFocusNode(),
                         textAlign: TextAlign.left),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton(
                         child: Text(
                           'Do you want to change password?',
                           style: TextStyle(
@@ -169,6 +169,13 @@ class _AccountScreenState extends State<AccountScreen> {
                             color: ShoppyColors.blue,
                           ),
                         ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => ForgotPasswordScreenInternal()),
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(
