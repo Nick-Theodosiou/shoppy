@@ -93,13 +93,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
         onLoading: _onLoading,
         child: SingleChildScrollView(
             child: Padding(
-          padding: EdgeInsets.only(
-            // top: MediaQuery.of(context).size.height * 0.00,
-            top: MediaQuery.of(context).size.height * 0.01,
-            left: MediaQuery.of(context).size.width * 0.03,
-            right: MediaQuery.of(context).size.width * 0.03,
-            //bottom: MediaQuery.of(context).size.height * 0.0,
-          ),
+          padding:
+              const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 10),
           child: Column(children: [
             searchBar(),
             Padding(
@@ -195,7 +190,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   Padding searchBar() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, 3, 0, 0),
       child: TextFormField(
         style: TextStyle(color: ShoppyColors.blue),
         decoration: InputDecoration(

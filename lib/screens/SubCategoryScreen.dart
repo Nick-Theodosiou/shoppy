@@ -92,16 +92,11 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
         onLoading: _onLoading,
         child: SingleChildScrollView(
           child: Padding(
-             padding: EdgeInsets.only(
-                              // top: MediaQuery.of(context).size.height * 0.00,
-                              top: MediaQuery.of(context).size.height * 0.01,
-                              left: MediaQuery.of(context).size.width * 0.03,
-                              right: MediaQuery.of(context).size.width * 0.03,
-                              //bottom: MediaQuery.of(context).size.height * 0.0,
-              ) ,
+            padding:
+                const EdgeInsets.only(top: 17, left: 10, right: 10, bottom: 10),
             child: Column(
               children: [
-               searchBar(),
+                searchBar(),
                 sortAndFilter(),
                 ListView.builder(
                     padding: EdgeInsets.zero,
@@ -122,8 +117,8 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                         },
                         child: Padding(
                           padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).size.height * 0.01,
-                              ),
+                            bottom: MediaQuery.of(context).size.height * 0.01,
+                          ),
                           child: Container(
                             width: double.infinity,
                             height: 100,
@@ -140,11 +135,12 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 8, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                     height: 100,
@@ -167,15 +163,22 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                         ),
                                         onPressed: () {
                                           setState(() {
-                                            
-                                            if((user.likedProduct.any(((element) => element.productId ==subcategoryOffers[index] .product .productId)))){
+                                            if ((user.likedProduct.any(
+                                                ((element) =>
+                                                    element.productId ==
+                                                    subcategoryOffers[index]
+                                                        .product
+                                                        .productId)))) {
                                               ShoppyColors.blue;
-                                               removeFromLikedProducts(subcategoryOffers[index].product);
-                                              }
-                                              else{
-                                                ShoppyColors.red;
-                                                addToLikedProducts(subcategoryOffers[index].product);
-                                              }
+                                              removeFromLikedProducts(
+                                                  subcategoryOffers[index]
+                                                      .product);
+                                            } else {
+                                              ShoppyColors.red;
+                                              addToLikedProducts(
+                                                  subcategoryOffers[index]
+                                                      .product);
+                                            }
                                             // if (iconColors[index] == ShoppyColors.blue)
                                             //   iconColors[index] = ShoppyColors.red;
                                             // else
@@ -188,8 +191,8 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
-                                      top:
-                                          MediaQuery.of(context).size.height * 0.01,
+                                      top: MediaQuery.of(context).size.height *
+                                          0.01,
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(20),
@@ -197,8 +200,9 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                         subcategoryOffers[index]
                                             .product
                                             .productImage,
-                                        width: MediaQuery.of(context).size.width *
-                                            0.16,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.16,
                                         fit: BoxFit.fitWidth,
                                       ),
                                     ),
@@ -209,9 +213,13 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                       alignment: Alignment.topLeft,
                                       child: Padding(
                                         padding: EdgeInsets.only(
-                                          top: MediaQuery.of(context).size.height *
+                                          top: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
                                               0.0250,
-                                          left: MediaQuery.of(context).size.height *
+                                          left: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
                                               0.01,
                                         ),
                                         child: Column(
@@ -239,11 +247,13 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                               ),
                                               Text(
                                                 //textAlign:TextAlign.left,
-                                                subcategoryOffers[index].storeName,
+                                                subcategoryOffers[index]
+                                                    .storeName,
                                                 style: TextStyle(
                                                     color: ShoppyColors.blue,
                                                     fontSize: 15,
-                                                    fontWeight: FontWeight.w300),
+                                                    fontWeight:
+                                                        FontWeight.w300),
                                               ),
                                             ]),
                                       ),
@@ -255,7 +265,9 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                       alignment: Alignment.topRight,
                                       child: Padding(
                                         padding: EdgeInsets.only(
-                                          top: MediaQuery.of(context).size.height *
+                                          top: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
                                               0.0150,
                                           //left: MediaQuery.of(context).size.height * 0.01,
                                         ),
@@ -276,10 +288,11 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
                                             Text(
                                               "€${subcategoryOffers[index].price.toStringAsFixed(2)}",
                                               style: TextStyle(
-                                                  fontSize: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.05,
+                                                  fontSize:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.05,
                                                   fontWeight: FontWeight.w500,
                                                   color: ShoppyColors.blue),
                                             )
@@ -348,6 +361,7 @@ class _SubCategoryScreennState extends State<SubCategoryScreen> {
 //   }
 // }
 }
+
 TextFormField searchBar() {
   return TextFormField(
     style: TextStyle(color: ShoppyColors.blue),
@@ -370,11 +384,11 @@ TextFormField searchBar() {
     ),
   );
 }
+
 Padding sortAndFilter() {
   return Padding(
-    padding: const EdgeInsets.fromLTRB(0, 15,0, 0),
-    child: Row(
-      children: [
+    padding: const EdgeInsets.fromLTRB(0, 13, 0, 0),
+    child: Row(children: [
       TextButton.icon(
         //contentPadding:const EdgeInsets.only(bottom: 0),
         // <-- TextButton
@@ -401,11 +415,10 @@ Padding sortAndFilter() {
           color: ShoppyColors.blue,
         ),
         style: TextButton.styleFrom(
-         // padding: EdgeInsets.all(0),
+          // padding: EdgeInsets.all(0),
           foregroundColor: ShoppyColors.blue, // Text Color
         ),
       ),
     ]),
   );
 }
-
