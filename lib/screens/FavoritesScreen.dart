@@ -18,7 +18,7 @@ class FavoritesScreen extends StatefulWidget {
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
   final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: true);
   List<Product> _likedList = localUser.likedProduct;
   List<Store> favoriteSupermarkets = localUser.likedStores;
 
@@ -38,28 +38,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       _likedList = localUser.likedProduct;
     });
     _refreshController.loadComplete();
-  }
-
-  void navigateToStores() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const StoresScreen()),
-    );
-    setState(() {
-      favoriteSupermarkets = localUser.likedStores;
-      _likedList = localUser.likedProduct;
-    });
-  }
-
-  void navigateToCategories() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const CategoriesScreen()),
-    );
-    setState(() {
-      favoriteSupermarkets = localUser.likedStores;
-      _likedList = localUser.likedProduct;
-    });
   }
 
   @override
@@ -100,55 +78,75 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               );
                             },
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15.0),
                               child: Padding(
                                 padding: const EdgeInsets.only(
-                                    top: 8, bottom: 8, left: 5, right: 5),
-                                child: CachedNetworkImage(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.1,
-                                  imageUrl: s.storeImage,
-                                  imageBuilder: ((context, imageProvider) =>
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image:
-                                                  NetworkImage(s.storeImage)),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.5),
-                                              spreadRadius: -2,
-                                              blurRadius: 7,
-                                              offset: const Offset(0,
-                                                  3), // changes position of shadow
-                                            ),
-                                          ],
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                    left: 1, right: 5, bottom: 5),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    // ignore: prefer_const_literals_to_create_immutables
+                                    boxShadow: [
+                                      const BoxShadow(
+                                        blurRadius: 2,
+                                        color: Color(0x320E151B),
+                                        offset: Offset(2, 2),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CachedNetworkImage(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.3,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.1,
+                                        imageUrl: s.storeImage,
+                                        imageBuilder: ((context,
+                                                imageProvider) =>
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    fit: BoxFit.fill,
+                                                    image: NetworkImage(
+                                                        s.storeImage)),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.5),
+                                                    spreadRadius: -2,
+                                                    blurRadius: 7,
+                                                    offset: const Offset(0,
+                                                        3), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(80.0)),
+                                              ),
+                                            )),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            removeFromLikedStores(s);
+                                          });
+                                        },
+                                        icon: Icon(
+                                          Icons.favorite,
+                                          color: ShoppyColors.red,
+                                          size: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.06,
                                         ),
-                                        child: Align(
-                                          alignment: Alignment(1.5, -5.9),
-                                          child: IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                removeFromLikedStores(s);
-                                              });
-                                            },
-                                            icon: Icon(
-                                              Icons.favorite,
-                                              color: ShoppyColors.red,
-                                              size: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.07,
-                                            ),
-                                          ),
-                                        ),
-                                      )),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -176,7 +174,11 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           ),
                         ),
                         onPressed: () {
-                          navigateToStores();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const StoresScreen()),
+                          );
                         },
                       ),
                     ),
@@ -374,7 +376,11 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           ),
                         ),
                         onPressed: () {
-                          navigateToCategories();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const CategoriesScreen()),
+                          );
                         },
                       ),
                     ),
@@ -395,11 +401,18 @@ TextButton supermarketsBTN() {
         text: TextSpan(
           children: [
             TextSpan(
-              text: "Favorite Supermarkets",
+              text: "Favourite Supermarkets",
               style: TextStyle(
                   fontSize: 25,
                   color: ShoppyColors.blue,
                   fontWeight: FontWeight.w500),
+            ),
+            WidgetSpan(
+              child: Icon(
+                Icons.arrow_right_alt,
+                size: 25,
+                color: ShoppyColors.blue,
+              ),
             ),
           ],
         ),
@@ -418,11 +431,18 @@ TextButton productsBTN() {
         text: TextSpan(
           children: [
             TextSpan(
-              text: "Favorite Products",
+              text: "Favourite Products",
               style: TextStyle(
                   fontSize: 25,
                   color: ShoppyColors.blue,
                   fontWeight: FontWeight.w500),
+            ),
+            WidgetSpan(
+              child: Icon(
+                Icons.arrow_right_alt,
+                size: 25,
+                color: ShoppyColors.blue,
+              ),
             ),
           ],
         ),
