@@ -62,7 +62,7 @@ class _ListScreenState extends State<ListScreen> {
           children: <Widget>[
             SmartRefresher(
               enablePullDown: true,
-              enablePullUp: true,
+              enablePullUp: false,
               header: const WaterDropHeader(),
               controller: _refreshController,
               onRefresh: _onRefresh,
@@ -602,12 +602,12 @@ class _ListScreenState extends State<ListScreen> {
                                         alignment: Alignment.topRight,
                                         child: Padding(
                                           padding: const EdgeInsets.only(
-                                              right: 20.0),
+                                              right: 10.0),
                                           child: SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.06,
+                                                0.09,
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .width *
@@ -663,7 +663,7 @@ class _ListScreenState extends State<ListScreen> {
                             child: RichText(
                               textAlign: TextAlign.right,
                               text: TextSpan(
-                                text: 'Total: €' +
+                                text: 'Subtotal: €' +
                                     getTotalS(indexS).toStringAsFixed(2),
                                 style: TextStyle(
                                   color: ShoppyColors.blue,
