@@ -15,11 +15,11 @@ List<Store> DCsupermarkets = [];
 List<Category> DCcategories = [];
 
 var settings = ConnectionSettings(
-    host: '45.84.205.255',
-    port: 3306,
-    user: 'u274018054_admin',
-    password: 'Test123@!',
-    db: 'u274018054_testDB');
+    host: '',
+    port: ,
+    user: '',
+    password: '',
+    db: '');
 
 Future<bool> checkCredentials(String email, String password) async {
   var conn = await MySqlConnection.connect(settings);
